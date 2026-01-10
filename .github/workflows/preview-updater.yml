@@ -1,0 +1,17 @@
+name: Preview Updater
+
+on:
+    schedule:
+        -   cron: 20 2 1 * *
+    workflow_dispatch:
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v5
+
+            -   name: Update Previews
+                uses: TheDragonCode/preview-updater@main
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
