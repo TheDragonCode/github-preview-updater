@@ -89,3 +89,16 @@ const parse = () => {
         labels
     }
 }
+
+module.exports = {
+    parse,
+    PATH,
+    COMMIT_TITLE,
+    COMMIT_BODY,
+    COMMIT_AUTHOR_NAME,
+    COMMIT_AUTHOR_EMAIL,
+    PR_TITLE,
+    PR_BODY,
+    ASSIGNEES,
+    LABELS
+}
