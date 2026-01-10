@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import github from '@actions/github'
 
-import { resolveRepository, loadConfig } from './config'
+import { loadConfig, resolveRepository } from './config'
 import { PreviewConfig } from './types/config'
 import { Repository } from './types/repository'
 import { setPreview } from './utils/preview'
@@ -68,7 +68,7 @@ const updatePreview = async (octokit: ReturnType<typeof github.getOctokit>, repo
 const ensureToken = () => {
     const token = core.getInput('token') || process.env.GITHUB_TOKEN
 
-    if (!token) {
+    if (! token) {
         throw new Error('GitHub token is required. Provide it via the "token" input or GITHUB_TOKEN env.')
     }
 
@@ -97,8 +97,7 @@ const previewUpdater = async () => {
 
         try {
             await updatePreview(octokit, repository, commitMessage)
-        }
-        catch (error) {
+        } catch (error) {
             const message = error instanceof Error ? error.message : String(error)
 
             failures.push(`${ repository.owner }/${ repository.name }: ${ message }`)
