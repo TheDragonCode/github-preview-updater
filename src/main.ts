@@ -1,5 +1,5 @@
 import { info } from '@actions/core'
-import { context } from '@actions/github'
+import { context, getOctokit } from '@actions/github'
 import { parse } from './utils/inputs'
 
 module.exports = (): void => {
@@ -25,4 +25,9 @@ module.exports = (): void => {
         assignees,
         labels
     } = parse()
+
+    const currentRepository = getOctokit(token).rest.repos.get
+
+    // Authenticate
+    const repo = new Repository(owner, RepoName, token)
 }
