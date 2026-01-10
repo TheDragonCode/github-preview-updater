@@ -1,66 +1,66 @@
 import { getInput } from '@actions/core'
 import { splitCsv } from './parsers'
 
-const TOKEN = {
+export const TOKEN = {
     name: 'token',
     env: 'INPUT_TOKEN'
 }
 
-const PATH = {
+export const PATH = {
     name: 'path',
     env: 'INPUT_PATH',
     defaultValue: 'README.md'
 }
 
-const COMMIT_TITLE = {
+export const COMMIT_TITLE = {
     name: 'commitTitle',
     env: 'INPUT_COMMITTITLE',
     defaultValue: 'docs(readme): Update preview image'
 }
 
-const COMMIT_BODY = {
+export const COMMIT_BODY = {
     name: 'commitBody',
     env: 'INPUT_COMMITBODY',
     defaultValue: ''
 }
 
-const COMMIT_AUTHOR_NAME = {
+export const COMMIT_AUTHOR_NAME = {
     name: 'commitAuthorName',
     env: 'INPUT_COMMITAUTHORNAME',
     defaultValue: 'github-actions'
 }
 
-const COMMIT_AUTHOR_EMAIL = {
+export const COMMIT_AUTHOR_EMAIL = {
     name: 'commitAuthorEmail',
     env: 'INPUT_COMMITAUTHOREMAIL',
     defaultValue: 'github-actions@github.com'
 }
 
-const PR_TITLE = {
+export const PR_TITLE = {
     name: 'prTitle',
     env: 'INPUT_PRTITLE',
     defaultValue: 'Update preview image'
 }
 
-const PR_BODY = {
+export const PR_BODY = {
     name: 'prBody',
     env: 'INPUT_PRBODY',
     defaultValue: ''
 }
 
-const ASSIGNEES = {
+export const ASSIGNEES = {
     name: 'assignees',
     env: 'INPUT_ASSIGNEES',
     defaultValue: ''
 }
 
-const LABELS = {
+export const LABELS = {
     name: 'labels',
     env: 'INPUT_LABELS',
     defaultValue: ''
 }
 
-const parse = () => {
+export const parse = () => {
     const token = getInput(TOKEN.name, { required: true })
     const path = getInput(PATH.name) || PATH.defaultValue
 
@@ -88,17 +88,4 @@ const parse = () => {
         assignees,
         labels
     }
-}
-
-module.exports = {
-    parse,
-    PATH,
-    COMMIT_TITLE,
-    COMMIT_BODY,
-    COMMIT_AUTHOR_NAME,
-    COMMIT_AUTHOR_EMAIL,
-    PR_TITLE,
-    PR_BODY,
-    ASSIGNEES,
-    LABELS
 }
