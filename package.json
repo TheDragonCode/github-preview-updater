@@ -6,8 +6,8 @@
     "scripts": {
         "type-check": "tsc --noEmit",
         "test": "jest",
-        "dist": "rm -rf ./dist && ncc build ./src/index.js",
-        "release": "npm run dist"
+        "build": "ncc build ./src/index.ts",
+        "release": "npm run build"
     },
     "keywords": [
         "preview",
@@ -29,7 +29,8 @@
     },
     "dependencies": {
         "@actions/core": "^2.0.2",
-        "@actions/github": "^7.0.0"
+        "@actions/github": "^7.0.0",
+        "@probot/adapter-github-actions": "^5.0.1"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
