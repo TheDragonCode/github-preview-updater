@@ -34329,6 +34329,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveRepository = exports.loadConfig = void 0;
 const github_1 = __nccwpck_require__(3228);
 const js_yaml_1 = __importDefault(__nccwpck_require__(4281));
+const node_path_1 = __importDefault(__nccwpck_require__(6760));
 const filesystem_1 = __nccwpck_require__(9742);
 const image_1 = __nccwpck_require__(5768);
 const normalizeImage = (configDefaults = {}, image = {}, name) => {
@@ -34338,8 +34339,25 @@ const normalizeImage = (configDefaults = {}, image = {}, name) => {
     merged.packageName = image.packageName ?? configDefaults.packageName ?? name;
     return merged;
 };
+const resolveConfigPaths = (configPath) => {
+    if (node_path_1.default.isAbsolute(configPath)) {
+        return [configPath];
+    }
+    const paths = [configPath];
+    const workspace = process.env.GITHUB_WORKSPACE;
+    if (workspace) {
+        paths.unshift(node_path_1.default.join(workspace, configPath));
+    }
+    return paths;
+};
 const loadConfig = (configPath) => {
-    const content = (0, filesystem_1.readFile)(configPath);
+    let content = '';
+    for (const currentPath of resolveConfigPaths(configPath)) {
+        content = (0, filesystem_1.readFile)(currentPath);
+        if (content) {
+            break;
+        }
+    }
     if (!content) {
         throw new Error(`Config file not found at ${configPath}`);
     }
@@ -34840,6 +34858,14 @@ module.exports = require("node:events");
 
 "use strict";
 module.exports = require("node:fs");
+
+/***/ }),
+
+/***/ 6760:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
 
 /***/ }),
 

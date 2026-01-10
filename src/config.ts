@@ -1,5 +1,6 @@
 import { context } from '@actions/github'
 import yaml from 'js-yaml'
+import path from 'node:path'
 
 import { readFile } from './utils/filesystem'
 import { defaultImage, Image } from './types/image'
@@ -16,8 +17,31 @@ const normalizeImage = (configDefaults: Partial<Image> = {}, image: Partial<Imag
     return merged
 }
 
+const resolveConfigPaths = (configPath: string): string[] => {
+    if (path.isAbsolute(configPath)) {
+        return [configPath]
+    }
+
+    const paths = [configPath]
+    const workspace = process.env.GITHUB_WORKSPACE
+
+    if (workspace) {
+        paths.unshift(path.join(workspace, configPath))
+    }
+
+    return paths
+}
+
 export const loadConfig = (configPath: string): PreviewConfig => {
-    const content = readFile(configPath)
+    let content = ''
+
+    for (const currentPath of resolveConfigPaths(configPath)) {
+        content = readFile(currentPath)
+
+        if (content) {
+            break
+        }
+    }
 
     if (!content) {
         throw new Error(`Config file not found at ${ configPath }`)
