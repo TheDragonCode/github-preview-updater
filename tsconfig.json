@@ -10,5 +10,5 @@
         "target": "ES2021",
         "skipLibCheck": true
     },
-    "exclude": ["./coverage/*", "./dist/*"]
+    "exclude": ["./coverage/*", "./dist/*", "./build/*"]
 }

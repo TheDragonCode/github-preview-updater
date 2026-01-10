@@ -1,3 +1,5 @@
+import { Image } from '../types/image'
+
 const encodeUri = (value: string) => encodeURIComponent(value)
 
 const packageManager = (image: Image): string => {
@@ -32,13 +34,17 @@ const render = (image: Image, theme: string = '', suffix: string = ''): string =
     return image.host + '/' + encodeUri(image.title) + '.png?' + params.toString() + suffix
 }
 
-export const getImages = (image: Image): string => {
+const format = (title: string, url: string) => `![${ title }](${ url })`
+
+export const getImages = (image: Image): string[] => {
+    const title = `${ image.title } banner`
+
     if (! image.canDark) {
-        return render(image, 'light')
+        return [format(title, render(image, image.theme))]
     }
 
-    const light = render(image, 'light', '#gh-light-mode-only')
-    const dark = render(image, 'dark', '#gh-dark-mode-only')
+    const light = format(title, render(image, 'light', '#gh-light-mode-only'))
+    const dark = format(title, render(image, 'dark', '#gh-dark-mode-only'))
 
-    return light + '\n' + dark
+    return [light, dark]
 }

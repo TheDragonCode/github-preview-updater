@@ -1,5 +1,19 @@
-interface Repository
+import { Image } from './image'
+
+export interface RepositoryConfig
 {
-    owner: string
     name: string
+    owner?: string
+    branch?: string
+    path?: string
+    image?: Partial<Image>
+}
+
+export interface Repository
+{
+    name: string
+    owner: string
+    branch?: string
+    path: string
+    image: Image
 }

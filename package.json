@@ -5,7 +5,7 @@
     "main": "./dist/index.js",
     "scripts": {
         "type-check": "tsc --noEmit",
-        "test": "jest",
+        "test": "tsc --outDir build && jest --runInBand --roots ./build --testMatch \"**/?(*.)+(spec|test).js\"",
         "dev": "npm run build && node dist/index.js",
         "build": "ncc build ./src/index.ts",
         "release": "npm run build"
@@ -31,7 +31,7 @@
     "dependencies": {
         "@actions/core": "^2.0.2",
         "@actions/github": "^7.0.0",
-        "@probot/adapter-github-actions": "^5.0.1"
+        "js-yaml": "^4.1.1"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
@@ -39,7 +39,6 @@
         "@types/node": "^25.0.5",
         "@vercel/ncc": "^0.38.4",
         "jest": "^30.2.0",
-        "js-yaml": "^4.1.1",
         "typescript": "^5.9.3"
     }
 }

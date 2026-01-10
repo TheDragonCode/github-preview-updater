@@ -1,3 +1,5 @@
+import { Image } from '../types/image'
+import { Repository } from '../types/repository'
 import { getImages } from './image'
 
 const hasHeader = (content: string) => content.match(/^#\s+/)
@@ -19,7 +21,7 @@ export const setPreview = (content: string, repo: Repository, image: Image) => {
         content = `# ${ title }\n\n${ content }`
     }
 
-    const images = getImages(image)
+    const images = getImages(image).join('\n')
 
     return cleanUp(content).replace(/^(#\s+.+\n\n)/, `$1${ images }\n\n`)
 }
