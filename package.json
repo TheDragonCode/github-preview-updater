@@ -17,7 +17,7 @@
     "type": "commonjs",
     "repository": "https://github.com/TheDragonCode/preview-updater",
     "engines": {
-        "node": ">=24.0.0"
+        "node": ">=20.0.0"
     },
     "dependencies": {
         "@actions/core": "^2.0.2",
