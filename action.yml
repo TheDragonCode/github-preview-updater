@@ -2,20 +2,19 @@ name: 'Preview Updater'
 description: 'Lightweight preview update in Your repository'
 author: 'Andrey Helldar <helldar@dragon-code.pro>'
 
-permissions:
-    contents: write
-
 runs:
     using: node20
     main: './dist/index.js'
 branding:
     icon: image
     color: orange
+
 inputs:
     token:
         description: |
             GitHub token with `contents:write` permission used to read and update repository files.
         required: true
+
     config-path:
         description: Path to the preview configuration YAML file.
         default: '.github/preview.yml'
