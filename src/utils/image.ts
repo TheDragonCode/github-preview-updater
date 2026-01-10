@@ -19,6 +19,8 @@ const packageManager = (image: Image): string => {
     }
 }
 
+const packageName = (image: Image) => image.packageManager !== 'none' ? image.packageName : ''
+
 const render = (image: Image, theme: string = '', suffix: string = ''): string => {
     const params = new URLSearchParams({
         theme: theme || image.theme,
@@ -27,7 +29,7 @@ const render = (image: Image, theme: string = '', suffix: string = ''): string =
         fontSize: image.fontSize,
         images: image.icon,
         packageManager: encodeUri(packageManager(image)),
-        packageName: encodeUri(image.packageName),
+        packageName: encodeUri(packageName(image)),
         description: encodeUri(image.description)
     })
 
@@ -38,10 +40,6 @@ const format = (title: string, url: string) => `![${ title }](${ url })`
 
 export const getImages = (image: Image): string[] => {
     const title = `${ image.title } banner`
-
-    if (! image.canDark) {
-        return [format(title, render(image, image.theme))]
-    }
 
     const light = format(title, render(image, 'light', '#gh-light-mode-only'))
     const dark = format(title, render(image, 'dark', '#gh-dark-mode-only'))
