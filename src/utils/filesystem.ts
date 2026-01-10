@@ -1,5 +1,4 @@
 import * as fs from 'node:fs'
-import { info } from '@actions/core'
 
 export const readFile = (path: string): string => {
     if (! fs.existsSync(path)) {
@@ -19,8 +18,6 @@ export const cwd = (): string => {
     if (path === undefined) {
         throw new Error('GitHub Actions has not set the working directory')
     }
-
-    info(`Working directory: ${ path }`)
 
     return path
 }
