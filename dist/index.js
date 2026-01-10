@@ -34376,15 +34376,48 @@ exports.resolveRepository = resolveRepository;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __importDefault(__nccwpck_require__(7484));
+const core = __importStar(__nccwpck_require__(7484));
 const main_1 = __importDefault(__nccwpck_require__(1730));
 (0, main_1.default)().catch(error => {
     const message = error instanceof Error ? error.message : String(error);
-    core_1.default.setFailed(`💥 Preview Updater failed with error: ${message}`);
+    core.setFailed(`💥 Preview Updater failed with error: ${message}`);
 });
 
 
@@ -34395,11 +34428,44 @@ const main_1 = __importDefault(__nccwpck_require__(1730));
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __importDefault(__nccwpck_require__(7484));
+const core = __importStar(__nccwpck_require__(7484));
 const github_1 = __importDefault(__nccwpck_require__(3228));
 const config_1 = __nccwpck_require__(2973);
 const preview_1 = __nccwpck_require__(1365);
@@ -34435,7 +34501,7 @@ const updatePreview = async (octokit, repo, commitMessage) => {
     const { sha, content } = await loadReadme(octokit, repo, branch);
     const updatedContent = (0, preview_1.setPreview)(content, repo, repo.image);
     if (updatedContent === content) {
-        core_1.default.info(`No preview changes for ${repo.owner}/${repo.name}`);
+        core.info(`No preview changes for ${repo.owner}/${repo.name}`);
         return;
     }
     await octokit.rest.repos.createOrUpdateFileContents({
@@ -34447,22 +34513,22 @@ const updatePreview = async (octokit, repo, commitMessage) => {
         sha,
         branch
     });
-    core_1.default.info(`Preview updated for ${repo.owner}/${repo.name} (${repo.path})`);
+    core.info(`Preview updated for ${repo.owner}/${repo.name} (${repo.path})`);
 };
 const ensureToken = () => {
-    const token = core_1.default.getInput('token') || process.env.GITHUB_TOKEN;
+    const token = core.getInput('token') || process.env.GITHUB_TOKEN;
     if (!token) {
         throw new Error('GitHub token is required. Provide it via the "token" input or GITHUB_TOKEN env.');
     }
     return token;
 };
 const loadConfiguration = () => {
-    const configPath = core_1.default.getInput('config-path') || DEFAULT_CONFIG_PATH;
-    core_1.default.info(`Using config: ${configPath}`);
+    const configPath = core.getInput('config-path') || DEFAULT_CONFIG_PATH;
+    core.info(`Using config: ${configPath}`);
     return (0, config_1.loadConfig)(configPath);
 };
 const previewUpdater = async () => {
-    const commitMessage = core_1.default.getInput('commit-message') || DEFAULT_COMMIT_MESSAGE;
+    const commitMessage = core.getInput('commit-message') || DEFAULT_COMMIT_MESSAGE;
     const token = ensureToken();
     const config = loadConfiguration();
     const octokit = github_1.default.getOctokit(token);
@@ -34475,7 +34541,7 @@ const previewUpdater = async () => {
         catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             failures.push(`${repository.owner}/${repository.name}: ${message}`);
-            core_1.default.warning(`Failed to update ${repository.owner}/${repository.name}: ${message}`);
+            core.warning(`Failed to update ${repository.owner}/${repository.name}: ${message}`);
         }
     }
     if (failures.length > 0) {
