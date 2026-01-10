@@ -1,21 +1,44 @@
-const render = (image: Image, theme: string, suffix: string = ''): string => {
-    return `${ image.template }${ suffix }`
-        .replace('{theme}', theme)
-        .replace('{pattern}', image.pattern)
-        .replace('{style}', image.style)
-        .replace('{fontSize}', image.fontSize)
-        .replace('{icon}', image.icon)
-        .replace('{packageManager}', image.packageManager)
-        .replace('{packageName}', image.packageName)
-        .replace('{title}', image.title)
-        .replace('{description}', image.description)
+const encodeUri = (value: string) => encodeURIComponent(value)
+
+const packageManager = (image: Image): string => {
+    const visibility = image.packageGlobal ? ' global' : ''
+
+    switch (image.packageManager) {
+        case 'composer':
+            return `composer${ visibility } require`
+        case 'npm':
+            return `npm${ visibility } install`
+        case 'yarn':
+            return `yarn${ visibility } add`
+        case 'pip':
+            return `pip${ visibility } install`
+        default:
+            return ''
+    }
+}
+
+const render = (image: Image, theme: string = '', suffix: string = ''): string => {
+    const params = new URLSearchParams({
+        theme: theme || image.theme,
+        pattern: image.pattern,
+        style: image.style,
+        fontSize: image.fontSize,
+        images: image.icon,
+        packageManager: encodeUri(packageManager(image)),
+        packageName: encodeUri(image.packageName),
+        description: encodeUri(image.description)
+    })
+
+    return image.host + '/' + encodeUri(image.title) + '.png?' + params.toString() + suffix
 }
 
 export const getImages = (image: Image): string => {
     if (! image.canDark) {
-        return render(image, 'dark')
+        return render(image, 'light')
     }
 
-    return render(image, 'light', '#gh-light-mode-only') + '\n'
-        + render(image, 'dark', '#gh-dark-mode-only')
+    const light = render(image, 'light', '#gh-light-mode-only')
+    const dark = render(image, 'dark', '#gh-dark-mode-only')
+
+    return light + '\n' + dark
 }
