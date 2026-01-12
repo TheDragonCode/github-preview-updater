@@ -1,5 +1,5 @@
 import { hasComposer, hasNpm, hasYarn } from '../../src/utils/packageManagers'
-import { testConfig } from '../mocks/config'
+import { testConfig } from '../helpers/config'
 
 test('composer', () => {
     expect(hasComposer(testConfig)).toBe(false)
