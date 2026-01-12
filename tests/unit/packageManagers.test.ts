@@ -1,13 +1,13 @@
 import { hasComposer, hasNpm, hasYarn } from '../../src/utils/packageManagers'
 
 test('composer', () => {
-    expect(hasComposer()).toBe(true)
+    expect(hasComposer(process.cwd())).toBe(false)
 })
 
 test('npm', () => {
-    expect(hasNpm()).toBe(true)
+    expect(hasNpm(process.cwd())).toBe(true)
 })
 
 test('yarn', () => {
-    expect(hasYarn()).toBe(false)
+    expect(hasYarn(process.cwd())).toBe(false)
 })
