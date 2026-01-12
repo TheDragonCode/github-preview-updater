@@ -30,7 +30,7 @@ export class Repository
 
     async branchExists()
     {
-        return await exec(`git rev-parse --verify ${ this.branchName() }`)
+        return await exec(`git branch --list "${ this.branchName() }"`)
             .then(() => true)
             .catch(error => {
                 throw new Error(error.message)

@@ -34766,7 +34766,7 @@ class Repository {
         }
     }
     async branchExists() {
-        return await (0, filesystem_1.exec)(`git rev-parse --verify ${this.branchName()}`)
+        return await (0, filesystem_1.exec)(`git branch --list "${this.branchName()}"`)
             .then(() => true)
             .catch(error => {
             throw new Error(error.message);
