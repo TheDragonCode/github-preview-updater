@@ -1,5 +1,6 @@
 import { fileExists } from './filesystem'
+import { Config } from '../types/config'
 
-export const hasComposer = (directory: string = ''): boolean => fileExists(directory + '/composer.json')
-export const hasNpm = (directory: string = ''): boolean => fileExists(directory + '/package.json')
-export const hasYarn = (directory: string = ''): boolean => fileExists(directory + '/yarn.lock')
+export const hasComposer = (config: Config): boolean => fileExists(config, 'composer.json')
+export const hasNpm = (config: Config): boolean => fileExists(config, 'package.json')
+export const hasYarn = (config: Config): boolean => fileExists(config, 'yarn.lock')

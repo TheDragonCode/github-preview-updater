@@ -3,20 +3,6 @@ import { Config, defaultConfig } from '../types/config'
 import * as yaml from 'js-yaml'
 import { deepmerge } from 'deepmerge-ts'
 
-export const fileExists = (path: string): boolean => fs.existsSync(path)
-
-export const readFile = (path: string): string => {
-    if (! fs.existsSync(path)) {
-        return ''
-    }
-
-    return fs.readFileSync(path, 'utf-8')
-}
-
-export const writeFile = (path: string, content: string): void => {
-    fs.writeFileSync(path, content)
-}
-
 export const cwd = (): string => {
     const path = process.env.GITHUB_WORKSPACE
 
@@ -27,8 +13,24 @@ export const cwd = (): string => {
     return path
 }
 
-export const readConfig = (path: string = ''): Config => {
-    const content = readFile(path || '.github/preview-updater.yml')
+const filePath = (config: Config, filename: string): string => `${ config.directory }/${ filename }`
+
+export const fileExists = (config: Config, filename: string): boolean => fs.existsSync(filePath(config, filename))
+
+export const readFile = (config: Config, filename: string): string => {
+    if (! fs.existsSync(filePath(config, filename))) {
+        return ''
+    }
+
+    return fs.readFileSync(filePath(config, filename), 'utf-8')
+}
+
+export const writeFile = (config: Config, filename: string, content: string): void => {
+    fs.writeFileSync(filePath(config, filename), content)
+}
+
+export const readConfig = (config: Config, path: string = ''): Config => {
+    const content = readFile(config, path || '.github/preview-updater.yml')
 
     if (content === '') {
         return defaultConfig

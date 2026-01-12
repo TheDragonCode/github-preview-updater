@@ -3,7 +3,9 @@ import { readFile } from '../../src/utils/filesystem'
 import { defaultConfig } from '../../src/types/config'
 
 const getReadme = (filename: string): string => {
-    const content = readFile(__dirname + '/../fixtures/readme/' + filename)
+    const content = readFile(defaultConfig, 'tests/fixtures/readme/' + filename)
+
+    console.log(content)
 
     return setPreview(content, 'Qwerty', defaultConfig.image)
 }

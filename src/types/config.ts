@@ -16,15 +16,18 @@ export interface ImageParameters
 export interface Image
 {
     url: string;
-    parameters: ImageParameters;
+    parameters?: ImageParameters;
 }
 
 export interface Config
 {
+    directory: string;
     image: Image;
 }
 
 export const defaultConfig: Config = {
+    directory: '',
+
     image: {
         url: 'https://banners.beyondco.de/{title}.png',
 
