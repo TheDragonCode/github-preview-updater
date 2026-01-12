@@ -1,5 +1,8 @@
 # Preview Updater
 
+![](https://banners.beyondco.de/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=&description=#gh-light-mode-only)
+![](https://banners.beyondco.de/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=&description=#gh-dark-mode-only)
+
 Легко обновляйте превью своих репозиториев, сохраняя время и усилия на процесс разработки.
 
 ## Как это работает
