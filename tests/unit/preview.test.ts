@@ -1,14 +1,4 @@
-import { setPreview } from '../../src/utils/preview'
-import { readFile } from '../../src/utils/filesystem'
-import { defaultConfig } from '../../src/types/config'
-
-const getReadme = (filename: string): string => {
-    const content = readFile(defaultConfig, 'tests/fixtures/readme/' + filename)
-
-    console.log(content)
-
-    return setPreview(content, 'Qwerty', defaultConfig.image)
-}
+import { getReadme } from '../helpers/filesystem'
 
 test('empty', () => expect(getReadme('empty.md')).toMatchSnapshot())
 test('just-text', () => expect(getReadme('just-text.md')).toMatchSnapshot())

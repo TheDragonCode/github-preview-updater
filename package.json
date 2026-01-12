@@ -1,6 +1,6 @@
 {
     "name": "preview-updater",
-    "description": "Lightweight preview update in Your repository",
+    "description": "Lightweight preview update in your repository",
     "author": "Andrey Helldar <helldar@dragon-code.pro>",
     "main": "./dist/index.js",
     "scripts": {

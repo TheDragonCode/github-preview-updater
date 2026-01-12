@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`empty 1`] = `
-"#  $1werty
+"# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 "
 `;
 
 exports[`just-text 1`] = `
-"#  $1werty
+"# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 Something
 "
@@ -22,8 +22,8 @@ Something
 exports[`with-one-image 1`] = `
 "# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 
 ## Usage
@@ -33,10 +33,10 @@ Something
 `;
 
 exports[`with-one-image-without-header 1`] = `
-"#  $1werty
+"# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 
 ## Usage
@@ -48,8 +48,8 @@ Something
 exports[`with-two-images 1`] = `
 "# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 
 ## Usage
@@ -59,10 +59,10 @@ Something
 `;
 
 exports[`with-two-images-without-header 1`] = `
-"#  $1werty
+"# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 
 ## Usage
@@ -72,10 +72,10 @@ Something
 `;
 
 exports[`without-all 1`] = `
-"#  $1werty
+"# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 ## Usage
 
@@ -86,8 +86,8 @@ Something
 exports[`without-images 1`] = `
 "# Preview Updater
 
-![](https://banners.beyondco.de/{title}.png/.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-light-mode-only)
-![](https://banners.beyondco.de/{title}.png/.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm%2520install&packageName=&description=#gh-dark-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
+![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
 
 ## Usage
 

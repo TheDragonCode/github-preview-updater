@@ -16,7 +16,7 @@ export interface ImageParameters
 export interface Image
 {
     url: string;
-    parameters?: ImageParameters;
+    parameters: ImageParameters;
 }
 
 export interface Config
