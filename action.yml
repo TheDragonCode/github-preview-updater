@@ -15,12 +15,7 @@ inputs:
             GitHub token with `contents:write` permission used to read and update repository files.
         required: true
 
-    config-path:
+    configPath:
         description: Path to the preview configuration YAML file.
-        default: '.github/preview.yml'
-        required: false
-
-    commit-message:
-        description: Commit message used when saving README updates.
-        default: 'docs: update preview banner'
+        default: '.github/preview-updater.yml'
         required: false
