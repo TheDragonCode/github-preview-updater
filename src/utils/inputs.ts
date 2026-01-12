@@ -68,7 +68,7 @@ export const LABELS = {
 export const parse = () => {
     const token = getInput(TOKEN.name, { required: true })
     const path = getInput(PATH.name) || PATH.defaultValue
-    const branchName = getInput(BRANCH_NAME.name) || BRANCH_NAME.defaultValue
+    const branchName = (getInput(BRANCH_NAME.name) || BRANCH_NAME.defaultValue).replace('{timestamp}', Date.now().toString())
 
     const commitTitle = getInput(COMMIT_TITLE.name) || COMMIT_TITLE.defaultValue
     const commitBody = getInput(COMMIT_BODY.name) || COMMIT_BODY.defaultValue
