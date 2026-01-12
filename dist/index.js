@@ -34379,6 +34379,8 @@ const github_1 = __nccwpck_require__(3228);
 const inputs_1 = __nccwpck_require__(9612);
 const core_1 = __nccwpck_require__(7484);
 const repository_1 = __nccwpck_require__(6629);
+const preview_1 = __nccwpck_require__(1365);
+const outputs_1 = __nccwpck_require__(8595);
 const previewUpdater = async () => {
     // Inputs
     const { token, configPath } = (0, inputs_1.parse)();
@@ -34399,44 +34401,34 @@ const previewUpdater = async () => {
     // Checkout branch
     const branchExists = await repo.branchExists();
     (0, core_1.info)(`Checkout ${branchExists ? 'existing' : 'new'} branch named "${repo.branchName()}"`);
-    // await repo.checkoutBranch(! branchExists)
-    //
-    // console.log('aaaa', branchExists)
-    //
-    // // Read file
-    // const content = readFile(config, config.path.readme)
-    // const preview = setPreview(content, config)
-    //
-    // if (content !== preview) {
-    //     info(`Update readme in "${ config.path.readme }" file`)
-    //     writeFile(config, config.path.readme, preview)
-    // } else {
-    //     info(`File "${ config.path.readme }" is up to date`)
-    // }
-    //
-    // // Stage and commit changes
-    // await repo.stage()
-    // await repo.commit()
-    // await repo.push()
-    //
-    // // Create a Pull Request
-    // const pullRequest = await repo.createPullRequest()
-    //
-    // // Variables
-    // const pullRequestNumber: number = pullRequest.data.number
-    // const pullRequestUrl: string = pullRequest.data.html_url
-    //
-    // if (config.repository.pullRequest.assignees.length > 0) {
-    //     await repo.assignee(pullRequestNumber, config.repository.pullRequest.assignees)
-    // }
-    //
-    // if (config.repository.pullRequest.labels.length > 0) {
-    //     await repo.addLabels(pullRequestNumber, config.repository.pullRequest.labels)
-    // }
-    //
-    // info(`Preview created in pull request #${ pullRequestNumber }: ${ pullRequestUrl }`)
-    //
-    // setOutputs(repo.branchName(), pullRequestNumber, pullRequestUrl)
+    await repo.checkoutBranch(!branchExists);
+    // Read file
+    const content = (0, filesystem_1.readFile)(config, config.path.readme);
+    const preview = (0, preview_1.setPreview)(content, config);
+    if (content !== preview) {
+        (0, core_1.info)(`Update readme in "${config.path.readme}" file`);
+        (0, filesystem_1.writeFile)(config, config.path.readme, preview);
+    }
+    else {
+        (0, core_1.info)(`File "${config.path.readme}" is up to date`);
+    }
+    // Stage and commit changes
+    await repo.stage();
+    await repo.commit();
+    await repo.push();
+    // Create a Pull Request
+    const pullRequest = await repo.createPullRequest();
+    // Variables
+    const pullRequestNumber = pullRequest.data.number;
+    const pullRequestUrl = pullRequest.data.html_url;
+    if (config.repository.pullRequest.assignees.length > 0) {
+        await repo.assignee(pullRequestNumber, config.repository.pullRequest.assignees);
+    }
+    if (config.repository.pullRequest.labels.length > 0) {
+        await repo.addLabels(pullRequestNumber, config.repository.pullRequest.labels);
+    }
+    (0, core_1.info)(`Preview created in Pull Request #${pullRequestNumber}: ${pullRequestUrl}`);
+    (0, outputs_1.setOutputs)(repo.branchName(), pullRequestNumber, pullRequestUrl);
 };
 exports["default"] = previewUpdater;
 
@@ -34583,6 +34575,73 @@ exports.exec = exec;
 
 /***/ }),
 
+/***/ 7828:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getImages = void 0;
+const packageManagers_1 = __nccwpck_require__(2453);
+const encodeUri = (value) => {
+    if (value === '') {
+        return '';
+    }
+    return encodeURIComponent(value);
+};
+const detectPackageManager = (config, visibility) => {
+    if ((0, packageManagers_1.hasComposer)(config)) {
+        return `composer${visibility} require`;
+    }
+    if ((0, packageManagers_1.hasNpm)(config)) {
+        return `npm${visibility} install`;
+    }
+    if ((0, packageManagers_1.hasYarn)(config)) {
+        return `yarn${visibility} add`;
+    }
+    return '';
+};
+const packageManager = (config) => {
+    const visibility = config.image.parameters.packageGlobal ? ' global' : '';
+    switch (config.image.parameters.packageManager) {
+        case 'composer':
+            return `composer${visibility} require`;
+        case 'npm':
+            return `npm${visibility} install`;
+        case 'yarn':
+            return `yarn${visibility} add`;
+        case 'auto':
+            return detectPackageManager(config, visibility);
+        default:
+            return '';
+    }
+};
+const packageName = (image) => image.packageManager !== 'none' ? image.packageName : '';
+const render = (config, theme, suffix = '') => {
+    const image = config.image.parameters;
+    const params = new URLSearchParams({
+        theme: theme,
+        pattern: image.pattern,
+        style: image.style,
+        fontSize: image.fontSize,
+        images: image.icon,
+        packageManager: packageManager(config),
+        packageName: packageName(image),
+        description: image.description
+    });
+    return config.image.url.replace('{title}', encodeUri(image.title)) + '?' + params.toString() + suffix;
+};
+const format = (title, url) => `![${title}](${url})`;
+const getImages = (config) => {
+    const light = format(config.image.parameters.title, render(config, 'light', '#gh-light-mode-only'));
+    const dark = format(config.image.parameters.title, render(config, 'dark', '#gh-dark-mode-only'));
+    return [light, dark];
+};
+exports.getImages = getImages;
+
+
+/***/ }),
+
 /***/ 9612:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -34609,6 +34668,72 @@ const parse = () => {
     };
 };
 exports.parse = parse;
+
+
+/***/ }),
+
+/***/ 8595:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.setOutputs = void 0;
+const core_1 = __nccwpck_require__(7484);
+const setOutputs = (branchName, pullRequestNumber, pullRequestUrl) => {
+    (0, core_1.setOutput)('branchName', branchName);
+    (0, core_1.setOutput)('pullRequestNumber', pullRequestNumber);
+    (0, core_1.setOutput)('pullRequestUrl', pullRequestUrl);
+};
+exports.setOutputs = setOutputs;
+
+
+/***/ }),
+
+/***/ 2453:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hasYarn = exports.hasNpm = exports.hasComposer = void 0;
+const filesystem_1 = __nccwpck_require__(9742);
+const hasComposer = (config) => (0, filesystem_1.fileExists)(config, 'composer.json');
+exports.hasComposer = hasComposer;
+const hasNpm = (config) => (0, filesystem_1.fileExists)(config, 'package.json');
+exports.hasNpm = hasNpm;
+const hasYarn = (config) => (0, filesystem_1.fileExists)(config, 'yarn.lock');
+exports.hasYarn = hasYarn;
+
+
+/***/ }),
+
+/***/ 1365:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.setPreview = void 0;
+const image_1 = __nccwpck_require__(7828);
+const hasHeader = (content) => content.match(/^#\s+/);
+const cleanUp = (content) => content
+    .replace(/^(#\s+.+\n+)(!\[.+]\(.*\)\n?){1,2}\n?/, '$1\n')
+    .replace(/^(#\s+.+\n+)(<img\s.*\/>\n?){1,2}\n?/, '$1\n');
+const titleCase = (title) => title
+    .replace(/([A-Z])/g, '$1')
+    .toLowerCase()
+    .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
+    .replace(/[-_]/g, ' ');
+const setPreview = (content, config) => {
+    if (!hasHeader(content)) {
+        const title = titleCase(config.image.parameters.title);
+        content = `# ${title}\n\n${content}`;
+    }
+    const images = (0, image_1.getImages)(config).join('\n');
+    return cleanUp(content).replace(/^(#\s+.+\n\n)/, '$1' + images + '\n\n');
+};
+exports.setPreview = setPreview;
 
 
 /***/ }),
@@ -34681,7 +34806,6 @@ class Repository {
     async checkoutBranch(isNew) {
         try {
             this._newBranch = isNew;
-            console.log('bbb', isNew);
             await (0, filesystem_1.exec)(`git switch ${isNew ? '-c' : ''} "${this.branchName()}"`);
         }
         catch (error) {

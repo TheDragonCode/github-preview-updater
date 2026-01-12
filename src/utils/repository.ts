@@ -57,8 +57,6 @@ export class Repository
         try {
             this._newBranch = isNew
 
-            console.log('bbb', isNew)
-
             await exec(`git switch ${ isNew ? '-c' : '' } "${ this.branchName() }"`)
         } catch (error) {
             // @ts-ignore
