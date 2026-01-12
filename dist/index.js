@@ -34401,6 +34401,7 @@ const previewUpdater = async () => {
     const branchExists = await repo.branchExists();
     (0, core_1.info)(`Checkout ${branchExists ? 'existing' : 'new'} branch named "${repo.branchName()}"`);
     await repo.checkoutBranch(!branchExists);
+    console.log('aaaa', branchExists);
     // Read file
     const content = (0, filesystem_1.readFile)(config, config.path.readme);
     const preview = (0, preview_1.setPreview)(content, config);
@@ -34775,6 +34776,7 @@ class Repository {
     async checkoutBranch(isNew) {
         try {
             this._newBranch = isNew;
+            console.log('bbb', isNew);
             await (0, filesystem_1.exec)(`git switch ${isNew ? '-c' : ''} "${this.branchName()}"`);
         }
         catch (error) {

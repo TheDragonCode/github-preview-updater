@@ -35,6 +35,8 @@ const previewUpdater = async () => {
     info(`Checkout ${ branchExists ? 'existing' : 'new' } branch named "${ repo.branchName() }"`)
     await repo.checkoutBranch(! branchExists)
 
+    console.log('aaaa', branchExists)
+
     // Read file
     const content = readFile(config, config.path.readme)
     const preview = setPreview(content, config)
