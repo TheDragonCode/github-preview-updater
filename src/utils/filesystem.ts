@@ -40,7 +40,7 @@ export const readConfig = (config: Config, userConfigPath: string): Config => {
 
     const userConfig = <Config>yaml.load(content)
 
-    return <Config>deepmerge(defaultConfig, userConfig, config)
+    return <Config>deepmerge(defaultConfig, config, userConfig)
 }
 
 export const exec = async (command: string): Promise<string> => {

@@ -34381,11 +34381,12 @@ const core_1 = __nccwpck_require__(7484);
 const repository_1 = __nccwpck_require__(6629);
 const preview_1 = __nccwpck_require__(1365);
 const outputs_1 = __nccwpck_require__(8595);
+const packageManagers_1 = __nccwpck_require__(2453);
 const previewUpdater = async () => {
     // Inputs
     const { token, configPath } = (0, inputs_1.parse)();
     // Load Config
-    const config = (0, filesystem_1.readConfig)({
+    let config = (0, filesystem_1.readConfig)({
         directory: (0, filesystem_1.cwd)(),
         repository: {
             owner: github_1.context.repo.owner,
@@ -34393,6 +34394,11 @@ const previewUpdater = async () => {
             octokit: (0, github_1.getOctokit)(token)
         }
     }, configPath);
+    // Read names
+    const packageManager = (0, packageManagers_1.getPackageManager)(config);
+    config.image.parameters.packageName = packageManager.name;
+    config.image.parameters.title = config.repository.repo;
+    config.image.parameters.description = packageManager.description || config.repository.owner;
     // Show working directory
     (0, core_1.info)(`Working directory: ${config.directory}`);
     // Authenticate
@@ -34559,7 +34565,7 @@ const readConfig = (config, userConfigPath) => {
         return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config);
     }
     const userConfig = yaml.load(content);
-    return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, userConfig, config);
+    return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config, userConfig);
 };
 exports.readConfig = readConfig;
 const exec = async (command) => {
@@ -34693,7 +34699,7 @@ exports.setOutputs = setOutputs;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hasYarn = exports.hasNpm = exports.hasComposer = void 0;
+exports.getPackageManager = exports.getNpm = exports.getComposer = exports.hasYarn = exports.hasNpm = exports.hasComposer = void 0;
 const filesystem_1 = __nccwpck_require__(9742);
 const hasComposer = (config) => (0, filesystem_1.fileExists)(config, 'composer.json');
 exports.hasComposer = hasComposer;
@@ -34701,6 +34707,17 @@ const hasNpm = (config) => (0, filesystem_1.fileExists)(config, 'package.json');
 exports.hasNpm = hasNpm;
 const hasYarn = (config) => (0, filesystem_1.fileExists)(config, 'yarn.lock');
 exports.hasYarn = hasYarn;
+const getComposer = (config) => JSON.parse((0, filesystem_1.readFile)(config, 'composer.json'));
+exports.getComposer = getComposer;
+const getNpm = (config) => JSON.parse((0, filesystem_1.readFile)(config, 'package.json'));
+exports.getNpm = getNpm;
+const getPackageManager = (config) => {
+    if ((0, exports.hasComposer)(config)) {
+        return (0, exports.getComposer)(config);
+    }
+    return (0, exports.getNpm)(config);
+};
+exports.getPackageManager = getPackageManager;
 
 
 /***/ }),

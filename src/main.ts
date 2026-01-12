@@ -6,6 +6,7 @@ import { Config } from './types/config'
 import { Repository } from './utils/repository'
 import { setPreview } from './utils/preview'
 import { setOutputs } from './utils/outputs'
+import { getPackageManager } from './utils/packageManagers'
 
 const previewUpdater = async () => {
     // Inputs
@@ -15,7 +16,7 @@ const previewUpdater = async () => {
     } = parse()
 
     // Load Config
-    const config: Config = readConfig(<Config>{
+    let config: Config = readConfig(<Config>{
         directory: cwd(),
 
         repository: {
@@ -24,6 +25,13 @@ const previewUpdater = async () => {
             octokit: getOctokit(token)
         }
     }, configPath)
+
+    // Read names
+    const packageManager = getPackageManager(config)
+
+    config.image.parameters.packageName = packageManager.name
+    config.image.parameters.title = config.repository.repo
+    config.image.parameters.description = packageManager.description || config.repository.owner
 
     // Show working directory
     info(`Working directory: ${ config.directory }`)
