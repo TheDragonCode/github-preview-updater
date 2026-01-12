@@ -34317,78 +34317,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 2973:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.resolveRepository = exports.loadConfig = void 0;
-const github_1 = __nccwpck_require__(3228);
-const js_yaml_1 = __importDefault(__nccwpck_require__(4281));
-const node_path_1 = __importDefault(__nccwpck_require__(6760));
-const filesystem_1 = __nccwpck_require__(9742);
-const image_1 = __nccwpck_require__(5768);
-const normalizeImage = (configDefaults = {}, image = {}, name) => {
-    const merged = { ...image_1.defaultImage, ...configDefaults, ...image };
-    merged.title = image.title ?? configDefaults.title ?? name;
-    merged.description = image.description ?? configDefaults.description ?? merged.description;
-    merged.packageName = image.packageName ?? configDefaults.packageName ?? name;
-    return merged;
-};
-const resolveConfigPaths = (configPath) => {
-    if (node_path_1.default.isAbsolute(configPath)) {
-        return [configPath];
-    }
-    const paths = [configPath];
-    const workspace = process.env.GITHUB_WORKSPACE;
-    if (workspace) {
-        paths.unshift(node_path_1.default.join(workspace, configPath));
-    }
-    return paths;
-};
-const loadConfig = (configPath) => {
-    let content = '';
-    for (const currentPath of resolveConfigPaths(configPath)) {
-        content = (0, filesystem_1.readFile)(currentPath);
-        if (content) {
-            break;
-        }
-    }
-    if (!content) {
-        throw new Error(`Config file not found at ${configPath}`);
-    }
-    const config = js_yaml_1.default.load(content);
-    if (!config || !Array.isArray(config.repositories) || config.repositories.length === 0) {
-        throw new Error('Config file must contain a non-empty "repositories" list');
-    }
-    return config;
-};
-exports.loadConfig = loadConfig;
-const resolveRepository = (config, repository) => {
-    const owner = repository.owner ?? config.owner ?? github_1.context.repo.owner;
-    const branch = repository.branch ?? config.branch;
-    const path = repository.path ?? config.path ?? 'README.md';
-    const image = normalizeImage(config.defaults, repository.image, repository.name);
-    if (!owner) {
-        throw new Error(`Owner is not set for repository ${repository.name}`);
-    }
-    return {
-        owner,
-        name: repository.name,
-        branch,
-        path,
-        image
-    };
-};
-exports.resolveRepository = resolveRepository;
-
-
-/***/ }),
-
 /***/ 9407:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -34433,164 +34361,124 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(7484));
 const main_1 = __importDefault(__nccwpck_require__(1730));
-(0, main_1.default)().catch(error => {
-    const message = error instanceof Error ? error.message : String(error);
-    core.setFailed(`💥 Preview Updater failed with error: ${message}`);
+(0, main_1.default)().catch((error) => {
+    core.setFailed(`💥 Preview Updater failed with error: ${error.message}`);
 });
 
 
 /***/ }),
 
 /***/ 1730:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(7484));
-const github_1 = __importDefault(__nccwpck_require__(3228));
-const config_1 = __nccwpck_require__(2973);
+const filesystem_1 = __nccwpck_require__(9742);
+const github_1 = __nccwpck_require__(3228);
+const inputs_1 = __nccwpck_require__(9612);
+const core_1 = __nccwpck_require__(7484);
+const repository_1 = __nccwpck_require__(6629);
 const preview_1 = __nccwpck_require__(1365);
-const DEFAULT_CONFIG_PATH = '.github/preview.yml';
-const DEFAULT_COMMIT_MESSAGE = 'docs: update preview banner';
-const resolveBranch = async (octokit, repo) => {
-    if (repo.branch) {
-        return repo.branch;
-    }
-    const { data } = await octokit.rest.repos.get({
-        owner: repo.owner,
-        repo: repo.name
-    });
-    return data.default_branch;
-};
-const loadReadme = async (octokit, repo, branch) => {
-    const { data } = await octokit.rest.repos.getContent({
-        owner: repo.owner,
-        repo: repo.name,
-        path: repo.path,
-        ref: branch
-    });
-    if (Array.isArray(data) || data.type !== 'file') {
-        throw new Error(`Path ${repo.path} is not a file`);
-    }
-    return {
-        sha: data.sha,
-        content: Buffer.from(data.content, data.encoding).toString()
-    };
-};
-const updatePreview = async (octokit, repo, commitMessage) => {
-    const branch = await resolveBranch(octokit, repo);
-    const { sha, content } = await loadReadme(octokit, repo, branch);
-    const updatedContent = (0, preview_1.setPreview)(content, repo, repo.image);
-    if (updatedContent === content) {
-        core.info(`No preview changes for ${repo.owner}/${repo.name}`);
-        return;
-    }
-    await octokit.rest.repos.createOrUpdateFileContents({
-        owner: repo.owner,
-        repo: repo.name,
-        path: repo.path,
-        message: commitMessage,
-        content: Buffer.from(updatedContent).toString('base64'),
-        sha,
-        branch
-    });
-    core.info(`Preview updated for ${repo.owner}/${repo.name} (${repo.path})`);
-};
-const ensureToken = () => {
-    const token = core.getInput('token') || process.env.GITHUB_TOKEN;
-    if (!token) {
-        throw new Error('GitHub token is required. Provide it via the "token" input or GITHUB_TOKEN env.');
-    }
-    return token;
-};
-const loadConfiguration = () => {
-    const configPath = core.getInput('config-path') || DEFAULT_CONFIG_PATH;
-    core.info(`Using config: ${configPath}`);
-    return (0, config_1.loadConfig)(configPath);
-};
+const outputs_1 = __nccwpck_require__(8595);
 const previewUpdater = async () => {
-    const commitMessage = core.getInput('commit-message') || DEFAULT_COMMIT_MESSAGE;
-    const token = ensureToken();
-    const config = loadConfiguration();
-    const octokit = github_1.default.getOctokit(token);
-    const failures = [];
-    for (const repoConfig of config.repositories) {
-        const repository = (0, config_1.resolveRepository)(config, repoConfig);
-        try {
-            await updatePreview(octokit, repository, commitMessage);
+    // Welcome
+    (0, core_1.info)(`Working directory: ${filesystem_1.cwd}`);
+    // Inputs
+    const { token, configPath } = (0, inputs_1.parse)();
+    // Load Config
+    const config = (0, filesystem_1.readConfig)({
+        repository: {
+            owner: github_1.context.repo.owner,
+            repo: github_1.context.repo.repo,
+            octokit: (0, github_1.getOctokit)(token)
         }
-        catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
-            failures.push(`${repository.owner}/${repository.name}: ${message}`);
-            core.warning(`Failed to update ${repository.owner}/${repository.name}: ${message}`);
-        }
+    }, configPath);
+    // Authenticate
+    const repo = new repository_1.Repository(config);
+    await repo.authenticate();
+    // Checkout branch
+    const branchExists = await repo.branchExists();
+    (0, core_1.info)(`Checkout ${branchExists ? 'existing' : 'new'} branch named "${repo.branchName()}"`);
+    await repo.checkoutBranch(!branchExists);
+    // Read file
+    const content = (0, filesystem_1.readFile)(config, config.path.readme);
+    const preview = (0, preview_1.setPreview)(content, config);
+    if (content !== preview) {
+        (0, core_1.info)(`Update readme in "${config.path.readme}" file`);
+        (0, filesystem_1.writeFile)(config, config.path.readme, preview);
     }
-    if (failures.length > 0) {
-        throw new Error(`Preview update finished with errors: ${failures.join('; ')}`);
+    else {
+        (0, core_1.info)(`File "${config.path.readme}" is up to date`);
     }
+    // Stage and commit changes
+    await repo.stage();
+    await repo.commit();
+    await repo.push();
+    // Create a Pull Request
+    const pullRequest = await repo.createPullRequest();
+    // Variables
+    const pullRequestNumber = pullRequest.data.number;
+    const pullRequestUrl = pullRequest.data.html_url;
+    if (config.repository.pullRequest.assignees.length > 0) {
+        await repo.assignee(pullRequestNumber, config.repository.pullRequest.assignees);
+    }
+    if (config.repository.pullRequest.labels.length > 0) {
+        await repo.addLabels(pullRequestNumber, config.repository.pullRequest.labels);
+    }
+    (0, core_1.info)(`Preview created in pull request #${pullRequestNumber}: ${pullRequestUrl}`);
+    (0, outputs_1.setOutputs)(repo.branchName(), pullRequestNumber, pullRequestUrl);
 };
 exports["default"] = previewUpdater;
 
 
 /***/ }),
 
-/***/ 5768:
+/***/ 7899:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.defaultImage = void 0;
-exports.defaultImage = {
-    canDark: true,
-    host: 'https://banners.beyondco.de',
-    theme: 'light',
-    pattern: 'topography',
-    style: 'style_2',
-    fontSize: '100px',
-    icon: 'https://laravel.com/img/logomark.min.svg',
-    packageManager: 'none',
-    packageName: '',
-    packageGlobal: false,
-    title: '',
-    description: ''
+exports.defaultConfig = void 0;
+exports.defaultConfig = {
+    directory: '',
+    path: {
+        readme: 'README.md'
+    },
+    image: {
+        url: 'https://banners.beyondco.de/{title}.png',
+        parameters: {
+            pattern: 'topography',
+            style: 'style_2',
+            fontSize: '100px',
+            icon: 'https://laravel.com/img/logomark.min.svg',
+            packageManager: 'auto',
+            packageName: '',
+            packageGlobal: false,
+            title: '',
+            description: ''
+        }
+    },
+    repository: {
+        owner: '',
+        repo: '',
+        commit: {
+            branch: 'preview/update-{timestamp}',
+            title: 'docs(preview): Update preview',
+            body: '',
+            author: {
+                name: 'github-actions',
+                email: 'github-actions@github.com'
+            }
+        },
+        pullRequest: {
+            title: 'Update preview',
+            body: '',
+            assignees: [],
+            labels: []
+        }
+    }
 };
 
 
@@ -34635,70 +34523,187 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.writeFile = exports.readFile = void 0;
+exports.exec = exports.readConfig = exports.writeFile = exports.readFile = exports.fileExists = exports.cwd = void 0;
 const fs = __importStar(__nccwpck_require__(3024));
-const readFile = (path) => {
-    if (!fs.existsSync(path)) {
+const config_1 = __nccwpck_require__(7899);
+const yaml = __importStar(__nccwpck_require__(4281));
+const deepmerge_ts_1 = __nccwpck_require__(5584);
+const node_child_process_1 = __nccwpck_require__(1421);
+const cwd = () => {
+    const path = process.env.GITHUB_WORKSPACE;
+    if (path === undefined) {
+        throw new Error('GitHub Actions has not set the working directory');
+    }
+    return path;
+};
+exports.cwd = cwd;
+const filePath = (config, filename) => `${config.directory}/${filename}`;
+const fileExists = (config, filename) => fs.existsSync(filePath(config, filename));
+exports.fileExists = fileExists;
+const readFile = (config, filename) => {
+    if (!fs.existsSync(filePath(config, filename))) {
         return '';
     }
-    return fs.readFileSync(path, 'utf-8');
+    return fs.readFileSync(filePath(config, filename), 'utf-8');
 };
 exports.readFile = readFile;
-const writeFile = (path, content) => {
-    fs.writeFileSync(path, content);
+const writeFile = (config, filename, content) => {
+    fs.writeFileSync(filePath(config, filename), content);
 };
 exports.writeFile = writeFile;
+const readConfig = (config, userConfigPath) => {
+    const content = (0, exports.readFile)(config_1.defaultConfig, userConfigPath);
+    if (content === '') {
+        return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config);
+    }
+    const userConfig = yaml.load(content);
+    return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, userConfig, config);
+};
+exports.readConfig = readConfig;
+const exec = (command) => {
+    return new Promise((resolve, reject) => {
+        (0, node_child_process_1.exec)(command, (error, stdout, stderr) => {
+            if (error || stderr) {
+                reject(error || stderr);
+            }
+            resolve(stdout);
+        });
+    });
+};
+exports.exec = exec;
 
 
 /***/ }),
 
 /***/ 7828:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImages = void 0;
-const encodeUri = (value) => encodeURIComponent(value);
-const packageManager = (image) => {
-    const visibility = image.packageGlobal ? ' global' : '';
-    switch (image.packageManager) {
+const packageManagers_1 = __nccwpck_require__(2453);
+const encodeUri = (value) => {
+    if (value === '') {
+        return '';
+    }
+    return encodeURIComponent(value);
+};
+const detectPackageManager = (config, visibility) => {
+    if ((0, packageManagers_1.hasComposer)(config)) {
+        return `composer${visibility} require`;
+    }
+    if ((0, packageManagers_1.hasNpm)(config)) {
+        return `npm${visibility} install`;
+    }
+    if ((0, packageManagers_1.hasYarn)(config)) {
+        return `yarn${visibility} add`;
+    }
+    return '';
+};
+const packageManager = (config) => {
+    const visibility = config.image.parameters.packageGlobal ? ' global' : '';
+    switch (config.image.parameters.packageManager) {
         case 'composer':
             return `composer${visibility} require`;
         case 'npm':
             return `npm${visibility} install`;
         case 'yarn':
             return `yarn${visibility} add`;
-        case 'pip':
-            return `pip${visibility} install`;
+        case 'auto':
+            return detectPackageManager(config, visibility);
         default:
             return '';
     }
 };
-const render = (image, theme = '', suffix = '') => {
+const packageName = (image) => image.packageManager !== 'none' ? image.packageName : '';
+const render = (config, theme, suffix = '') => {
+    const image = config.image.parameters;
     const params = new URLSearchParams({
-        theme: theme || image.theme,
+        theme: theme,
         pattern: image.pattern,
         style: image.style,
         fontSize: image.fontSize,
         images: image.icon,
-        packageManager: encodeUri(packageManager(image)),
-        packageName: encodeUri(image.packageName),
-        description: encodeUri(image.description)
+        packageManager: packageManager(config),
+        packageName: packageName(image),
+        description: image.description
     });
-    return image.host + '/' + encodeUri(image.title) + '.png?' + params.toString() + suffix;
+    return config.image.url.replace('{title}', encodeUri(image.title)) + '?' + params.toString() + suffix;
 };
 const format = (title, url) => `![${title}](${url})`;
-const getImages = (image) => {
-    const title = `${image.title} banner`;
-    if (!image.canDark) {
-        return [format(title, render(image, image.theme))];
-    }
-    const light = format(title, render(image, 'light', '#gh-light-mode-only'));
-    const dark = format(title, render(image, 'dark', '#gh-dark-mode-only'));
+const getImages = (config) => {
+    const light = format(config.image.parameters.title, render(config, 'light', '#gh-light-mode-only'));
+    const dark = format(config.image.parameters.title, render(config, 'dark', '#gh-dark-mode-only'));
     return [light, dark];
 };
 exports.getImages = getImages;
+
+
+/***/ }),
+
+/***/ 9612:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parse = exports.CONFIG_PATH = exports.TOKEN = void 0;
+const core_1 = __nccwpck_require__(7484);
+exports.TOKEN = {
+    name: 'token',
+    env: 'INPUT_TOKEN'
+};
+exports.CONFIG_PATH = {
+    name: 'configPath',
+    env: 'INPUT_CONFIG_PATH',
+    defaultValue: '.github/preview-updater.yml'
+};
+const parse = () => {
+    const token = (0, core_1.getInput)(exports.TOKEN.name, { required: true });
+    const configPath = (0, core_1.getInput)(exports.CONFIG_PATH.name) || exports.CONFIG_PATH.defaultValue;
+    return {
+        token,
+        configPath
+    };
+};
+exports.parse = parse;
+
+
+/***/ }),
+
+/***/ 8595:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.setOutputs = void 0;
+const core_1 = __nccwpck_require__(7484);
+const setOutputs = (branchName, pullRequestNumber, pullRequestUrl) => {
+    (0, core_1.setOutput)('branchName', branchName);
+    (0, core_1.setOutput)('pullRequestNumber', pullRequestNumber);
+    (0, core_1.setOutput)('pullRequestUrl', pullRequestUrl);
+};
+exports.setOutputs = setOutputs;
+
+
+/***/ }),
+
+/***/ 2453:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hasYarn = exports.hasNpm = exports.hasComposer = void 0;
+const filesystem_1 = __nccwpck_require__(9742);
+const hasComposer = (config) => (0, filesystem_1.fileExists)(config, 'composer.json');
+exports.hasComposer = hasComposer;
+const hasNpm = (config) => (0, filesystem_1.fileExists)(config, 'package.json');
+exports.hasNpm = hasNpm;
+const hasYarn = (config) => (0, filesystem_1.fileExists)(config, 'yarn.lock');
+exports.hasYarn = hasYarn;
 
 
 /***/ }),
@@ -34716,19 +34721,161 @@ const cleanUp = (content) => content
     .replace(/^(#\s+.+\n+)(!\[.+]\(.*\)\n?){1,2}\n?/, '$1\n')
     .replace(/^(#\s+.+\n+)(<img\s.*\/>\n?){1,2}\n?/, '$1\n');
 const titleCase = (title) => title
-    .replace(/[A-Z]/g, ' $1')
+    .replace(/([A-Z])/g, '$1')
     .toLowerCase()
     .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
     .replace(/[-_]/g, ' ');
-const setPreview = (content, repo, image) => {
+const setPreview = (content, config) => {
     if (!hasHeader(content)) {
-        const title = titleCase(repo.name);
+        const title = titleCase(config.image.parameters.title);
         content = `# ${title}\n\n${content}`;
     }
-    const images = (0, image_1.getImages)(image).join('\n');
-    return cleanUp(content).replace(/^(#\s+.+\n\n)/, `$1${images}\n\n`);
+    const images = (0, image_1.getImages)(config).join('\n');
+    return cleanUp(content).replace(/^(#\s+.+\n\n)/, '$1' + images + '\n\n');
 };
 exports.setPreview = setPreview;
+
+
+/***/ }),
+
+/***/ 6629:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Repository = void 0;
+const filesystem_1 = __nccwpck_require__(9742);
+class Repository {
+    constructor(config) {
+        this._timestamp = Date.now().toString();
+        this._currentBranch = '';
+        this._newBranch = false;
+        this._config = config;
+    }
+    async authenticate() {
+        try {
+            const author = this._config.repository.commit.author;
+            await (0, filesystem_1.exec)(`git config user.name "${author.name}"`);
+            await (0, filesystem_1.exec)(`git config user.email "${author.email}"`);
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error authenticating user "${author.name}" with e-mail "${author.email}": ${error.message}`;
+            throw error;
+        }
+    }
+    async branchExists() {
+        return await (0, filesystem_1.exec)(`git rev-parse --verify ${this.branchName()}`)
+            .then(() => true)
+            .catch(error => {
+            throw new Error(error.message);
+        });
+    }
+    async checkoutBranch(isNew) {
+        try {
+            this._newBranch = isNew;
+            await (0, filesystem_1.exec)(`git switch ${isNew ? '-c' : ''} "${this.branchName()}"`);
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error checking out ${isNew ? 'new' : 'existing'} branch "${this.branchName()}": ${error.message}`;
+            throw error;
+        }
+    }
+    async stage() {
+        try {
+            await (0, filesystem_1.exec)('git add ' + this._config.path.readme);
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error staging file "${this._config.path.readme}": ${error.message}`;
+            throw error;
+        }
+    }
+    async commit() {
+        try {
+            const message = this._config.repository.commit.title + '\n' + this._config.repository.commit.body;
+            (0, filesystem_1.exec)(`git commit -m "${message}"`);
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error committing file "${this._config.path.readme}": ${error.message}`;
+            throw error;
+        }
+    }
+    async push() {
+        try {
+            let cmd = 'git push';
+            if (this._newBranch) {
+                cmd += ` --set-upstream origin ${this.branchName()}`;
+            }
+            (0, filesystem_1.exec)(cmd);
+            this._newBranch = false;
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error pushing changes to "${this.branchName()} branch": ${error.message}`;
+            throw error;
+        }
+    }
+    async createPullRequest() {
+        try {
+            const defaultBranch = await (0, filesystem_1.exec)(`git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`);
+            return this._config.repository.octokit.rest.pulls.create({
+                owner: this._config.repository.owner,
+                repo: this._config.repository.repo,
+                title: this._config.repository.pullRequest.title,
+                body: this._config.repository.pullRequest.body,
+                head: this.branchName(),
+                base: defaultBranch.trim()
+            });
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error when creating pull request from ${this.branchName()}: ${error.message}`;
+            throw error;
+        }
+    }
+    async assignee(issueNumber, assignees) {
+        try {
+            return this._config.repository.octokit.rest.issues.addAssignees({
+                owner: this._config.repository.owner,
+                repo: this._config.repository.repo,
+                issue_number: issueNumber,
+                assignees: assignees
+            });
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error when adding assignees to issue ${issueNumber}: ${error.message}`;
+            throw error;
+        }
+    }
+    async addLabels(issueNumber, labels) {
+        try {
+            return this._config.repository.octokit.rest.issues.addLabels({
+                owner: this._config.repository.owner,
+                repo: this._config.repository.repo,
+                issue_number: issueNumber,
+                labels
+            });
+        }
+        catch (error) {
+            // @ts-ignore
+            error.message = `Error when adding labels to issue ${issueNumber}: ${error.message}`;
+            throw error;
+        }
+    }
+    branchName() {
+        if (this._currentBranch === '') {
+            this._currentBranch = this._config.repository.commit.branch
+                .replace('{timestamp}', this._timestamp);
+        }
+        return this._currentBranch;
+    }
+}
+exports.Repository = Repository;
 
 
 /***/ }),
@@ -34837,6 +34984,14 @@ module.exports = require("net");
 
 /***/ }),
 
+/***/ 1421:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:child_process");
+
+/***/ }),
+
 /***/ 7598:
 /***/ ((module) => {
 
@@ -34858,14 +35013,6 @@ module.exports = require("node:events");
 
 "use strict";
 module.exports = require("node:fs");
-
-/***/ }),
-
-/***/ 6760:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:path");
 
 /***/ }),
 
@@ -36618,6 +36765,633 @@ function parseParams (str) {
 }
 
 module.exports = parseParams
+
+
+/***/ }),
+
+/***/ 5584:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+/**
+ * Special values that tell deepmerge to perform a certain action.
+ */
+const actions = {
+    defaultMerge: Symbol("deepmerge-ts: default merge"),
+    skip: Symbol("deepmerge-ts: skip"),
+};
+/**
+ * Special values that tell deepmergeInto to perform a certain action.
+ */
+const actionsInto = {
+    defaultMerge: actions.defaultMerge,
+};
+
+/**
+ * The default function to update meta data.
+ *
+ * It doesn't update the meta data.
+ */
+function defaultMetaDataUpdater(previousMeta, metaMeta) {
+    return metaMeta;
+}
+/**
+ * The default function to filter values.
+ *
+ * It filters out undefined values.
+ */
+function defaultFilterValues(values, meta) {
+    return values.filter((value) => value !== undefined);
+}
+
+/**
+ * The different types of objects deepmerge-ts support.
+ */
+var ObjectType;
+(function (ObjectType) {
+    ObjectType[ObjectType["NOT"] = 0] = "NOT";
+    ObjectType[ObjectType["RECORD"] = 1] = "RECORD";
+    ObjectType[ObjectType["ARRAY"] = 2] = "ARRAY";
+    ObjectType[ObjectType["SET"] = 3] = "SET";
+    ObjectType[ObjectType["MAP"] = 4] = "MAP";
+    ObjectType[ObjectType["OTHER"] = 5] = "OTHER";
+})(ObjectType || (ObjectType = {}));
+/**
+ * Get the type of the given object.
+ *
+ * @param object - The object to get the type of.
+ * @returns The type of the given object.
+ */
+function getObjectType(object) {
+    if (typeof object !== "object" || object === null) {
+        return 0 /* ObjectType.NOT */;
+    }
+    if (Array.isArray(object)) {
+        return 2 /* ObjectType.ARRAY */;
+    }
+    if (isRecord(object)) {
+        return 1 /* ObjectType.RECORD */;
+    }
+    if (object instanceof Set) {
+        return 3 /* ObjectType.SET */;
+    }
+    if (object instanceof Map) {
+        return 4 /* ObjectType.MAP */;
+    }
+    return 5 /* ObjectType.OTHER */;
+}
+/**
+ * Get the keys of the given objects including symbol keys.
+ *
+ * Note: Only keys to enumerable properties are returned.
+ *
+ * @param objects - An array of objects to get the keys of.
+ * @returns A set containing all the keys of all the given objects.
+ */
+function getKeys(objects) {
+    const keys = new Set();
+    for (const object of objects) {
+        for (const key of [...Object.keys(object), ...Object.getOwnPropertySymbols(object)]) {
+            keys.add(key);
+        }
+    }
+    return keys;
+}
+/**
+ * Does the given object have the given property.
+ *
+ * @param object - The object to test.
+ * @param property - The property to test.
+ * @returns Whether the object has the property.
+ */
+function objectHasProperty(object, property) {
+    return typeof object === "object" && Object.prototype.propertyIsEnumerable.call(object, property);
+}
+/**
+ * Get an iterable object that iterates over the given iterables.
+ */
+function getIterableOfIterables(iterables) {
+    let mut_iterablesIndex = 0;
+    let mut_iterator = iterables[0]?.[Symbol.iterator]();
+    return {
+        [Symbol.iterator]() {
+            return {
+                next() {
+                    do {
+                        if (mut_iterator === undefined) {
+                            return { done: true, value: undefined };
+                        }
+                        const result = mut_iterator.next();
+                        if (result.done === true) {
+                            mut_iterablesIndex += 1;
+                            mut_iterator = iterables[mut_iterablesIndex]?.[Symbol.iterator]();
+                            continue;
+                        }
+                        return {
+                            done: false,
+                            value: result.value,
+                        };
+                    } while (true);
+                },
+            };
+        },
+    };
+}
+// eslint-disable-next-line unicorn/prefer-set-has -- Array is more performant for a low number of elements.
+const validRecordToStringValues = ["[object Object]", "[object Module]"];
+/**
+ * Does the given object appear to be a record.
+ */
+function isRecord(value) {
+    // All records are objects.
+    if (!validRecordToStringValues.includes(Object.prototype.toString.call(value))) {
+        return false;
+    }
+    const { constructor } = value;
+    // If has modified constructor.
+    // eslint-disable-next-line ts/no-unnecessary-condition
+    if (constructor === undefined) {
+        return true;
+    }
+    const prototype = constructor.prototype;
+    // If has modified prototype.
+    if (prototype === null ||
+        typeof prototype !== "object" ||
+        !validRecordToStringValues.includes(Object.prototype.toString.call(prototype))) {
+        return false;
+    }
+    // If constructor does not have an Object-specific method.
+    // eslint-disable-next-line sonar/prefer-single-boolean-return, no-prototype-builtins
+    if (!prototype.hasOwnProperty("isPrototypeOf")) {
+        return false;
+    }
+    // Most likely a record.
+    return true;
+}
+
+/**
+ * The default strategy to merge records.
+ *
+ * @param values - The records.
+ */
+function mergeRecords$1(values, utils, meta) {
+    const result = {};
+    for (const key of getKeys(values)) {
+        const propValues = [];
+        for (const value of values) {
+            if (objectHasProperty(value, key)) {
+                propValues.push(value[key]);
+            }
+        }
+        if (propValues.length === 0) {
+            continue;
+        }
+        const updatedMeta = utils.metaDataUpdater(meta, {
+            key,
+            parents: values,
+        });
+        const propertyResult = mergeUnknowns(propValues, utils, updatedMeta);
+        if (propertyResult === actions.skip) {
+            continue;
+        }
+        if (key === "__proto__") {
+            Object.defineProperty(result, key, {
+                value: propertyResult,
+                configurable: true,
+                enumerable: true,
+                writable: true,
+            });
+        }
+        else {
+            result[key] = propertyResult;
+        }
+    }
+    return result;
+}
+/**
+ * The default strategy to merge arrays.
+ *
+ * @param values - The arrays.
+ */
+function mergeArrays$1(values) {
+    return values.flat();
+}
+/**
+ * The default strategy to merge sets.
+ *
+ * @param values - The sets.
+ */
+function mergeSets$1(values) {
+    return new Set(getIterableOfIterables(values));
+}
+/**
+ * The default strategy to merge maps.
+ *
+ * @param values - The maps.
+ */
+function mergeMaps$1(values) {
+    return new Map(getIterableOfIterables(values));
+}
+/**
+ * Get the last value in the given array.
+ */
+function mergeOthers$1(values) {
+    return values.at(-1);
+}
+/**
+ * The merge functions.
+ */
+const mergeFunctions = {
+    mergeRecords: mergeRecords$1,
+    mergeArrays: mergeArrays$1,
+    mergeSets: mergeSets$1,
+    mergeMaps: mergeMaps$1,
+    mergeOthers: mergeOthers$1,
+};
+
+/**
+ * Deeply merge objects.
+ *
+ * @param objects - The objects to merge.
+ */
+function deepmerge(...objects) {
+    return deepmergeCustom({})(...objects);
+}
+function deepmergeCustom(options, rootMetaData) {
+    const utils = getUtils(options, customizedDeepmerge);
+    /**
+     * The customized deepmerge function.
+     */
+    function customizedDeepmerge(...objects) {
+        return mergeUnknowns(objects, utils, rootMetaData);
+    }
+    return customizedDeepmerge;
+}
+/**
+ * The the utils that are available to the merge functions.
+ *
+ * @param options - The options the user specified
+ */
+function getUtils(options, customizedDeepmerge) {
+    return {
+        defaultMergeFunctions: mergeFunctions,
+        mergeFunctions: {
+            ...mergeFunctions,
+            ...Object.fromEntries(Object.entries(options)
+                .filter(([key, option]) => Object.hasOwn(mergeFunctions, key))
+                .map(([key, option]) => (option === false ? [key, mergeFunctions.mergeOthers] : [key, option]))),
+        },
+        metaDataUpdater: (options.metaDataUpdater ?? defaultMetaDataUpdater),
+        deepmerge: customizedDeepmerge,
+        useImplicitDefaultMerging: options.enableImplicitDefaultMerging ?? false,
+        filterValues: options.filterValues === false ? undefined : (options.filterValues ?? defaultFilterValues),
+        actions,
+    };
+}
+/**
+ * Merge unknown things.
+ *
+ * @param values - The values.
+ */
+function mergeUnknowns(values, utils, meta) {
+    const filteredValues = utils.filterValues?.(values, meta) ?? values;
+    if (filteredValues.length === 0) {
+        return undefined;
+    }
+    if (filteredValues.length === 1) {
+        return mergeOthers(filteredValues, utils, meta);
+    }
+    const type = getObjectType(filteredValues[0]);
+    if (type !== 0 /* ObjectType.NOT */ && type !== 5 /* ObjectType.OTHER */) {
+        for (let mut_index = 1; mut_index < filteredValues.length; mut_index++) {
+            if (getObjectType(filteredValues[mut_index]) === type) {
+                continue;
+            }
+            return mergeOthers(filteredValues, utils, meta);
+        }
+    }
+    switch (type) {
+        case 1 /* ObjectType.RECORD */: {
+            return mergeRecords(filteredValues, utils, meta);
+        }
+        case 2 /* ObjectType.ARRAY */: {
+            return mergeArrays(filteredValues, utils, meta);
+        }
+        case 3 /* ObjectType.SET */: {
+            return mergeSets(filteredValues, utils, meta);
+        }
+        case 4 /* ObjectType.MAP */: {
+            return mergeMaps(filteredValues, utils, meta);
+        }
+        default: {
+            return mergeOthers(filteredValues, utils, meta);
+        }
+    }
+}
+/**
+ * Merge records.
+ *
+ * @param values - The records.
+ */
+function mergeRecords(values, utils, meta) {
+    const result = utils.mergeFunctions.mergeRecords(values, utils, meta);
+    if (result === actions.defaultMerge ||
+        (utils.useImplicitDefaultMerging &&
+            result === undefined &&
+            utils.mergeFunctions.mergeRecords !== utils.defaultMergeFunctions.mergeRecords)) {
+        return utils.defaultMergeFunctions.mergeRecords(values, utils, meta);
+    }
+    return result;
+}
+/**
+ * Merge arrays.
+ *
+ * @param values - The arrays.
+ */
+function mergeArrays(values, utils, meta) {
+    const result = utils.mergeFunctions.mergeArrays(values, utils, meta);
+    if (result === actions.defaultMerge ||
+        (utils.useImplicitDefaultMerging &&
+            result === undefined &&
+            utils.mergeFunctions.mergeArrays !== utils.defaultMergeFunctions.mergeArrays)) {
+        return utils.defaultMergeFunctions.mergeArrays(values);
+    }
+    return result;
+}
+/**
+ * Merge sets.
+ *
+ * @param values - The sets.
+ */
+function mergeSets(values, utils, meta) {
+    const result = utils.mergeFunctions.mergeSets(values, utils, meta);
+    if (result === actions.defaultMerge ||
+        (utils.useImplicitDefaultMerging &&
+            result === undefined &&
+            utils.mergeFunctions.mergeSets !== utils.defaultMergeFunctions.mergeSets)) {
+        return utils.defaultMergeFunctions.mergeSets(values);
+    }
+    return result;
+}
+/**
+ * Merge maps.
+ *
+ * @param values - The maps.
+ */
+function mergeMaps(values, utils, meta) {
+    const result = utils.mergeFunctions.mergeMaps(values, utils, meta);
+    if (result === actions.defaultMerge ||
+        (utils.useImplicitDefaultMerging &&
+            result === undefined &&
+            utils.mergeFunctions.mergeMaps !== utils.defaultMergeFunctions.mergeMaps)) {
+        return utils.defaultMergeFunctions.mergeMaps(values);
+    }
+    return result;
+}
+/**
+ * Merge other things.
+ *
+ * @param values - The other things.
+ */
+function mergeOthers(values, utils, meta) {
+    const result = utils.mergeFunctions.mergeOthers(values, utils, meta);
+    if (result === actions.defaultMerge ||
+        (utils.useImplicitDefaultMerging &&
+            result === undefined &&
+            utils.mergeFunctions.mergeOthers !== utils.defaultMergeFunctions.mergeOthers)) {
+        return utils.defaultMergeFunctions.mergeOthers(values);
+    }
+    return result;
+}
+
+/**
+ * The default strategy to merge records into a target record.
+ *
+ * @param mut_target - The result will be mutated into this record
+ * @param values - The records (including the target's value if there is one).
+ */
+function mergeRecordsInto$1(mut_target, values, utils, meta) {
+    for (const key of getKeys(values)) {
+        const propValues = [];
+        for (const value of values) {
+            if (objectHasProperty(value, key)) {
+                propValues.push(value[key]);
+            }
+        }
+        if (propValues.length === 0) {
+            continue;
+        }
+        const updatedMeta = utils.metaDataUpdater(meta, {
+            key,
+            parents: values,
+        });
+        const propertyTarget = { value: propValues[0] };
+        mergeUnknownsInto(propertyTarget, propValues, utils, updatedMeta);
+        if (key === "__proto__") {
+            Object.defineProperty(mut_target.value, key, {
+                value: propertyTarget.value,
+                configurable: true,
+                enumerable: true,
+                writable: true,
+            });
+        }
+        else {
+            mut_target.value[key] = propertyTarget.value;
+        }
+    }
+}
+/**
+ * The default strategy to merge arrays into a target array.
+ *
+ * @param mut_target - The result will be mutated into this array
+ * @param values - The arrays (including the target's value if there is one).
+ */
+function mergeArraysInto$1(mut_target, values) {
+    mut_target.value.push(...values.slice(1).flat());
+}
+/**
+ * The default strategy to merge sets into a target set.
+ *
+ * @param mut_target - The result will be mutated into this set
+ * @param values - The sets (including the target's value if there is one).
+ */
+function mergeSetsInto$1(mut_target, values) {
+    for (const value of getIterableOfIterables(values.slice(1))) {
+        mut_target.value.add(value);
+    }
+}
+/**
+ * The default strategy to merge maps into a target map.
+ *
+ * @param mut_target - The result will be mutated into this map
+ * @param values - The maps (including the target's value if there is one).
+ */
+function mergeMapsInto$1(mut_target, values) {
+    for (const [key, value] of getIterableOfIterables(values.slice(1))) {
+        mut_target.value.set(key, value);
+    }
+}
+/**
+ * Set the target to the last value.
+ */
+function mergeOthersInto$1(mut_target, values) {
+    mut_target.value = values.at(-1);
+}
+/**
+ * The merge functions.
+ */
+const mergeIntoFunctions = {
+    mergeRecords: mergeRecordsInto$1,
+    mergeArrays: mergeArraysInto$1,
+    mergeSets: mergeSetsInto$1,
+    mergeMaps: mergeMapsInto$1,
+    mergeOthers: mergeOthersInto$1,
+};
+
+function deepmergeInto(target, ...objects) {
+    return void deepmergeIntoCustom({})(target, ...objects);
+}
+function deepmergeIntoCustom(options, rootMetaData) {
+    const utils = getIntoUtils(options, customizedDeepmergeInto);
+    /**
+     * The customized deepmerge function.
+     */
+    function customizedDeepmergeInto(target, ...objects) {
+        mergeUnknownsInto({ value: target }, [target, ...objects], utils, rootMetaData);
+    }
+    return customizedDeepmergeInto;
+}
+/**
+ * The the utils that are available to the merge functions.
+ *
+ * @param options - The options the user specified
+ */
+function getIntoUtils(options, customizedDeepmergeInto) {
+    return {
+        defaultMergeFunctions: mergeIntoFunctions,
+        mergeFunctions: {
+            ...mergeIntoFunctions,
+            ...Object.fromEntries(Object.entries(options)
+                .filter(([key, option]) => Object.hasOwn(mergeIntoFunctions, key))
+                .map(([key, option]) => (option === false ? [key, mergeIntoFunctions.mergeOthers] : [key, option]))),
+        },
+        metaDataUpdater: (options.metaDataUpdater ?? defaultMetaDataUpdater),
+        deepmergeInto: customizedDeepmergeInto,
+        filterValues: options.filterValues === false ? undefined : (options.filterValues ?? defaultFilterValues),
+        actions: actionsInto,
+    };
+}
+/**
+ * Merge unknown things into a target.
+ *
+ * @param mut_target - The target to merge into.
+ * @param values - The values.
+ */
+function mergeUnknownsInto(mut_target, values, utils, meta) {
+    const filteredValues = utils.filterValues?.(values, meta) ?? values;
+    if (filteredValues.length === 0) {
+        return;
+    }
+    if (filteredValues.length === 1) {
+        return void mergeOthersInto(mut_target, filteredValues, utils, meta);
+    }
+    const type = getObjectType(mut_target.value);
+    if (type !== 0 /* ObjectType.NOT */ && type !== 5 /* ObjectType.OTHER */) {
+        for (let mut_index = 1; mut_index < filteredValues.length; mut_index++) {
+            if (getObjectType(filteredValues[mut_index]) === type) {
+                continue;
+            }
+            return void mergeOthersInto(mut_target, filteredValues, utils, meta);
+        }
+    }
+    switch (type) {
+        case 1 /* ObjectType.RECORD */: {
+            return void mergeRecordsInto(mut_target, filteredValues, utils, meta);
+        }
+        case 2 /* ObjectType.ARRAY */: {
+            return void mergeArraysInto(mut_target, filteredValues, utils, meta);
+        }
+        case 3 /* ObjectType.SET */: {
+            return void mergeSetsInto(mut_target, filteredValues, utils, meta);
+        }
+        case 4 /* ObjectType.MAP */: {
+            return void mergeMapsInto(mut_target, filteredValues, utils, meta);
+        }
+        default: {
+            return void mergeOthersInto(mut_target, filteredValues, utils, meta);
+        }
+    }
+}
+/**
+ * Merge records into a target record.
+ *
+ * @param mut_target - The target to merge into.
+ * @param values - The records.
+ */
+function mergeRecordsInto(mut_target, values, utils, meta) {
+    const action = utils.mergeFunctions.mergeRecords(mut_target, values, utils, meta);
+    if (action === actionsInto.defaultMerge) {
+        utils.defaultMergeFunctions.mergeRecords(mut_target, values, utils, meta);
+    }
+}
+/**
+ * Merge arrays into a target array.
+ *
+ * @param mut_target - The target to merge into.
+ * @param values - The arrays.
+ */
+function mergeArraysInto(mut_target, values, utils, meta) {
+    const action = utils.mergeFunctions.mergeArrays(mut_target, values, utils, meta);
+    if (action === actionsInto.defaultMerge) {
+        utils.defaultMergeFunctions.mergeArrays(mut_target, values);
+    }
+}
+/**
+ * Merge sets into a target set.
+ *
+ * @param mut_target - The target to merge into.
+ * @param values - The sets.
+ */
+function mergeSetsInto(mut_target, values, utils, meta) {
+    const action = utils.mergeFunctions.mergeSets(mut_target, values, utils, meta);
+    if (action === actionsInto.defaultMerge) {
+        utils.defaultMergeFunctions.mergeSets(mut_target, values);
+    }
+}
+/**
+ * Merge maps into a target map.
+ *
+ * @param mut_target - The target to merge into.
+ * @param values - The maps.
+ */
+function mergeMapsInto(mut_target, values, utils, meta) {
+    const action = utils.mergeFunctions.mergeMaps(mut_target, values, utils, meta);
+    if (action === actionsInto.defaultMerge) {
+        utils.defaultMergeFunctions.mergeMaps(mut_target, values);
+    }
+}
+/**
+ * Merge other things into a target.
+ *
+ * @param mut_target - The target to merge into.
+ * @param values - The other things.
+ */
+function mergeOthersInto(mut_target, values, utils, meta) {
+    const action = utils.mergeFunctions.mergeOthers(mut_target, values, utils, meta);
+    if (action === actionsInto.defaultMerge || mut_target.value === actionsInto.defaultMerge) {
+        utils.defaultMergeFunctions.mergeOthers(mut_target, values);
+    }
+}
+
+exports.deepmerge = deepmerge;
+exports.deepmergeCustom = deepmergeCustom;
+exports.deepmergeInto = deepmergeInto;
+exports.deepmergeIntoCustom = deepmergeIntoCustom;
+exports.getKeys = getKeys;
+exports.getObjectType = getObjectType;
+exports.objectHasProperty = objectHasProperty;
 
 
 /***/ })
