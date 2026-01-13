@@ -1,5 +1,155 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://raw.githubusercontent.com/TheDragonCode/preview-updater/refs/heads/main/resources/schema.json",
-    "additionalProperties": false
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "path": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "readme": {
+                    "type": "string",
+                    "description": "Target README file where the banner will be inserted",
+                    "default": "README.md"
+                }
+            }
+        },
+        "image": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "Banner generation service URL",
+                    "default": "https://banners.beyondco.de/{title}.png"
+                },
+                "parameters": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "pattern": {
+                            "type": "string",
+                            "default": "topography"
+                        },
+                        "style": {
+                            "type": "string",
+                            "default": "style_2"
+                        },
+                        "fontSize": {
+                            "type": "string",
+                            "default": "100px"
+                        },
+                        "icon": {
+                            "type": "string",
+                            "default": "code"
+                        },
+                        "packageManager": {
+                            "description": "Package manager name. Reserved values: composer | npm | yarn | auto | none",
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "enum": ["composer", "npm", "yarn", "auto", "none"]
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ],
+                            "default": "auto"
+                        },
+                        "packageName": {
+                            "type": "string",
+                            "description": "Package name. By default taken from composer.json or package.json"
+                        },
+                        "packageGlobal": {
+                            "type": "boolean",
+                            "description": "Add prefix for global installation",
+                            "default": false
+                        },
+                        "title": {
+                            "type": "string",
+                            "description": "Banner title. The repository name is used by default"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Package description. The repository description is used by default"
+                        }
+                    }
+                }
+            }
+        },
+        "repository": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "commit": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "branch": {
+                            "type": "string",
+                            "description": "Branch name for the commit",
+                            "default": "preview-{random}"
+                        },
+                        "title": {
+                            "type": "string",
+                            "description": "Commit title",
+                            "default": "docs(preview): Update preview"
+                        },
+                        "body": {
+                            "type": "string",
+                            "description": "Commit text"
+                        },
+                        "author": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "description": "Commit author name",
+                                    "default": "github-actions"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "description": "Commit author email",
+                                    "default": "github-actions@github.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "pullRequest": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "description": "Pull request title",
+                            "default": "Update preview"
+                        },
+                        "body": {
+                            "type": "string",
+                            "description": "Pull request text"
+                        },
+                        "assignees": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Assignees list",
+                            "default": []
+                        },
+                        "labels": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Labels list",
+                            "default": []
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
