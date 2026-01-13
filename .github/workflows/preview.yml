@@ -4,7 +4,6 @@ on:
     schedule:
         -   cron: 20 2 1 * *
     workflow_dispatch:
-    push:
 
 jobs:
     update:
@@ -13,7 +12,6 @@ jobs:
             -   uses: actions/checkout@v5
 
             -   name: Update Previews
-#                uses: TheDragonCode/preview-updater@main
                 uses: ./
                 with:
                     token: ${{ secrets.GITHUB_TOKEN || env.GITHUB_TOKEN }}
