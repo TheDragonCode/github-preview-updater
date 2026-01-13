@@ -100,7 +100,7 @@ image:
 
 repository:
     commit:
-        branch: preview/update-{random}
+        branch: preview-banner-{random}
         title: "docs(preview): Update preview"
         body: ''
         author:
