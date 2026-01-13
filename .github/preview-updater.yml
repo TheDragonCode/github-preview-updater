@@ -1,0 +1,4 @@
+image:
+    parameters:
+        packageManager: 'none'
+        icon: 'photograph'
