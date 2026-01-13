@@ -39,7 +39,6 @@ export interface PullRequest {
 export interface Repository {
     owner?: string;
     repo?: string;
-    octokit?: any;
 
     commit: Commit;
     pullRequest: PullRequest;

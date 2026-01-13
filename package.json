@@ -9,7 +9,10 @@
         "dev": "npm run build && node dist/index.js",
         "coverage": "jest --coverage",
         "test": "jest",
-        "type-check": "tsc --noEmit"
+        "type-check": "tsc --noEmit",
+        "lint": "npx @biomejs/biome lint --write",
+        "format": "npx @biomejs/biome format --write",
+        "style": "npm run lint && npm run format"
     },
     "keywords": [
         "preview",

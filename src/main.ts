@@ -21,7 +21,6 @@ const previewUpdater = async () => {
             repository: {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                octokit: getOctokit(token),
             },
         },
         configPath,
@@ -39,7 +38,7 @@ const previewUpdater = async () => {
     info(`Working directory: ${config.directory}`);
 
     // Authenticate
-    const repo = new Repository(config);
+    const repo = new Repository(config, getOctokit(token));
     await repo.authenticate();
 
     // Read file

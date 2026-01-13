@@ -1,14 +1,18 @@
 import type { Config } from "../types/config";
 import { exec } from "./filesystem";
 import { randomizer } from "./randomizer";
+import type { GitHub } from "@actions/github/lib/utils";
+import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods/dist-types/generated/parameters-and-response-types";
 
 export class Repository {
     private _config: Config;
     private _currentBranch: string = "";
     private _newBranch: boolean = false;
+    private _octokit: InstanceType<typeof GitHub>;
 
-    constructor(config: Config) {
+    constructor(config: Config, octokit: InstanceType<typeof GitHub>) {
         this._config = config;
+        this._octokit = octokit;
     }
 
     async authenticate() {
@@ -69,7 +73,7 @@ export class Repository {
 
     async stage() {
         try {
-            await exec("git add " + this._config.path.readme);
+            await exec(`git add ${this._config.path.readme}`);
         } catch (error) {
             // @ts-expect-error
             error.message = `Error staging file "${this._config.path.readme}": ${error.message}`;
@@ -117,7 +121,9 @@ export class Repository {
                 `git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`,
             );
 
-            return this._config.repository.octokit.rest.pulls.create({
+            return this._octokit.rest.pulls.create(<
+                RestEndpointMethodTypes["pulls"]["create"]["parameters"]
+            >{
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 title: this._config.repository.pullRequest.title,
@@ -135,7 +141,9 @@ export class Repository {
 
     async assignee(issueNumber: number, assignees: string[]) {
         try {
-            return this._config.repository.octokit.rest.issues.addAssignees({
+            return this._octokit.rest.issues.addAssignees(<
+                RestEndpointMethodTypes["issues"]["addAssignees"]["parameters"]
+            >{
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 issue_number: issueNumber,
@@ -151,7 +159,9 @@ export class Repository {
 
     async addLabels(issueNumber: number, labels: string[]) {
         try {
-            return this._config.repository.octokit.rest.issues.addLabels({
+            return this._octokit.rest.issues.addLabels(<
+                RestEndpointMethodTypes["issues"]["addLabels"]["parameters"]
+            >{
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 issue_number: issueNumber,

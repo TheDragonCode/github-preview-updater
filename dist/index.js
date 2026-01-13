@@ -34392,7 +34392,6 @@ const previewUpdater = async () => {
         repository: {
             owner: github_1.context.repo.owner,
             repo: github_1.context.repo.repo,
-            octokit: (0, github_1.getOctokit)(token),
         },
     }, configPath);
     // Read names
@@ -34404,7 +34403,7 @@ const previewUpdater = async () => {
     // Show working directory
     (0, core_1.info)(`Working directory: ${config.directory}`);
     // Authenticate
-    const repo = new repository_1.Repository(config);
+    const repo = new repository_1.Repository(config, (0, github_1.getOctokit)(token));
     await repo.authenticate();
     // Read file
     const content = (0, filesystem_1.readFile)(config, config.path.readme);
@@ -34463,8 +34462,8 @@ exports.defaultConfig = {
             fontSize: "100px",
             icon: "code",
             packageManager: "auto",
-            packageName: undefined,
             packageGlobal: false,
+            packageName: undefined,
             title: undefined,
             description: undefined,
         },
@@ -34754,7 +34753,8 @@ const setPreview = (content, config) => {
         content = `# ${title}\n\n${content}`;
     }
     const images = (0, image_1.getImages)(config);
-    return cleanUp(content).replace(/^(#\s+.+[\n\s]+)/, "$1" + images + "\n\n");
+    const replace = "$1";
+    return cleanUp(content).replace(/^(#\s+.+[\n\s]+)/, `${replace}${images}\n\n`);
 };
 exports.setPreview = setPreview;
 
@@ -34791,10 +34791,11 @@ exports.Repository = void 0;
 const filesystem_1 = __nccwpck_require__(9742);
 const randomizer_1 = __nccwpck_require__(3678);
 class Repository {
-    constructor(config) {
-        this._currentBranch = '';
+    constructor(config, octokit) {
+        this._currentBranch = "";
         this._newBranch = false;
         this._config = config;
+        this._octokit = octokit;
     }
     async authenticate() {
         try {
@@ -34829,17 +34830,17 @@ class Repository {
     async checkoutBranch(isNew) {
         try {
             this._newBranch = isNew;
-            await (0, filesystem_1.exec)(`git switch ${isNew ? '-c' : ''} "${this.branchName()}"`);
+            await (0, filesystem_1.exec)(`git switch ${isNew ? "-c" : ""} "${this.branchName()}"`);
         }
         catch (error) {
             // @ts-expect-error
-            error.message = `Error checking out ${isNew ? 'new' : 'existing'} branch "${this.branchName()}": ${error.message}`;
+            error.message = `Error checking out ${isNew ? "new" : "existing"} branch "${this.branchName()}": ${error.message}`;
             throw error;
         }
     }
     async stage() {
         try {
-            await (0, filesystem_1.exec)('git add ' + this._config.path.readme);
+            await (0, filesystem_1.exec)(`git add ${this._config.path.readme}`);
         }
         catch (error) {
             // @ts-expect-error
@@ -34850,7 +34851,7 @@ class Repository {
     async commit() {
         try {
             const message = this._config.repository.commit.title +
-                '\n' +
+                "\n" +
                 this._config.repository.commit.body;
             await (0, filesystem_1.exec)(`git commit -m "${message}"`);
         }
@@ -34862,7 +34863,7 @@ class Repository {
     }
     async push() {
         try {
-            let cmd = 'git push';
+            let cmd = "git push";
             if (this._newBranch) {
                 cmd += ` --set-upstream origin ${this.branchName()}`;
             }
@@ -34877,13 +34878,13 @@ class Repository {
     async createPullRequest() {
         try {
             const defaultBranch = await (0, filesystem_1.exec)(`git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`);
-            return this._config.repository.octokit.rest.pulls.create({
+            return this._octokit.rest.pulls.create({
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 title: this._config.repository.pullRequest.title,
                 body: this._config.repository.pullRequest.body,
                 head: this.branchName(),
-                base: defaultBranch
+                base: defaultBranch,
             });
         }
         catch (error) {
@@ -34894,11 +34895,11 @@ class Repository {
     }
     async assignee(issueNumber, assignees) {
         try {
-            return this._config.repository.octokit.rest.issues.addAssignees({
+            return this._octokit.rest.issues.addAssignees({
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 issue_number: issueNumber,
-                assignees: assignees
+                assignees: assignees,
             });
         }
         catch (error) {
@@ -34909,11 +34910,11 @@ class Repository {
     }
     async addLabels(issueNumber, labels) {
         try {
-            return this._config.repository.octokit.rest.issues.addLabels({
+            return this._octokit.rest.issues.addLabels({
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 issue_number: issueNumber,
-                labels
+                labels,
             });
         }
         catch (error) {
@@ -34923,8 +34924,8 @@ class Repository {
         }
     }
     branchName() {
-        if (this._currentBranch === '') {
-            this._currentBranch = this._config.repository.commit.branch.replace('{random}', (0, randomizer_1.randomizer)());
+        if (this._currentBranch === "") {
+            this._currentBranch = this._config.repository.commit.branch.replace("{random}", (0, randomizer_1.randomizer)());
         }
         return this._currentBranch;
     }
