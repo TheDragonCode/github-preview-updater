@@ -34763,7 +34763,7 @@ exports.setPreview = setPreview;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomizer = void 0;
 const randomizer = (length = 8) => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const chars = 'abcdefghijklmnopqrstuvwxyz';
     let result = '';
     for (let i = 0; i < length; i++) {
         result += chars.charAt(Math.floor(Math.random() * chars.length));

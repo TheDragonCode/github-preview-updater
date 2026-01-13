@@ -1,5 +1,5 @@
 export const randomizer = (length: number = 8) => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    const chars = 'abcdefghijklmnopqrstuvwxyz'
 
     let result: string = ''
 
