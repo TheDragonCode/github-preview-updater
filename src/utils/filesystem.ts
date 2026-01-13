@@ -1,6 +1,4 @@
 import * as fs from "node:fs";
-import { exec as nodeExec } from "node:child_process";
-import { promisify } from "node:util";
 import { type Config } from "../types/config";
 
 export const cwd = (): string => {
@@ -33,12 +31,4 @@ export const writeFile = (
     content: string,
 ): void => {
     fs.writeFileSync(filePath(config, filename), content);
-};
-
-export const exec = async (command: string): Promise<string> => {
-    const execAsync = promisify(nodeExec);
-
-    const { stdout } = await execAsync(command);
-
-    return stdout.toString().trim();
 };
