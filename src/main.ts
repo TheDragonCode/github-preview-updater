@@ -30,7 +30,9 @@ const previewUpdater = async () => {
     const packageManager = getPackageManager(config);
 
     config.image.parameters.packageName = packageManager.name;
-    config.image.parameters.title = titleCase(config.repository.repo);
+    config.image.parameters.title = titleCase(
+        config.image.parameters.title || config.repository.repo,
+    );
     config.image.parameters.description =
         packageManager.description || config.repository.owner;
 

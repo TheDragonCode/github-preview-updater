@@ -34397,7 +34397,7 @@ const previewUpdater = async () => {
     // Read names
     const packageManager = (0, packageManagers_1.getPackageManager)(config);
     config.image.parameters.packageName = packageManager.name;
-    config.image.parameters.title = (0, strings_1.titleCase)(config.repository.repo);
+    config.image.parameters.title = (0, strings_1.titleCase)(config.image.parameters.title || config.repository.repo);
     config.image.parameters.description =
         packageManager.description || config.repository.owner;
     // Show working directory
