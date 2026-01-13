@@ -5,9 +5,6 @@
     <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=preview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
-
-
-
 Легко обновляйте превью своих репозиториев, сохраняя время и усилия на процесс разработки.
 
 ## Как это работает
