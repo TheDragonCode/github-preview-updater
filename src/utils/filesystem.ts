@@ -1,9 +1,7 @@
 import * as fs from "node:fs";
-import * as yaml from "js-yaml";
-import { deepmerge } from "deepmerge-ts";
 import { exec as nodeExec } from "node:child_process";
 import { promisify } from "node:util";
-import { type Config, defaultConfig } from "../types/config";
+import { type Config } from "../types/config";
 
 export const cwd = (): string => {
     const path = process.env.GITHUB_WORKSPACE;
