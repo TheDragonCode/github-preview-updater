@@ -34408,7 +34408,7 @@ const previewUpdater = async () => {
     // Read file
     const content = (0, filesystem_1.readFile)(config, config.path.readme);
     const preview = (0, preview_1.setPreview)(content, config);
-    if (content.trim() !== preview.trim()) {
+    if (content !== preview) {
         // Checkout branch
         const branchExists = await repo.branchExists();
         (0, core_1.info)(`Checkout ${branchExists ? 'existing' : 'new'} branch named "${repo.branchName()}"`);
