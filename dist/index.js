@@ -34460,7 +34460,7 @@ exports.defaultConfig = {
             pattern: 'topography',
             style: 'style_2',
             fontSize: '100px',
-            icon: 'https://laravel.com/img/logomark.min.svg',
+            icon: 'code',
             packageManager: 'auto',
             packageName: '',
             packageGlobal: false,
