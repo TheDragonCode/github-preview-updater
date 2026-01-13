@@ -6,9 +6,15 @@
         "allowJs": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "lib": ["ES2021"],
+        "lib": [
+            "ES2021"
+        ],
         "target": "ES2021",
         "skipLibCheck": true
     },
-    "exclude": ["./coverage/*", "./dist/*", "./build/*"]
+    "exclude": [
+        "./coverage/*",
+        "./dist/*",
+        "./build/*"
+    ]
 }

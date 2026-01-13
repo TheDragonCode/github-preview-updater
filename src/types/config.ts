@@ -1,11 +1,10 @@
-export interface ImageParameters
-{
+export interface ImageParameters {
     pattern: string;
     style: string;
     fontSize: string;
     icon: string;
 
-    packageManager: 'composer' | 'npm' | 'yarn' | 'auto' | 'none';
+    packageManager: "composer" | "npm" | "yarn" | "auto" | "none";
     packageName?: string;
     packageGlobal: boolean;
 
@@ -13,36 +12,31 @@ export interface ImageParameters
     description?: string;
 }
 
-export interface Image
-{
+export interface Image {
     url: string;
     parameters: ImageParameters;
 }
 
-export interface Author
-{
+export interface Author {
     name: string;
     email: string;
 }
 
-export interface Commit
-{
+export interface Commit {
     branch: string;
     title: string;
     body?: string;
-    author: Author
+    author: Author;
 }
 
-export interface PullRequest
-{
+export interface PullRequest {
     title: string;
     body?: string;
     assignees: string[];
     labels: string[];
 }
 
-export interface Repository
-{
+export interface Repository {
     owner?: string;
     repo?: string;
     octokit?: any;
@@ -51,13 +45,11 @@ export interface Repository
     pullRequest: PullRequest;
 }
 
-export interface Path
-{
+export interface Path {
     readme: string;
 }
 
-export interface Config
-{
+export interface Config {
     directory?: string;
     path: Path;
 
@@ -68,25 +60,25 @@ export interface Config
 export const defaultConfig: Config = {
     directory: undefined,
     path: {
-        readme: 'README.md'
+        readme: "README.md",
     },
 
     image: {
-        url: 'https://banners.beyondco.de/{title}.png',
+        url: "https://banners.beyondco.de/{title}.png",
 
         parameters: {
-            pattern: 'topography',
-            style: 'style_2',
-            fontSize: '100px',
-            icon: 'code',
+            pattern: "topography",
+            style: "style_2",
+            fontSize: "100px",
+            icon: "code",
 
-            packageManager: 'auto',
+            packageManager: "auto",
             packageName: undefined,
             packageGlobal: false,
 
             title: undefined,
-            description: undefined
-        }
+            description: undefined,
+        },
     },
 
     repository: {
@@ -94,21 +86,21 @@ export const defaultConfig: Config = {
         repo: undefined,
 
         commit: {
-            branch: 'preview/update-{random}',
-            title: 'docs(preview): Update preview',
+            branch: "preview/update-{random}",
+            title: "docs(preview): Update preview",
             body: undefined,
 
             author: {
-                name: 'github-actions',
-                email: 'github-actions@github.com'
-            }
+                name: "github-actions",
+                email: "github-actions@github.com",
+            },
         },
 
         pullRequest: {
-            title: 'Update preview',
+            title: "Update preview",
             body: undefined,
             assignees: [],
-            labels: []
-        }
-    }
-}
+            labels: [],
+        },
+    },
+};
