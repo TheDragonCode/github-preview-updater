@@ -34387,19 +34387,20 @@ const previewUpdater = async () => {
     // Inputs
     const { token, configPath } = (0, inputs_1.parse)();
     // Load Config
-    let config = (0, filesystem_1.readConfig)({
+    const config = (0, filesystem_1.readConfig)({
         directory: (0, filesystem_1.cwd)(),
         repository: {
             owner: github_1.context.repo.owner,
             repo: github_1.context.repo.repo,
-            octokit: (0, github_1.getOctokit)(token)
-        }
+            octokit: (0, github_1.getOctokit)(token),
+        },
     }, configPath);
     // Read names
     const packageManager = (0, packageManagers_1.getPackageManager)(config);
     config.image.parameters.packageName = packageManager.name;
     config.image.parameters.title = (0, strings_1.titleCase)(config.repository.repo);
-    config.image.parameters.description = packageManager.description || config.repository.owner;
+    config.image.parameters.description =
+        packageManager.description || config.repository.owner;
     // Show working directory
     (0, core_1.info)(`Working directory: ${config.directory}`);
     // Authenticate
@@ -34414,7 +34415,7 @@ const previewUpdater = async () => {
     }
     // Checkout branch
     const branchExists = await repo.branchExists();
-    (0, core_1.info)(`Checkout ${branchExists ? 'existing' : 'new'} branch named "${repo.branchName()}"`);
+    (0, core_1.info)(`Checkout ${branchExists ? "existing" : "new"} branch named "${repo.branchName()}"`);
     await repo.checkoutBranch(!branchExists);
     // Write a file
     (0, core_1.info)(`Update readme in "${config.path.readme}" file`);
@@ -34452,41 +34453,41 @@ exports.defaultConfig = void 0;
 exports.defaultConfig = {
     directory: undefined,
     path: {
-        readme: 'README.md'
+        readme: "README.md",
     },
     image: {
-        url: 'https://banners.beyondco.de/{title}.png',
+        url: "https://banners.beyondco.de/{title}.png",
         parameters: {
-            pattern: 'topography',
-            style: 'style_2',
-            fontSize: '100px',
-            icon: 'code',
-            packageManager: 'auto',
+            pattern: "topography",
+            style: "style_2",
+            fontSize: "100px",
+            icon: "code",
+            packageManager: "auto",
             packageName: undefined,
             packageGlobal: false,
             title: undefined,
-            description: undefined
-        }
+            description: undefined,
+        },
     },
     repository: {
         owner: undefined,
         repo: undefined,
         commit: {
-            branch: 'preview/update-{random}',
-            title: 'docs(preview): Update preview',
+            branch: "preview/update-{random}",
+            title: "docs(preview): Update preview",
             body: undefined,
             author: {
-                name: 'github-actions',
-                email: 'github-actions@github.com'
-            }
+                name: "github-actions",
+                email: "github-actions@github.com",
+            },
         },
         pullRequest: {
-            title: 'Update preview',
+            title: "Update preview",
             body: undefined,
             assignees: [],
-            labels: []
-        }
-    }
+            labels: [],
+        },
+    },
 };
 
 
@@ -34541,7 +34542,7 @@ const config_1 = __nccwpck_require__(7899);
 const cwd = () => {
     const path = process.env.GITHUB_WORKSPACE;
     if (path === undefined) {
-        throw new Error('GitHub Actions has not set the working directory');
+        throw new Error("GitHub Actions has not set the working directory");
     }
     return path;
 };
@@ -34551,9 +34552,9 @@ const fileExists = (config, filename) => fs.existsSync(filePath(config, filename
 exports.fileExists = fileExists;
 const readFile = (config, filename) => {
     if (!fs.existsSync(filePath(config, filename))) {
-        return '';
+        return "";
     }
-    return fs.readFileSync(filePath(config, filename), 'utf-8');
+    return fs.readFileSync(filePath(config, filename), "utf-8");
 };
 exports.readFile = readFile;
 const writeFile = (config, filename, content) => {
@@ -34562,7 +34563,7 @@ const writeFile = (config, filename, content) => {
 exports.writeFile = writeFile;
 const readConfig = (config, userConfigPath) => {
     const content = (0, exports.readFile)(config, userConfigPath);
-    if (content === '') {
+    if (content === "") {
         return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config);
     }
     const userConfig = yaml.load(content);
@@ -34588,8 +34589,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImages = void 0;
 const packageManagers_1 = __nccwpck_require__(2453);
 const encodeUri = (value) => {
-    if (value === '' || value === undefined) {
-        return '';
+    if (value === "" || value === undefined) {
+        return "";
     }
     return encodeURIComponent(value);
 };
@@ -34603,28 +34604,28 @@ const detectPackageManager = (config, visibility) => {
     if ((0, packageManagers_1.hasYarn)(config)) {
         return `yarn${visibility} add`;
     }
-    return '';
+    return "";
 };
 const packageManager = (config) => {
-    const visibility = config.image.parameters.packageGlobal ? ' global' : '';
+    const visibility = config.image.parameters.packageGlobal ? " global" : "";
     switch (config.image.parameters.packageManager) {
-        case 'composer':
+        case "composer":
             return `composer${visibility} require`;
-        case 'npm':
+        case "npm":
             return `npm${visibility} install`;
-        case 'yarn':
+        case "yarn":
             return `yarn${visibility} add`;
-        case 'auto':
+        case "auto":
             return detectPackageManager(config, visibility);
         default:
-            return '';
+            return "";
     }
 };
 const packageName = (image) => {
-    if (image.packageManager === 'none') {
-        return '';
+    if (image.packageManager === "none") {
+        return "";
     }
-    return image?.packageName || '';
+    return image?.packageName || "";
 };
 const render = (config, theme) => {
     const image = config.image.parameters;
@@ -34636,14 +34637,16 @@ const render = (config, theme) => {
         images: image.icon,
         packageManager: packageManager(config),
         packageName: packageName(image),
-        description: image.description || ''
+        description: image.description || "",
     });
-    return config.image.url.replace('{title}', encodeUri(image.title)) + '?' + params.toString();
+    return (config.image.url.replace("{title}", encodeUri(image.title)) +
+        "?" +
+        params.toString());
 };
 const getImages = (config) => {
     const title = config.image.parameters.title;
-    const light = render(config, 'light');
-    const dark = render(config, 'dark');
+    const light = render(config, "light");
+    const dark = render(config, "dark");
     return `<picture>
     <source media="(prefers-color-scheme: dark)" srcset="${dark}">
     <img src="${light}" alt="${title}">
@@ -34663,20 +34666,20 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parse = exports.CONFIG_PATH = exports.TOKEN = void 0;
 const core_1 = __nccwpck_require__(7484);
 exports.TOKEN = {
-    name: 'token',
-    env: 'INPUT_TOKEN'
+    name: "token",
+    env: "INPUT_TOKEN",
 };
 exports.CONFIG_PATH = {
-    name: 'configPath',
-    env: 'INPUT_CONFIG_PATH',
-    defaultValue: '.github/preview-updater.yml'
+    name: "configPath",
+    env: "INPUT_CONFIG_PATH",
+    defaultValue: ".github/preview-updater.yml",
 };
 const parse = () => {
     const token = (0, core_1.getInput)(exports.TOKEN.name, { required: true });
     const configPath = (0, core_1.getInput)(exports.CONFIG_PATH.name) || exports.CONFIG_PATH.defaultValue;
     return {
         token,
-        configPath
+        configPath,
     };
 };
 exports.parse = parse;
@@ -34693,9 +34696,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.setOutputs = void 0;
 const core_1 = __nccwpck_require__(7484);
 const setOutputs = (branchName, pullRequestNumber, pullRequestUrl) => {
-    (0, core_1.setOutput)('branchName', branchName);
-    (0, core_1.setOutput)('pullRequestNumber', pullRequestNumber);
-    (0, core_1.setOutput)('pullRequestUrl', pullRequestUrl);
+    (0, core_1.setOutput)("branchName", branchName);
+    (0, core_1.setOutput)("pullRequestNumber", pullRequestNumber);
+    (0, core_1.setOutput)("pullRequestUrl", pullRequestUrl);
 };
 exports.setOutputs = setOutputs;
 
@@ -34710,15 +34713,15 @@ exports.setOutputs = setOutputs;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPackageManager = exports.getNpm = exports.getComposer = exports.hasYarn = exports.hasNpm = exports.hasComposer = void 0;
 const filesystem_1 = __nccwpck_require__(9742);
-const hasComposer = (config) => (0, filesystem_1.fileExists)(config, 'composer.json');
+const hasComposer = (config) => (0, filesystem_1.fileExists)(config, "composer.json");
 exports.hasComposer = hasComposer;
-const hasNpm = (config) => (0, filesystem_1.fileExists)(config, 'package.json');
+const hasNpm = (config) => (0, filesystem_1.fileExists)(config, "package.json");
 exports.hasNpm = hasNpm;
-const hasYarn = (config) => (0, filesystem_1.fileExists)(config, 'yarn.lock');
+const hasYarn = (config) => (0, filesystem_1.fileExists)(config, "yarn.lock");
 exports.hasYarn = hasYarn;
-const getComposer = (config) => JSON.parse((0, filesystem_1.readFile)(config, 'composer.json'));
+const getComposer = (config) => JSON.parse((0, filesystem_1.readFile)(config, "composer.json"));
 exports.getComposer = getComposer;
-const getNpm = (config) => JSON.parse((0, filesystem_1.readFile)(config, 'package.json'));
+const getNpm = (config) => JSON.parse((0, filesystem_1.readFile)(config, "package.json"));
 exports.getNpm = getNpm;
 const getPackageManager = (config) => {
     if ((0, exports.hasComposer)(config)) {
@@ -34742,16 +34745,16 @@ const image_1 = __nccwpck_require__(7828);
 const strings_1 = __nccwpck_require__(3063);
 const hasHeader = (content) => content.match(/^#\s+/);
 const cleanUp = (content) => content
-    .replace(/^(#\s+.+[\n\s]+)\s*<picture>[.\w\W]+<\/picture>[\n\s]*/, '$1')
-    .replace(/^(#\s+.+[\n\s]+)(!\[.+]\(.*\)\n?){1,2}[\n\s]*/, '$1')
-    .replace(/^(#\s+.+[\n\s]+)(<img\s.*\/>\n?){1,2}[\n\s]*/, '$1');
+    .replace(/^(#\s+.+[\n\s]+)\s*<picture>[.\w\W]+<\/picture>[\n\s]*/, "$1")
+    .replace(/^(#\s+.+[\n\s]+)(!\[.+]\(.*\)\n?){1,2}[\n\s]*/, "$1")
+    .replace(/^(#\s+.+[\n\s]+)(<img\s.*\/>\n?){1,2}[\n\s]*/, "$1");
 const setPreview = (content, config) => {
     if (!hasHeader(content)) {
         const title = (0, strings_1.titleCase)(config.image.parameters.title);
         content = `# ${title}\n\n${content}`;
     }
     const images = (0, image_1.getImages)(config);
-    return cleanUp(content).replace(/^(#\s+.+[\n\s]+)/, '$1' + images + '\n\n');
+    return cleanUp(content).replace(/^(#\s+.+[\n\s]+)/, "$1" + images + "\n\n");
 };
 exports.setPreview = setPreview;
 
@@ -34766,8 +34769,8 @@ exports.setPreview = setPreview;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomizer = void 0;
 const randomizer = (length = 8) => {
-    const chars = 'abcdefghijklmnopqrstuvwxyz';
-    let result = '';
+    const chars = "abcdefghijklmnopqrstuvwxyz";
+    let result = "";
     for (let i = 0; i < length; i++) {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
@@ -34789,7 +34792,7 @@ const filesystem_1 = __nccwpck_require__(9742);
 const randomizer_1 = __nccwpck_require__(3678);
 class Repository {
     constructor(config) {
-        this._currentBranch = '';
+        this._currentBranch = "";
         this._newBranch = false;
         this._config = config;
     }
@@ -34800,7 +34803,7 @@ class Repository {
             await (0, filesystem_1.exec)(`git config user.email "${author.email}"`);
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error authenticating user "${author.name}" with e-mail "${author.email}": ${error.message}`;
             throw error;
         }
@@ -34818,7 +34821,7 @@ class Repository {
             return (await hasLocalBranch()) || (await hasRemoteBranch());
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error searching for branch "${this.branchName()}": ${error.message}`;
             throw error;
         }
@@ -34826,38 +34829,40 @@ class Repository {
     async checkoutBranch(isNew) {
         try {
             this._newBranch = isNew;
-            await (0, filesystem_1.exec)(`git switch ${isNew ? '-c' : ''} "${this.branchName()}"`);
+            await (0, filesystem_1.exec)(`git switch ${isNew ? "-c" : ""} "${this.branchName()}"`);
         }
         catch (error) {
-            // @ts-ignore
-            error.message = `Error checking out ${isNew ? 'new' : 'existing'} branch "${this.branchName()}": ${error.message}`;
+            // @ts-expect-error
+            error.message = `Error checking out ${isNew ? "new" : "existing"} branch "${this.branchName()}": ${error.message}`;
             throw error;
         }
     }
     async stage() {
         try {
-            await (0, filesystem_1.exec)('git add ' + this._config.path.readme);
+            await (0, filesystem_1.exec)("git add " + this._config.path.readme);
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error staging file "${this._config.path.readme}": ${error.message}`;
             throw error;
         }
     }
     async commit() {
         try {
-            const message = this._config.repository.commit.title + '\n' + this._config.repository.commit.body;
+            const message = this._config.repository.commit.title +
+                "\n" +
+                this._config.repository.commit.body;
             (0, filesystem_1.exec)(`git commit -m "${message}"`);
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error committing file "${this._config.path.readme}": ${error.message}`;
             throw error;
         }
     }
     async push() {
         try {
-            let cmd = 'git push';
+            let cmd = "git push";
             if (this._newBranch) {
                 cmd += ` --set-upstream origin ${this.branchName()}`;
             }
@@ -34865,7 +34870,7 @@ class Repository {
             this._newBranch = false;
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error pushing changes to "${this.branchName()} branch": ${error.message}`;
             throw error;
         }
@@ -34879,11 +34884,11 @@ class Repository {
                 title: this._config.repository.pullRequest.title,
                 body: this._config.repository.pullRequest.body,
                 head: this.branchName(),
-                base: defaultBranch.trim()
+                base: defaultBranch.trim(),
             });
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error when creating pull request from ${this.branchName()}: ${error.message}`;
             throw error;
         }
@@ -34894,11 +34899,11 @@ class Repository {
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 issue_number: issueNumber,
-                assignees: assignees
+                assignees: assignees,
             });
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error when adding assignees to issue ${issueNumber}: ${error.message}`;
             throw error;
         }
@@ -34909,19 +34914,18 @@ class Repository {
                 owner: this._config.repository.owner,
                 repo: this._config.repository.repo,
                 issue_number: issueNumber,
-                labels
+                labels,
             });
         }
         catch (error) {
-            // @ts-ignore
+            // @ts-expect-error
             error.message = `Error when adding labels to issue ${issueNumber}: ${error.message}`;
             throw error;
         }
     }
     branchName() {
-        if (this._currentBranch === '') {
-            this._currentBranch = this._config.repository.commit.branch
-                .replace('{random}', (0, randomizer_1.randomizer)());
+        if (this._currentBranch === "") {
+            this._currentBranch = this._config.repository.commit.branch.replace("{random}", (0, randomizer_1.randomizer)());
         }
         return this._currentBranch;
     }
@@ -34939,14 +34943,14 @@ exports.Repository = Repository;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.titleCase = void 0;
 const titleCase = (title) => {
-    if (title === '' || title === undefined) {
-        return '';
+    if (title === "" || title === undefined) {
+        return "";
     }
     return title
-        .replace(/([A-Z])/g, '$1')
+        .replace(/([A-Z])/g, "$1")
         .toLowerCase()
         .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
-        .replace(/[-_]/g, ' ');
+        .replace(/[-_]/g, " ");
 };
 exports.titleCase = titleCase;
 
