@@ -4,8 +4,8 @@ exports[`empty 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 "
@@ -15,8 +15,8 @@ exports[`just-text 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 Something
@@ -27,8 +27,8 @@ exports[`with-one-image 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 
@@ -42,8 +42,8 @@ exports[`with-one-image-without-header 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 
@@ -57,8 +57,8 @@ exports[`with-two-images 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 
@@ -72,8 +72,8 @@ exports[`with-two-images-without-header 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 
@@ -87,8 +87,8 @@ exports[`without-all 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 ## Usage
@@ -101,8 +101,8 @@ exports[`without-images 1`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
-    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fpreview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
 </picture>
 
 ## Usage
