@@ -1,6 +1,6 @@
 import { fileExists, readFile } from "./filesystem";
 import type { Config } from "../types/config";
-import type { Package } from "../types/Package";
+import type { Package } from "../types/package";
 
 export const hasComposer = (config: Config): boolean =>
     fileExists(config, "composer.json");
