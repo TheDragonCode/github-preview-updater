@@ -34560,13 +34560,14 @@ const writeFile = (config, filename, content) => {
     fs.writeFileSync(filePath(config, filename), content);
 };
 exports.writeFile = writeFile;
-const readConfig = (config, userConfigPath) => {
-    const content = (0, exports.readFile)(config_1.defaultConfig, userConfigPath);
+const readConfig = (override, userConfigPath, baseConfig = undefined) => {
+    const dataConfig = baseConfig ?? config_1.defaultConfig;
+    const content = (0, exports.readFile)(dataConfig, userConfigPath);
     if (content === '') {
-        return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config);
+        return (0, deepmerge_ts_1.deepmerge)(dataConfig, override);
     }
     const userConfig = yaml.load(content);
-    return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config, userConfig);
+    return (0, deepmerge_ts_1.deepmerge)(dataConfig, override, userConfig);
 };
 exports.readConfig = readConfig;
 const exec = async (command) => {
