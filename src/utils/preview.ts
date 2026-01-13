@@ -18,5 +18,5 @@ export const setPreview = (content: string, config: Config) => {
 
     const images: string = getImages(config)
 
-    return cleanUp(content).replace(/^(#\s+.+\n\n)/, '$1' + images + '\n\n')
+    return cleanUp(content).replace(/^(#\s+.+[\n\s]+)/, '$1' + images + '\n\n')
 }

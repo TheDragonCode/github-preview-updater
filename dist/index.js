@@ -34408,6 +34408,7 @@ const previewUpdater = async () => {
     // Read file
     const content = (0, filesystem_1.readFile)(config, config.path.readme);
     const preview = (0, preview_1.setPreview)(content, config);
+    console.log(preview);
     if (content === preview) {
         (0, core_1.info)(`File "${config.path.readme}" is up to date`);
         return;
