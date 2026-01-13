@@ -2,7 +2,7 @@ import type { Config } from "../types/config";
 import { randomizer } from "./randomizer";
 import type { GitHub } from "@actions/github/lib/utils";
 import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods/dist-types/generated/parameters-and-response-types";
-import { exec } from './processes'
+import { exec } from "./processes";
 
 export class Repository {
     private _config: Config;
