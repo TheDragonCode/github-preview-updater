@@ -8,7 +8,7 @@ import { setPreview } from "./utils/preview";
 import { setOutputs } from "./utils/outputs";
 import { getPackageManager } from "./utils/packageManagers";
 import { titleCase } from "./utils/strings";
-import { readConfig } from './utils/config'
+import { readConfig } from "./utils/config";
 
 const previewUpdater = async () => {
     // Inputs

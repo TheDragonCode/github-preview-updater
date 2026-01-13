@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-import { type Config } from "../types/config";
+import type { Config } from "../types/config";
 
 export const cwd = (): string => {
     const path = process.env.GITHUB_WORKSPACE;

@@ -1,7 +1,7 @@
 import { rawTestConfig } from "../helpers/config";
 import { type Config, defaultConfig } from "../../src/types/config";
 import { CONFIG_PATH } from "../../src/utils/inputs";
-import { readConfig } from '../../src/utils/config'
+import { readConfig } from "../../src/utils/config";
 
 test("read config", () => {
     const data: Config = readConfig(rawTestConfig, CONFIG_PATH.defaultValue);
