@@ -4,7 +4,7 @@ export interface ImageParameters {
     fontSize: string;
     icon: string;
 
-    packageManager: "composer" | "npm" | "yarn" | "auto" | "none";
+    packageManager: "composer" | "npm" | "yarn" | "auto" | "none" | string;
     packageName?: string;
     packageGlobal: boolean;
 

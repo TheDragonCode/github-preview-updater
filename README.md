@@ -82,12 +82,22 @@ image:
         fontSize: 100px
         icon: code
 
-        packageManager: auto # composer | npm | yarn | auto | none
+        # Declares the use of the package manager.
+        # It is a regular string that will be substituted into the URL address.
+        #
+        # Reserved words: composer | npm | yarn | auto | none
+        #
+        # Any package manager name can be specified.
+        #
+        # By default, auto
+        packageManager: auto
 
         # By default, the package name is taken from the composer.json or package.json file.
         packageName: ''
 
         # Add a prefix for global installation (`composer global require`, `npm install -g`)
+        # The parameter will be ignored when a non-standard package manager name is specified in
+        # the `packageManager` parameter.
         packageGlobal: false
 
         # By default, the repository name will be used.

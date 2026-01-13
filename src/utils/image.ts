@@ -30,8 +30,10 @@ const packageManager = (config: Config): string => {
             return `yarn${visibility} add`;
         case "auto":
             return detectPackageManager(config, visibility);
-        default:
+        case "none":
             return "";
+        default:
+            return config.image.parameters.packageManager;
     }
 };
 
