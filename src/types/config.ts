@@ -86,7 +86,7 @@ export const defaultConfig: Config = {
         repo: undefined,
 
         commit: {
-            branch: "preview-banner-{random}",
+            branch: "preview-{random}",
             title: "docs(preview): Update preview",
             body: undefined,
 
