@@ -1,3 +1,5 @@
+import type { GitHub } from "@actions/github/lib/utils";
+
 export interface ImageParameters {
     pattern: string;
     style: string;
@@ -39,7 +41,7 @@ export interface PullRequest {
 export interface Repository {
     owner?: string;
     repo?: string;
-    octokit?: any;
+    octokit?: InstanceType<typeof GitHub>;
 
     commit: Commit;
     pullRequest: PullRequest;
