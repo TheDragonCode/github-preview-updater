@@ -15,10 +15,8 @@
             "!composer.lock",
             "!package.json",
             "!package-lock.json",
-            "!analytics.*",
-            "!metrics.*",
-            "!coverage",
-            "!dist"
+            "!**/analytics.*",
+            "!**/metrics.*"
         ]
     },
     "formatter": {
