@@ -34450,7 +34450,7 @@ exports["default"] = previewUpdater;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultConfig = void 0;
 exports.defaultConfig = {
-    directory: '',
+    directory: undefined,
     path: {
         readme: 'README.md'
     },
@@ -34462,19 +34462,19 @@ exports.defaultConfig = {
             fontSize: '100px',
             icon: 'code',
             packageManager: 'auto',
-            packageName: '',
+            packageName: undefined,
             packageGlobal: false,
-            title: '',
-            description: ''
+            title: undefined,
+            description: undefined
         }
     },
     repository: {
-        owner: '',
-        repo: '',
+        owner: undefined,
+        repo: undefined,
         commit: {
             branch: 'preview/update-{random}',
             title: 'docs(preview): Update preview',
-            body: '',
+            body: undefined,
             author: {
                 name: 'github-actions',
                 email: 'github-actions@github.com'
@@ -34482,7 +34482,7 @@ exports.defaultConfig = {
         },
         pullRequest: {
             title: 'Update preview',
-            body: '',
+            body: undefined,
             assignees: [],
             labels: []
         }
@@ -34560,14 +34560,13 @@ const writeFile = (config, filename, content) => {
     fs.writeFileSync(filePath(config, filename), content);
 };
 exports.writeFile = writeFile;
-const readConfig = (override, userConfigPath, baseConfig = undefined) => {
-    const dataConfig = baseConfig ?? config_1.defaultConfig;
-    const content = (0, exports.readFile)(override, userConfigPath);
+const readConfig = (config, userConfigPath) => {
+    const content = (0, exports.readFile)(config, userConfigPath);
     if (content === '') {
-        return (0, deepmerge_ts_1.deepmerge)(dataConfig, override);
+        return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, config);
     }
     const userConfig = yaml.load(content);
-    return (0, deepmerge_ts_1.deepmerge)(dataConfig, userConfig, override);
+    return (0, deepmerge_ts_1.deepmerge)(config_1.defaultConfig, userConfig, config);
 };
 exports.readConfig = readConfig;
 const exec = async (command) => {
@@ -34589,7 +34588,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImages = void 0;
 const packageManagers_1 = __nccwpck_require__(2453);
 const encodeUri = (value) => {
-    if (value === '') {
+    if (value === '' || value === undefined) {
         return '';
     }
     return encodeURIComponent(value);
@@ -34621,7 +34620,12 @@ const packageManager = (config) => {
             return '';
     }
 };
-const packageName = (image) => image.packageManager !== 'none' ? image.packageName : '';
+const packageName = (image) => {
+    if (image.packageManager === 'none') {
+        return '';
+    }
+    return image?.packageName || '';
+};
 const render = (config, theme) => {
     const image = config.image.parameters;
     const params = new URLSearchParams({
@@ -34632,7 +34636,7 @@ const render = (config, theme) => {
         images: image.icon,
         packageManager: packageManager(config),
         packageName: packageName(image),
-        description: image.description
+        description: image.description || ''
     });
     return config.image.url.replace('{title}', encodeUri(image.title)) + '?' + params.toString();
 };
@@ -34934,11 +34938,16 @@ exports.Repository = Repository;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.titleCase = void 0;
-const titleCase = (title) => title
-    .replace(/([A-Z])/g, '$1')
-    .toLowerCase()
-    .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
-    .replace(/[-_]/g, ' ');
+const titleCase = (title) => {
+    if (title === '' || title === undefined) {
+        return '';
+    }
+    return title
+        .replace(/([A-Z])/g, '$1')
+        .toLowerCase()
+        .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
+        .replace(/[-_]/g, ' ');
+};
 exports.titleCase = titleCase;
 
 

@@ -1,10 +1,10 @@
-import { testConfig } from '../helpers/config'
+import { rawTestConfig } from '../helpers/config'
 import { Config, defaultConfig } from '../../src/types/config'
 import { readConfig } from '../../src/utils/filesystem'
 import { CONFIG_PATH } from '../../src/utils/inputs'
 
 test('read config', () => {
-    const data: Config = readConfig(testConfig, CONFIG_PATH.defaultValue)
+    const data: Config = readConfig(rawTestConfig, CONFIG_PATH.defaultValue)
 
     expect(data.directory).toBe(process.cwd())
 

@@ -1,8 +1,8 @@
 import { Config, ImageParameters } from '../types/config'
 import { hasComposer, hasNpm, hasYarn } from './packageManagers'
 
-const encodeUri = (value: string): string => {
-    if (value === '') {
+const encodeUri = (value: string | undefined): string => {
+    if (value === '' || value === undefined) {
         return ''
     }
 
@@ -42,7 +42,13 @@ const packageManager = (config: Config): string => {
     }
 }
 
-const packageName = (image: ImageParameters): string => image.packageManager !== 'none' ? image.packageName : ''
+const packageName = (image: ImageParameters): string => {
+    if (image.packageManager === 'none') {
+        return ''
+    }
+
+    return image?.packageName || ''
+}
 
 const render = (config: Config, theme: 'light' | 'dark'): string => {
     const image = config.image.parameters
@@ -55,7 +61,7 @@ const render = (config: Config, theme: 'light' | 'dark'): string => {
         images: image.icon,
         packageManager: packageManager(config),
         packageName: packageName(image),
-        description: image.description
+        description: image.description || ''
     })
 
     return config.image.url.replace('{title}', encodeUri(image.title)) + '?' + params.toString()

@@ -6,11 +6,11 @@ export interface ImageParameters
     icon: string;
 
     packageManager: 'composer' | 'npm' | 'yarn' | 'auto' | 'none';
-    packageName: string;
+    packageName?: string;
     packageGlobal: boolean;
 
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
 }
 
 export interface Image
@@ -29,22 +29,22 @@ export interface Commit
 {
     branch: string;
     title: string;
-    body: string;
+    body?: string;
     author: Author
 }
 
 export interface PullRequest
 {
     title: string;
-    body: string;
+    body?: string;
     assignees: string[];
     labels: string[];
 }
 
 export interface Repository
 {
-    owner: string;
-    repo: string;
+    owner?: string;
+    repo?: string;
     octokit?: any;
 
     commit: Commit;
@@ -58,7 +58,7 @@ export interface Path
 
 export interface Config
 {
-    directory: string;
+    directory?: string;
     path: Path;
 
     image: Image;
@@ -66,7 +66,7 @@ export interface Config
 }
 
 export const defaultConfig: Config = {
-    directory: '',
+    directory: undefined,
     path: {
         readme: 'README.md'
     },
@@ -81,22 +81,22 @@ export const defaultConfig: Config = {
             icon: 'code',
 
             packageManager: 'auto',
-            packageName: '',
+            packageName: undefined,
             packageGlobal: false,
 
-            title: '',
-            description: ''
+            title: undefined,
+            description: undefined
         }
     },
 
     repository: {
-        owner: '',
-        repo: '',
+        owner: undefined,
+        repo: undefined,
 
         commit: {
             branch: 'preview/update-{random}',
             title: 'docs(preview): Update preview',
-            body: '',
+            body: undefined,
 
             author: {
                 name: 'github-actions',
@@ -106,7 +106,7 @@ export const defaultConfig: Config = {
 
         pullRequest: {
             title: 'Update preview',
-            body: '',
+            body: undefined,
             assignees: [],
             labels: []
         }

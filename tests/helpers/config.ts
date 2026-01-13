@@ -1,7 +1,7 @@
 import { Config, defaultConfig } from '../../src/types/config'
 import { deepmerge } from 'deepmerge-ts'
 
-export const testConfig: Config = <Config>deepmerge(defaultConfig, {
+export const rawTestConfig: Config = <Config>{
     directory: process.cwd(),
 
     image: {
@@ -11,4 +11,6 @@ export const testConfig: Config = <Config>deepmerge(defaultConfig, {
             description: 'Lightweight preview update in your repository'
         }
     }
-})
+}
+
+export const testConfig: Config = <Config>deepmerge(defaultConfig, rawTestConfig)
