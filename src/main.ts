@@ -1,4 +1,4 @@
-import { cwd, readConfig, readFile, writeFile } from "./utils/filesystem";
+import { cwd, readFile, writeFile } from "./utils/filesystem";
 import { context, getOctokit } from "@actions/github";
 import { parse } from "./utils/inputs";
 import { info } from "@actions/core";
@@ -8,6 +8,7 @@ import { setPreview } from "./utils/preview";
 import { setOutputs } from "./utils/outputs";
 import { getPackageManager } from "./utils/packageManagers";
 import { titleCase } from "./utils/strings";
+import { readConfig } from './utils/config'
 
 const previewUpdater = async () => {
     // Inputs
