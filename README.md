@@ -1,7 +1,10 @@
 # Preview Updater
 
-![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=preview-updater&description=Lightweight+preview+update+in+your+repository#gh-light-mode-only)
-![Preview Updater](https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=preview-updater&description=Lightweight+preview+update+in+your+repository#gh-dark-mode-only)
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=preview-updater&description=Lightweight+preview+update+in+your+repository">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=npm+install&packageName=preview-updater&description=Lightweight+preview+update+in+your+repository" alt="Preview Updater">
+</picture>
+
 
 Легко обновляйте превью своих репозиториев, сохраняя время и усилия на процесс разработки.
 
