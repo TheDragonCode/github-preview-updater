@@ -23,3 +23,15 @@ export const encodeUri = (value: string | undefined): string => {
 
     return encodeURIComponent(value);
 };
+
+export const randomString = (length: number = 8) => {
+    const chars = "abcdefghijklmnopqrstuvwxyz";
+
+    let result: string = "";
+
+    for (let i: number = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return result;
+};
