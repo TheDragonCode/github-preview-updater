@@ -5,9 +5,9 @@ import { titleCase } from './strings'
 const hasHeader = (content: string) => content.match(/^#\s+/)
 
 const cleanUp = (content: string): string => content
-    .replace(/^(#\s+.+[\n\s]+)\s*<picture>[.\w\W]+<\/picture>[\n\s]*/, '$1\n')
-    .replace(/^(#\s+.+[\n\s]+)(!\[.+]\(.*\)\n?){1,2}[\n\s]*/, '$1\n')
-    .replace(/^(#\s+.+[\n\s]+)(<img\s.*\/>\n?){1,2}[\n\s]*/, '$1\n')
+    .replace(/^(#\s+.+[\n\s]+)\s*<picture>[.\w\W]+<\/picture>[\n\s]*/, '$1')
+    .replace(/^(#\s+.+[\n\s]+)(!\[.+]\(.*\)\n?){1,2}[\n\s]*/, '$1')
+    .replace(/^(#\s+.+[\n\s]+)(<img\s.*\/>\n?){1,2}[\n\s]*/, '$1')
 
 export const setPreview = (content: string, config: Config) => {
     if (! hasHeader(content)) {
