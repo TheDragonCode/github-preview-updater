@@ -1,0 +1,37 @@
+path:
+    readme: 'README-foo.md'
+
+image:
+    url: 'https://example.com/image.png'
+    parameters:
+        pattern: 'cage'
+        style: 'style_1'
+        fontSize: '123px'
+        icon: 'cog'
+        
+        packageManager: 'yarn'
+        packageGlobal: true
+        packageName: 'foo/bar'
+        
+        title: 'Foo Bar'
+        description: 'Lorem ipsum dolor sit amet.'
+
+repository:
+    commit:
+        branch: 'qwerty'
+        title: 'Foo Bar Commit'
+        body: 'Eu assum suscipit, vel veniam eu sadipscing kasd invidunt elit wisi.'
+        
+        author:
+            name: 'some_username'
+            email: 'some_username@example.com'
+    
+    pullRequest:
+        title: 'Foo Bar Baz Pull Request'
+        body: 'Eu assum suscipit, vel veniam eu sadipscing kasd invidunt elit wisi.'
+        assignees:
+            - foo1
+            - foo2
+        labels:
+            - foo3
+            - foo4

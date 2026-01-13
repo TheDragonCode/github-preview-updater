@@ -73,8 +73,8 @@ export const defaultConfig: Config = {
             icon: "code",
 
             packageManager: "auto",
-            packageName: undefined,
             packageGlobal: false,
+            packageName: undefined,
 
             title: undefined,
             description: undefined,
