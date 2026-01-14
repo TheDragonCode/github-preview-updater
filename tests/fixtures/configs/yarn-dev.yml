@@ -1,0 +1,4 @@
+image:
+    parameters:
+        packageManager: yarn
+        packageDev: true

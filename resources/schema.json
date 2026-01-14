@@ -72,6 +72,11 @@
                             "description": "Add prefix for global installation",
                             "default": false
                         },
+                        "packageDev": {
+                            "type": "boolean",
+                            "description": "Add a prefix for dev installation",
+                            "default": false
+                        },
                         "title": {
                             "type": "string",
                             "description": "Banner title. The repository name is used by default"

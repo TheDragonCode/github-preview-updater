@@ -1,5 +1,53 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`composer dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=composer+require+--dev&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=composer+require+--dev&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
+exports[`composer global dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=composer+global+require+--dev&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=composer+global+require+--dev&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
+exports[`custom dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=foo&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=foo&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
+exports[`custom global dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=foo&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=foo&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
 exports[`empty 1`] = `
 "# Preview Updater
 
@@ -31,6 +79,30 @@ exports[`just-text 1`] = `
 <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
     <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
+exports[`npm dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
+exports[`npm global dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install+-g+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=npm+install+-g+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
 </picture>
 
 Something
@@ -116,6 +188,30 @@ exports[`without-images 1`] = `
 </picture>
 
 ## Usage
+
+Something
+"
+`;
+
+exports[`yarn dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=yarn+add+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=yarn+add+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
+
+Something
+"
+`;
+
+exports[`yarn global dev 1`] = `
+"# Preview Updater
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=yarn+global+add+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Preview%20Updater.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=code&packageManager=yarn+global+add+-D&packageName=TheDragonCode%2Fgithub-preview-updater&description=Lightweight+preview+update+in+your+repository&md=1&showWatermark=1" alt="Preview Updater">
+</picture>
 
 Something
 "
