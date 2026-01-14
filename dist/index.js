@@ -34388,7 +34388,7 @@ const previewUpdater = async () => {
     // Inputs
     const { token, configPath } = (0, inputs_1.parse)();
     // Load Config
-    const config = (0, config_1.readConfig)({
+    const config = await (0, config_1.readConfig)({
         directory: (0, filesystem_1.cwd)(),
         repository: {
             owner: github_1.context.repo.owner,
@@ -34532,20 +34532,42 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.readConfig = void 0;
+exports.readRemoteConfig = exports.readConfig = void 0;
 const config_1 = __nccwpck_require__(7899);
 const yaml = __importStar(__nccwpck_require__(4281));
 const filesystem_1 = __nccwpck_require__(9742);
 const merge_1 = __nccwpck_require__(2221);
-const readConfig = (config, userConfigPath) => {
+const core_1 = __nccwpck_require__(7484);
+const url = __importStar(__nccwpck_require__(3136));
+const readConfig = async (config, userConfigPath) => {
     const content = (0, filesystem_1.readFile)(config, userConfigPath);
+    const remoteConfig = await (0, exports.readRemoteConfig)(config.repository?.owner, userConfigPath);
     if (content === "") {
-        return (0, merge_1.merge)(config_1.defaultConfig, config);
+        return (0, merge_1.merge)(config_1.defaultConfig, remoteConfig, config);
     }
     const userConfig = yaml.load(content);
-    return (0, merge_1.merge)(config_1.defaultConfig, userConfig, config);
+    return (0, merge_1.merge)(config_1.defaultConfig, remoteConfig, userConfig, config);
 };
 exports.readConfig = readConfig;
+const readRemoteConfig = async (owner, filename) => {
+    try {
+        if (owner === undefined) {
+            return {};
+        }
+        const url = `https://raw.githubusercontent.com/${owner}/.github/refs/heads/main/${filename}`;
+        const data = await (0, filesystem_1.readRemoteFile)(url);
+        if (data === "") {
+            return {};
+        }
+        return yaml.load(data);
+    }
+    catch (error) {
+        // @ts-expect-error
+        (0, core_1.info)(`Failed to fetch remote config from ${url}: ${error.message}`);
+        return {};
+    }
+};
+exports.readRemoteConfig = readRemoteConfig;
 
 
 /***/ }),
@@ -34589,8 +34611,9 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.writeFile = exports.readFile = exports.fileExists = exports.cwd = void 0;
+exports.writeFile = exports.readFile = exports.readRemoteFile = exports.fileExists = exports.cwd = void 0;
 const fs = __importStar(__nccwpck_require__(3024));
+const core_1 = __nccwpck_require__(7484);
 const cwd = () => {
     const path = process.env.GITHUB_WORKSPACE;
     if (path === undefined) {
@@ -34602,6 +34625,15 @@ exports.cwd = cwd;
 const filePath = (config, filename) => `${config.directory}/${filename}`;
 const fileExists = (config, filename) => fs.existsSync(filePath(config, filename));
 exports.fileExists = fileExists;
+const readRemoteFile = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) {
+        (0, core_1.info)(`Failed to fetch ${url} with status code ${response.status}`);
+        return "";
+    }
+    return response.text();
+};
+exports.readRemoteFile = readRemoteFile;
 const readFile = (config, filename) => {
     if (!fs.existsSync(filePath(config, filename))) {
         return "";
@@ -35214,6 +35246,14 @@ module.exports = require("node:fs");
 
 "use strict";
 module.exports = require("node:stream");
+
+/***/ }),
+
+/***/ 3136:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:url");
 
 /***/ }),
 
