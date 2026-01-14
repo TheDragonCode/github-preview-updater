@@ -1,4 +1,4 @@
-# Preview Updater
+# GitHub Preview Updater
 
 <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Preview%20Updater.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=photograph&packageManager=GitHub+Actions+uses%3A&packageName=TheDragonCode%2Fpreview-updater%40v1&description=Lightweight+preview+update+in+your+repository">
