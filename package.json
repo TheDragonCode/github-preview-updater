@@ -10,7 +10,7 @@
         "coverage": "jest --coverage",
         "test": "jest",
         "type-check": "tsc --noEmit",
-        "lint": "npx @biomejs/biome lint --write",
+        "lint": "npx @biomejs/biome lint --write --unsafe",
         "format": "npx @biomejs/biome format --write",
         "style": "npm run lint && npm run format"
     },
