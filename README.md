@@ -72,6 +72,7 @@ The action is setting the following outputs:
 > Support for working with a global settings file at the organization level (the `.github` repository).
 > 
 > For example, `https://github.com/<repo>/.github/blob/main/<configPath>`.
+>
 > Like a `https://github.com/TheDragonCode/.github/blob/main/.github/preview-updater.yml`.
 
 Create `.github/preview-updater.yml` (or provide your own path via `configPath`).
