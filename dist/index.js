@@ -34718,8 +34718,8 @@ const render = (config, packageData, theme) => {
         packageManager: packageManager(config),
         packageName: packageName(image),
         description: image.description || "",
-        md: '1',
-        showWatermark: '1'
+        md: "1",
+        showWatermark: "1",
     });
     return (config.image.url.replace("{title}", (0, strings_1.encodeUri)(image.title)) +
         "?" +
