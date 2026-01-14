@@ -1,0 +1,5 @@
+image:
+    parameters:
+        packageManager: npm
+        packageGlobal: true
+        packageDev: true

@@ -7,6 +7,7 @@ export interface ImageParameters {
     packageManager: "composer" | "npm" | "yarn" | "auto" | "none" | string;
     packageName?: string;
     packageGlobal: boolean;
+    packageDev: boolean;
 
     title?: string;
     description?: string;
@@ -73,6 +74,7 @@ export const defaultConfig: Config = {
 
             packageManager: "auto",
             packageGlobal: false,
+            packageDev: false,
             packageName: undefined,
 
             title: undefined,

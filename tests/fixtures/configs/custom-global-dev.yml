@@ -1,0 +1,5 @@
+image:
+    parameters:
+        packageManager: foo
+        packageGlobal: true
+        packageDev: true

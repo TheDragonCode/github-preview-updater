@@ -1,0 +1,5 @@
+image:
+    parameters:
+        packageManager: composer
+        packageGlobal: true
+        packageDev: true

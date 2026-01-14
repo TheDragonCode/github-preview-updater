@@ -108,6 +108,11 @@ image:
         # the `packageManager` parameter.
         packageGlobal: false
 
+        # Add a prefix for dev installation (`composer require --dev`, `npm install --save-dev`)
+        # The parameter will be ignored when a non-standard package manager name is specified in
+        # the `packageManager` parameter
+        packageDev: false
+
         # By default, the repository name will be used.
         # For example, for https://github.com/TheDragonCode/github-preview-updater, it will take `preview-updater`
         # and convert it to `Preview Updater`.

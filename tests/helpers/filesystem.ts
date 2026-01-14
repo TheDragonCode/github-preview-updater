@@ -3,11 +3,17 @@ import { setPreview } from "../../src/utils/preview";
 import { testConfig } from "./config";
 import type { Package } from "../../src/types/package";
 import { getNpm } from "../../src/utils/packageManagers";
+import type { Config } from "../../src/types/config";
+import { merge } from "../../src/utils/merge";
 
-export const getReadme = (filename: string): string => {
-    const content = readFile(testConfig, `tests/fixtures/readme/${filename}`);
+export const getReadme = (filename: string, config?: Config): string => {
+    config ||= <Config>{};
 
-    return setPreview(content, testConfig, getNpm(testConfig));
+    config = merge(testConfig, config);
+
+    const content = readFile(config, `tests/fixtures/readme/${filename}`);
+
+    return setPreview(content, config, getNpm(config));
 };
 
 export const getPackage = (filename: string): Package => {

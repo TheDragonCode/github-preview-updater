@@ -1,0 +1,5 @@
+image:
+    parameters:
+        packageManager: yarn
+        packageGlobal: true
+        packageDev: true
