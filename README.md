@@ -37,7 +37,7 @@ jobs:
                     fetch-depth: 0
 
             -   name: Update banner
-                uses: TheDragonCode/preview-updater@v1
+                uses: TheDragonCode/github-preview-updater@v1
                 with:
                     # Personal access token (PAT) used when interacting with Git and GitHub.
                     #
@@ -71,7 +71,7 @@ Create `.github/preview-updater.yml` (or provide your own path via `configPath`)
 All fields are optional—omitted ones fall back to defaults.
 
 ```yaml
-# $schema: https://raw.githubusercontent.com/TheDragonCode/preview-updater/refs/heads/main/resources/schema.json
+# $schema: https://raw.githubusercontent.com/TheDragonCode/github-preview-updater/refs/heads/main/resources/schema.json
 
 path:
     readme: README.md        # Target file to update
@@ -103,7 +103,7 @@ image:
         packageGlobal: false
 
         # By default, the repository name will be used.
-        # For example, for https://github.com/TheDragonCode/preview-updater, it will take `preview-updater`
+        # For example, for https://github.com/TheDragonCode/github-preview-updater, it will take `preview-updater`
         # and convert it to `Preview Updater`.
         title: ''          # Fallbacks to repo name (Title Case)
 

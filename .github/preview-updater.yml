@@ -3,5 +3,5 @@
 image:
     parameters:
         icon: 'photograph'
-        packageManager: 'GitHub Actions uses:'
-        packageName: 'TheDragonCode/preview-updater@v1'
+        packageManager: 'uses:'
+        packageName: 'TheDragonCode/github-preview-updater@v1'

@@ -19,9 +19,9 @@ test("read config", () => {
         defaultConfig.image.parameters.pattern,
     );
 
-    expect(data.image.parameters.packageManager).toBe("GitHub Actions uses:");
+    expect(data.image.parameters.packageManager).toBe("uses:");
     expect(data.image.parameters.packageName).toBe(
-        "TheDragonCode/preview-updater",
+        "TheDragonCode/github-preview-updater",
     );
     expect(data.image.parameters.icon).toBe("photograph");
 });

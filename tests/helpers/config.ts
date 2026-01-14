@@ -6,7 +6,7 @@ export const rawTestConfig: Config = <Config>{
 
     image: {
         parameters: {
-            packageName: "TheDragonCode/preview-updater",
+            packageName: "TheDragonCode/github-preview-updater",
             title: "Preview Updater",
             description: "Lightweight preview update in your repository",
         },

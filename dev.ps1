@@ -1,6 +1,6 @@
 $env:GITHUB_RUN_ID = 123
 $env:GITHUB_EVENT_NAME = "push"
-$env:GITHUB_EVENT_PATH = "TheDragonCode/preview-updater"
+$env:GITHUB_EVENT_PATH = "TheDragonCode/github-preview-updater"
 
 $envFile = ".env"
 

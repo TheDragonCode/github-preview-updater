@@ -24,10 +24,10 @@
     ],
     "license": "MIT",
     "type": "commonjs",
-    "repository": "https://github.com/TheDragonCode/preview-updater",
-    "homepage": "https://github.com/TheDragonCode/preview-updater",
+    "repository": "https://github.com/TheDragonCode/github-preview-updater",
+    "homepage": "https://github.com/TheDragonCode/github-preview-updater",
     "bugs": {
-        "url": "https://github.com/TheDragonCode/preview-updater/issues"
+        "url": "https://github.com/TheDragonCode/github-preview-updater/issues"
     },
     "engines": {
         "node": ">=20.0.0"
