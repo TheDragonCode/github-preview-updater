@@ -4,8 +4,19 @@ on:
     push:
         branches:
             - main
+        paths-ignore:
+            - '**dist/index.js'
     workflow_dispatch:
 
 jobs:
-    Update:
+    draft:
+        name: Drafter
         uses: TheDragonCode/.github/.github/workflows/release-drafter.yml@main
+    
+    build:
+        needs: draft
+        
+        name: App
+        uses: TheDragonCode/github-preview-updater/.github/workflows/build.yml@main
+        with:
+            tag: ${{ needs.draft.outputs.tag_name }}
