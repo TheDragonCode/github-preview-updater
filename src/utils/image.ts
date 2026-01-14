@@ -63,6 +63,8 @@ const render = (
         packageManager: packageManager(config),
         packageName: packageName(image),
         description: image.description || "",
+        md: '1',
+        showWatermark: '1'
     });
 
     return (
