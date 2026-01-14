@@ -34941,9 +34941,11 @@ class Repository {
     }
     async commit() {
         try {
-            const message = this._config.repository.commit.title +
-                "\n" +
-                this._config.repository.commit.body;
+            let message = this._config.repository.commit.title;
+            const body = this._config.repository.commit.body || "";
+            if (body !== "") {
+                message += `\n${body}`;
+            }
             await (0, processes_1.exec)(`git commit -m "${message}"`);
         }
         catch (error) {
