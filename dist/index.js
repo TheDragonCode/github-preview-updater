@@ -34464,6 +34464,7 @@ exports.defaultConfig = {
             icon: undefined,
             packageManager: "auto",
             packageGlobal: false,
+            packageDev: false,
             packageName: undefined,
             title: undefined,
             description: undefined,
@@ -34704,34 +34705,44 @@ exports.getImages = void 0;
 const packageManagers_1 = __nccwpck_require__(2453);
 const strings_1 = __nccwpck_require__(3063);
 const icons_1 = __nccwpck_require__(5983);
-const detectPackageManager = (config, visibility) => {
+const command = (manager, dev, global) => {
+    switch (manager) {
+        case "composer":
+            return `composer${global ? " global" : ""} require${dev ? " --dev" : ""}`;
+        case "npm":
+            return `npm install${global ? " -g" : ""}${dev ? " -D" : ""}`;
+        case "yarn":
+            return `yarn${global ? " global" : ""} add${dev ? " -D" : ""}`;
+        default:
+            return manager;
+    }
+};
+const detectPackageManager = (config) => {
     if ((0, packageManagers_1.hasComposer)(config)) {
-        return `composer${visibility} require`;
+        return "composer";
     }
     if ((0, packageManagers_1.hasNpm)(config)) {
-        return `npm${visibility} install`;
+        return "npm";
     }
     if ((0, packageManagers_1.hasYarn)(config)) {
-        return `yarn${visibility} add`;
+        return "yarn";
     }
-    return "";
+    return "none";
 };
 const packageManager = (config) => {
-    const visibility = config.image.parameters.packageGlobal ? " global" : "";
-    switch (config.image.parameters.packageManager) {
-        case "composer":
-            return `composer${visibility} require`;
-        case "npm":
-            return `npm${visibility} install`;
-        case "yarn":
-            return `yarn${visibility} add`;
-        case "auto":
-            return detectPackageManager(config, visibility);
-        case "none":
-            return "";
-        default:
-            return config.image.parameters.packageManager;
+    const global = config.image.parameters.packageGlobal;
+    const dev = config.image.parameters.packageDev;
+    let name = config.image.parameters.packageManager;
+    if (name === "none") {
+        return "";
     }
+    if (name === "auto") {
+        name = detectPackageManager(config);
+    }
+    if (["composer", "npm", "yarn"].includes(name)) {
+        return command(name, dev, global);
+    }
+    return config.image.parameters.packageManager.trim();
 };
 const packageName = (image) => {
     if (image.packageManager === "none") {
