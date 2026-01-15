@@ -75,16 +75,19 @@ const render = (
     parameters.packageManager = packageManager(config);
     parameters.packageName = packageName(config.package);
 
-    parameters.title = config.data?.title || "";
-    parameters.description = config.data?.description || "";
-
     parameters.images = detectIcon(config.image, packageData);
+
+    url = url
+        .replace("{title}", encodeUri(config.data?.title || ""))
+        .replace("{description}", encodeUri(config.data?.description || ""));
 
     for (const [key, value] of Object.entries(parameters)) {
         url = url.replace(`{${key}}`, encodeUri(value));
     }
 
-    return `${url}?${(new URLSearchParams(parameters)).toString()}`;
+    const query: string = new URLSearchParams(parameters).toString();
+
+    return `${url}?${query}`;
 };
 
 export const getImages = (config: Config, packageData: LockFile): string => {

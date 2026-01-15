@@ -4,8 +4,8 @@ exports[`custom config 1`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=composer+require+--dev&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=composer+require+--dev&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=composer+require+--dev&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=composer+require+--dev&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -16,8 +16,8 @@ exports[`custom config 2`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=composer+global+require+--dev&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=composer+global+require+--dev&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=composer+global+require+--dev&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=composer+global+require+--dev&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -28,8 +28,8 @@ exports[`custom config 3`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install+-D&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install+-D&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -40,8 +40,8 @@ exports[`custom config 4`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install+-g+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install+-g+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install+-g+-D&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install+-g+-D&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -52,8 +52,8 @@ exports[`custom config 5`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=yarn+add+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=yarn+add+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=yarn+add+-D&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=yarn+add+-D&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -64,8 +64,8 @@ exports[`custom config 6`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=yarn+global+add+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=yarn+global+add+-D&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=yarn+global+add+-D&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=yarn+global+add+-D&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -76,8 +76,8 @@ exports[`custom config 7`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=foo&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=foo&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=foo&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=foo&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -88,8 +88,8 @@ exports[`custom config 8`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=foo&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=foo&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=foo&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=foo&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -100,8 +100,8 @@ exports[`default config 1`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 "
@@ -111,8 +111,8 @@ exports[`default config 2`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 Something
@@ -123,8 +123,8 @@ exports[`default config 3`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
@@ -137,8 +137,8 @@ exports[`default config 4`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
@@ -151,8 +151,8 @@ exports[`default config 5`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
@@ -165,8 +165,8 @@ exports[`default config 6`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
@@ -179,8 +179,8 @@ exports[`default config 7`] = `
 "# Some Title
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
@@ -193,8 +193,8 @@ exports[`default config 8`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
@@ -207,8 +207,8 @@ exports[`default config 9`] = `
 "# Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code">
-    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&title=Some+title&description=Some+description&images=code" alt="Some title">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=dark&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code">
+    <img src="https://banners.beyondco.de/Some%20title.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&theme=light&packageManager=npm+install&packageName=foo%2Fbar-baz&images=code" alt="Some title">
 </picture>
 
 ## Usage
