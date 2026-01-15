@@ -34396,11 +34396,11 @@ exports.defaultAuthor = {
 };
 exports.defaultCommit = {
     branch: "preview/banner-{random}",
-    title: "docs(preview): Update preview",
+    title: "docs(preview): Update repository banner image",
     author: exports.defaultAuthor,
 };
 exports.defaultPullRequest = {
-    title: "Update preview",
+    title: "Update repository banner image",
     labels: ["preview"],
 };
 exports.defaultConfig = {
