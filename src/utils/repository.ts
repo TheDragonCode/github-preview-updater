@@ -152,7 +152,7 @@ export class Repository {
             });
         } catch (error) {
             // @ts-expect-error
-            error.message = `Error when creating pull request from ${this.branchName()}: ${error.message}`;
+            error.message = `Error when creating a pull request from ${this.branchName()}: ${error.message}`;
 
             throw error;
         }

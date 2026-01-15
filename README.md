@@ -49,12 +49,19 @@ jobs:
                     # Required: true
                     token: ${{ secrets.GITHUB_TOKEN }}
 
-                    # Path to the settings file 
+                    # Path to the settings file
                     #
                     # By default, .github/preview-updater.yml
                     #
                     # Required: false
                     config: ''
+
+                    # Specifies the path to the README file.
+                    #
+                    # By default, README.md
+                    #
+                    # Required: false
+                    readme: ''
 ```
 
 The action is setting the following outputs:
@@ -81,8 +88,6 @@ All fields are optional—omitted ones fall back to defaults.
 
 ```yaml
 # $schema: https://raw.githubusercontent.com/TheDragonCode/github-preview-updater/refs/heads/main/resources/schema.json
-
-path: README.md        # Target file to update
 
 package:
     # Declares the use of the package manager.
@@ -169,7 +174,7 @@ Ultimately, the image link will look like this:
 
 ## FAQ
 
-> 💥 Preview Updater failed with error: Error when creating pull request from preview/banner-***: GitHub Actions is not permitted to create or approve pull requests
+> 💥 Preview Updater failed with error: Error when creating a pull request from preview/banner-***: GitHub Actions is not permitted to create or approve pull requests
 
 Enable the "Allow GitHub Actions to create and approve pull requests" option in project settings.
 

@@ -11,6 +11,7 @@ Aliases:
 Ignore the following properties:
 
 - `directory`
+- `readme`
 - `repository.owner`
 - `repository.repo`
 
@@ -20,3 +21,4 @@ Steps:
 2. Study its dependencies.
 3. Memorize the overall relationship scheme of these interfaces.
 4. Update the JSON schema in the `resources/schema.json` file in accordance with the new requirements.
+5. Do not add the `default` parameter to the schema root.

@@ -2,6 +2,7 @@ import type { Config } from "../types/config";
 import type { Image } from "../types/image";
 import type { Package } from "../types/package";
 import type { Author, Commit, PullRequest } from "../types/repository";
+import { README_PATH } from "../utils/inputs";
 
 export const defaultPackage: Package = {
     manager: "auto",
@@ -39,7 +40,7 @@ export const defaultPullRequest: PullRequest = {
 };
 
 export const defaultConfig: Config = {
-    readme: "README.md",
+    readme: README_PATH.defaultValue,
 
     package: defaultPackage,
     image: defaultImage,

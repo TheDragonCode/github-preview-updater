@@ -12,16 +12,12 @@ import { readConfig } from "./utils/config";
 import type { LockFile } from "./types/lockFile";
 import type { Data } from "./types/data";
 import type { Repository as Credentials } from "./types/repository";
-import {
-    defaultConfig,
-    defaultPackage,
-    defaultPullRequest,
-} from "./libs/defaults";
+import { defaultPackage, defaultPullRequest } from "./libs/defaults";
 import type { GitHub } from "@actions/github/lib/utils";
 
 const previewUpdater = async () => {
     // Inputs
-    const { token, configPath } = parse();
+    const { token, configPath, readmePath } = parse();
 
     // Credentials
     const credentials: Credentials = {
@@ -53,7 +49,7 @@ const previewUpdater = async () => {
     // Read names
     const packageLock: LockFile = getPackageManager(config);
 
-    config.readme ||= defaultConfig.readme || "README.md";
+    config.readme = readmePath;
 
     config.package ||= defaultPackage;
     config.data ||= <Data>{};
@@ -71,8 +67,8 @@ const previewUpdater = async () => {
     await repo.authenticate();
 
     // Read file
-    const content = readFile(config, config.readme);
-    const preview = setPreview(content, config, packageLock);
+    const content: string = readFile(config, config.readme);
+    const preview: string = setPreview(content, config, packageLock);
 
     if (content === preview) {
         info(`File "${config.readme}" is up to date`);
@@ -81,7 +77,7 @@ const previewUpdater = async () => {
     }
 
     // Checkout branch
-    const branchExists = await repo.branchExists();
+    const branchExists: boolean = await repo.branchExists();
     info(
         `Checkout ${branchExists ? "existing" : "new"} branch named "${repo.branchName()}"`,
     );
