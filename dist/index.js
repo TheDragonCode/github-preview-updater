@@ -34480,7 +34480,7 @@ const previewUpdater = async () => {
     config.readme = readmePath;
     config.package ||= defaults_1.defaultPackage;
     config.data ||= {};
-    config.package.name ||= packageLock.name;
+    config.package.name ||= packageLock.name || config.repository?.repo;
     config.data.title ||= (0, strings_1.titleCase)(config.repository?.repo);
     config.data.description ||=
         packageLock.description || config.repository?.owner;
@@ -34898,7 +34898,10 @@ const getPackageManager = (config) => {
     if ((0, exports.hasComposer)(config)) {
         return (0, exports.getComposer)(config);
     }
-    return (0, exports.getNpm)(config);
+    if ((0, exports.hasNpm)(config) || (0, exports.hasYarn)(config)) {
+        return (0, exports.getNpm)(config);
+    }
+    return {};
 };
 exports.getPackageManager = getPackageManager;
 
