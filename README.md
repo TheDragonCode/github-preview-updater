@@ -11,6 +11,27 @@ GitHub Action that generates an always-fresh preview banner for your project and
 `README.md`. The action detects your package manager, builds a light/dark banner, replaces any previous preview block,
 commits the change in a dedicated branch, and opens a pull request with optional assignees and labels.
 
+## Quick start
+
+Create the file `.github/workflows/preview.yml` with the following content:
+
+```yaml
+name: Preview Updater
+
+on:
+    schedule:
+        -   cron: '20 2 * * *'
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    preview:
+        uses: TheDragonCode/.github/.github/workflows/preview.yml@main
+```
+
 ## Usage
 
 Create the file `.github/workflows/preview.yml` with the following content:
@@ -245,7 +266,8 @@ jobs:
 
 ## FAQ
 
-> 💥 Preview Updater failed with error: Error when creating a pull request from preview/banner-***: GitHub Actions is not permitted to create or approve pull requests
+> 💥 Preview Updater failed with error: Error when creating a pull request from preview/banner-***: GitHub Actions is not
+> permitted to create or approve pull requests
 
 Enable the "Allow GitHub Actions to create and approve pull requests" option in project settings.
 
