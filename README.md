@@ -1,8 +1,8 @@
 # GitHub Preview Updater
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=dark&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&title=GitHub+Preview+Updater&description=Lightweight+preview+update+in+your+repository&images=photograph">
-    <img src="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=light&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&title=GitHub+Preview+Updater&description=Lightweight+preview+update+in+your+repository&images=photograph" alt="GitHub Preview Updater">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=dark&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&images=photograph">
+    <img src="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=light&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&images=photograph" alt="GitHub Preview Updater">
 </picture>
 
 ## Overview
