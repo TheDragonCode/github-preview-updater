@@ -1,13 +1,28 @@
+import { reservedWords } from "../libs/words";
+
+const normalizeWords = (value: string): string => {
+    for (const word of reservedWords) {
+        value = value.replace(new RegExp(`\\b${word}\\b`, "i"), word);
+    }
+
+    return value;
+};
+
 export const titleCase = (title: string | undefined) => {
     if (title === "" || title === undefined) {
         return "";
     }
 
-    return title
+    title = title
         .replace(/([A-Z])/g, "$1")
         .toLowerCase()
         .replace(/(^|\s|-|_)\S/g, (match: string) => match.toUpperCase())
-        .replace(/[-_]/g, " ");
+        .replace(/[-_]/g, " ")
+        .trim();
+
+    const normalized = normalizeWords(title);
+
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 };
 
 export const removeImages = (content: string): string =>

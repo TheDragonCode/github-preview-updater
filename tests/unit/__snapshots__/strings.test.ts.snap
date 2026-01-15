@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`words 1`] = `
+[
+  "GitHub Bar",
+  "Foo GitHub Bar",
+  "Foo GitHub",
+  "GitHub Bar",
+  "Foo GitHub Bar",
+  "Foo GitHub",
+  "GitHub Bar",
+  "Foo GitHub Bar",
+  "Foo GitHub",
+]
+`;
+
+exports[`words 2`] = `
+[
+  "BitBucket Bar",
+  "Foo BitBucket Bar",
+  "Foo BitBucket",
+  "BitBucket Bar",
+  "Foo BitBucket Bar",
+  "Foo BitBucket",
+  "BitBucket Bar",
+  "Foo BitBucket Bar",
+  "Foo BitBucket",
+]
+`;
+
+exports[`words 3`] = `
+[
+  "GitLab Bar",
+  "Foo GitLab Bar",
+  "Foo GitLab",
+  "GitLab Bar",
+  "Foo GitLab Bar",
+  "Foo GitLab",
+  "GitLab Bar",
+  "Foo GitLab Bar",
+  "Foo GitLab",
+]
+`;
+
+exports[`words 4`] = `
+[
+  "JSON Bar",
+  "Foo JSON Bar",
+  "Foo JSON",
+  "JSON Bar",
+  "Foo JSON Bar",
+  "Foo JSON",
+  "JSON Bar",
+  "Foo JSON Bar",
+  "Foo JSON",
+]
+`;
+
+exports[`words 5`] = `
+[
+  "Via Bar",
+  "Foo via Bar",
+  "Foo via",
+  "Via Bar",
+  "Foo via Bar",
+  "Foo via",
+  "Via Bar",
+  "Foo via Bar",
+  "Foo via",
+]
+`;
+
+exports[`words 6`] = `
+[
+  "By Bar",
+  "Foo by Bar",
+  "Foo by",
+  "By Bar",
+  "Foo by Bar",
+  "Foo by",
+  "By Bar",
+  "Foo by Bar",
+  "Foo by",
+]
+`;
+
+exports[`words 7`] = `
+[
+  "With Bar",
+  "Foo with Bar",
+  "Foo with",
+  "With Bar",
+  "Foo with Bar",
+  "Foo with",
+  "With Bar",
+  "Foo with Bar",
+  "Foo with",
+]
+`;
+
+exports[`words 8`] = `
+[
+  "For Bar",
+  "Foo for Bar",
+  "Foo for",
+  "For Bar",
+  "Foo for Bar",
+  "Foo for",
+  "For Bar",
+  "Foo for Bar",
+  "Foo for",
+]
+`;
+
+exports[`words 9`] = `
+[
+  "A Bar",
+  "Foo a Bar",
+  "Foo a",
+  "A Bar",
+  "Foo a Bar",
+  "Foo a",
+  "A Bar",
+  "Foo a Bar",
+  "Foo a",
+]
+`;
+
+exports[`words 10`] = `
+[
+  "At Bar",
+  "Foo at Bar",
+  "Foo at",
+  "At Bar",
+  "Foo at Bar",
+  "Foo at",
+  "At Bar",
+  "Foo at Bar",
+  "Foo at",
+]
+`;
