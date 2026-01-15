@@ -35060,7 +35060,7 @@ class Repository {
     async createPullRequest() {
         try {
             const defaultBranch = await (0, processes_1.exec)(`git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`);
-            return this._octokit.rest.pulls.create({
+            return await this._octokit.rest.pulls.create({
                 owner: this._config.repository?.owner,
                 repo: this._config.repository?.repo,
                 title: this._config.repository?.pullRequest?.title ||
@@ -35083,7 +35083,7 @@ class Repository {
             if (assignees.length === 0) {
                 return;
             }
-            return this._octokit.rest.issues.addAssignees({
+            return await this._octokit.rest.issues.addAssignees({
                 owner: this._config.repository?.owner,
                 repo: this._config.repository?.repo,
                 issue_number: issueNumber,
@@ -35101,7 +35101,7 @@ class Repository {
             if (labels.length === 0) {
                 return;
             }
-            return this._octokit.rest.issues.addLabels({
+            return await this._octokit.rest.issues.addLabels({
                 owner: this._config.repository?.owner,
                 repo: this._config.repository?.repo,
                 issue_number: issueNumber,
