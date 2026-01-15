@@ -17,4 +17,4 @@ Get-Content $envFile |
 
 npm run build
 
-act push -W '.github/workflows/preview.yml'
+act workflow_dispatch -W '.github/workflows/preview.yml'

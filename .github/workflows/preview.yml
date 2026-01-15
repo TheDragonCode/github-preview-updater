@@ -10,5 +10,15 @@ permissions:
     pull-requests: write
 
 jobs:
-    preview:
-        uses: TheDragonCode/.github/.github/workflows/preview.yml@main
+    update:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v6
+                with:
+                    fetch-depth: 0
+
+            -   name: Update Previews
+                uses: ./
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN || env.GITHUB_TOKEN }}
