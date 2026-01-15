@@ -12,10 +12,34 @@
         "repository": {
             "type": "object",
             "additionalProperties": false,
+            "default": {
+                "commit": {
+                    "branch": "preview/banner-{random}",
+                    "title": "docs(preview): Update preview",
+                    "author": {
+                        "name": "github-actions",
+                        "email": "github-actions@github.com"
+                    }
+                },
+                "pullRequest": {
+                    "title": "Update preview",
+                    "labels": [
+                        "preview"
+                    ]
+                }
+            },
             "properties": {
                 "commit": {
                     "type": "object",
                     "additionalProperties": false,
+                    "default": {
+                        "branch": "preview/banner-{random}",
+                        "title": "docs(preview): Update preview",
+                        "author": {
+                            "name": "github-actions",
+                            "email": "github-actions@github.com"
+                        }
+                    },
                     "properties": {
                         "branch": {
                             "type": "string",
@@ -101,6 +125,11 @@
         "package": {
             "type": "object",
             "additionalProperties": false,
+            "default": {
+                "manager": "auto",
+                "global": false,
+                "dev": false
+            },
             "properties": {
                 "manager": {
                     "description": "Package manager name. Reserved values: composer | npm | yarn | auto | none",
@@ -140,6 +169,16 @@
         "image": {
             "type": "object",
             "additionalProperties": false,
+            "default": {
+                "url": "https://banners.beyondco.de/{title}.png",
+                "parameters": {
+                    "pattern": "topography",
+                    "style": "style_2",
+                    "fontSize": "100px",
+                    "md": "1",
+                    "showWatermark": "1"
+                }
+            },
             "properties": {
                 "url": {
                     "type": "string",
