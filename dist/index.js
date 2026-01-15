@@ -34615,6 +34615,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.writeFile = exports.readFile = exports.readRemoteFile = exports.fileExists = exports.cwd = void 0;
 const fs = __importStar(__nccwpck_require__(3024));
 const core_1 = __nccwpck_require__(7484);
+const node_https_1 = __nccwpck_require__(4708);
 const cwd = () => {
     const path = process.env.GITHUB_WORKSPACE;
     if (path === undefined) {
@@ -34627,12 +34628,25 @@ const filePath = (config, filename) => `${config.directory}/${filename}`;
 const fileExists = (config, filename) => fs.existsSync(filePath(config, filename));
 exports.fileExists = fileExists;
 const readRemoteFile = async (url) => {
-    const response = await fetch(url);
-    if (!response.ok) {
-        (0, core_1.info)(`Failed to fetch ${url} with status code ${response.status}`);
-        return "";
-    }
-    return response.text();
+    return new Promise((resolve) => {
+        (0, node_https_1.get)(url, (res) => {
+            if (res.statusCode !== 200) {
+                (0, core_1.info)(`Failed to fetch ${url} with status code ${res.statusCode}`);
+                resolve("");
+                return;
+            }
+            let data = "";
+            res.on("data", (chunk) => {
+                data += chunk;
+            });
+            res.on("end", () => {
+                resolve(data);
+            });
+        }).on("error", (err) => {
+            (0, core_1.info)(`Failed to fetch ${url} with error: ${err.message}`);
+            resolve("");
+        });
+    });
 };
 exports.readRemoteFile = readRemoteFile;
 const readFile = (config, filename) => {
@@ -35249,6 +35263,14 @@ module.exports = require("node:events");
 
 "use strict";
 module.exports = require("node:fs");
+
+/***/ }),
+
+/***/ 4708:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:https");
 
 /***/ }),
 
