@@ -32,6 +32,8 @@ jobs:
         uses: TheDragonCode/.github/.github/workflows/preview.yml@main
 ```
 
+You can see a workflow here: https://github.com/TheDragonCode/.github/blob/main/.github/workflows/preview.yml
+
 ## Usage
 
 Create the file `.github/workflows/preview.yml` with the following content:
@@ -233,7 +235,6 @@ jobs:
                 with:
                     token: ${{ secrets.GITHUB_TOKEN }}
                     readme: 'README_foo.md'
-                    config: '.github/preview-updater-foo.yml'
 
             -   name: Merge PR
                 if: steps.preview1.outputs.pullRequestNumber != ''
