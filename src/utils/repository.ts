@@ -136,7 +136,7 @@ export class Repository {
                 `git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`,
             );
 
-            return this._octokit.rest.pulls.create(<
+            return await this._octokit.rest.pulls.create(<
                 RestEndpointMethodTypes["pulls"]["create"]["parameters"]
             >{
                 owner: this._config.repository?.owner,
@@ -165,7 +165,7 @@ export class Repository {
                 return;
             }
 
-            return this._octokit.rest.issues.addAssignees(<
+            return await this._octokit.rest.issues.addAssignees(<
                 RestEndpointMethodTypes["issues"]["addAssignees"]["parameters"]
             >{
                 owner: this._config.repository?.owner,
@@ -187,7 +187,7 @@ export class Repository {
                 return;
             }
 
-            return this._octokit.rest.issues.addLabels(<
+            return await this._octokit.rest.issues.addLabels(<
                 RestEndpointMethodTypes["issues"]["addLabels"]["parameters"]
             >{
                 owner: this._config.repository?.owner,
