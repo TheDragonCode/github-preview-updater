@@ -34405,12 +34405,12 @@ exports.defaultPullRequest = {
 };
 exports.defaultConfig = {
     readme: "README.md",
+    package: exports.defaultPackage,
+    image: exports.defaultImage,
     repository: {
         commit: exports.defaultCommit,
         pullRequest: exports.defaultPullRequest,
     },
-    package: exports.defaultPackage,
-    image: exports.defaultImage,
 };
 
 
