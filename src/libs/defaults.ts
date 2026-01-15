@@ -28,13 +28,13 @@ export const defaultAuthor: Author = {
 
 export const defaultCommit: Commit = {
     branch: "preview/banner-{random}",
-    title: "docs(preview): Update preview",
+    title: "docs(preview): Update repository banner image",
 
     author: defaultAuthor,
 };
 
 export const defaultPullRequest: PullRequest = {
-    title: "Update preview",
+    title: "Update repository banner image",
     labels: ["preview"],
 };
 

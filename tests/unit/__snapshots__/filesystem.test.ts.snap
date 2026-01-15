@@ -72,13 +72,13 @@ exports[`read config 2`] = `
       "name": "github-actions",
     },
     "branch": "preview/banner-{random}",
-    "title": "docs(preview): Update preview",
+    "title": "docs(preview): Update repository banner image",
   },
   "pullRequest": {
     "labels": [
       "preview",
     ],
-    "title": "Update preview",
+    "title": "Update repository banner image",
   },
 }
 `;
