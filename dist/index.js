@@ -35158,6 +35158,13 @@ exports.Repository = Repository;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomString = exports.encodeUri = exports.removeImages = exports.titleCase = void 0;
 const words_1 = __nccwpck_require__(1053);
+const prepareWords = (value) => {
+    value = value.replace(/([^\w\d]|[-/_])+/g, " ");
+    for (const word of words_1.reservedWords) {
+        value = value.replace(new RegExp(`\\b${word}\\b`, "i"), word.toLowerCase());
+    }
+    return value;
+};
 const normalizeWords = (value) => {
     for (const word of words_1.reservedWords) {
         value = value.replace(new RegExp(`\\b${word}\\b`, "i"), word);
@@ -35168,11 +35175,15 @@ const titleCase = (title) => {
     if (title === "" || title === undefined) {
         return "";
     }
-    title = title
-        .replace(/([A-Z])/g, "$1")
+    const upper = title.toUpperCase();
+    if (upper === title) {
+        title = title.toLowerCase();
+    }
+    title = prepareWords(title)
+        .replace(/([A-Z])/g, " $1")
         .toLowerCase()
         .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
-        .replace(/[-_]/g, " ")
+        .replace(/(\s|\u3164|\u1160)+/gu, " ")
         .trim();
     const normalized = normalizeWords(title);
     return normalized.charAt(0).toUpperCase() + normalized.slice(1);
