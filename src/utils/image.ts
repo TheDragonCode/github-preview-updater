@@ -75,15 +75,16 @@ const render = (
     parameters.packageManager = packageManager(config);
     parameters.packageName = packageName(config.package);
 
-    parameters.images = detectIcon(config.image, packageData);
+    parameters.title ||= config.data?.title || "";
+    parameters.description ||= config.data?.description || "";
 
-    url = url
-        .replace("{title}", encodeUri(config.data?.title || ""))
-        .replace("{description}", encodeUri(config.data?.description || ""));
+    parameters.images = detectIcon(config.image, packageData);
 
     for (const [key, value] of Object.entries(parameters)) {
         url = url.replace(`{${key}}`, encodeUri(value));
     }
+
+    delete parameters.title;
 
     const query: string = new URLSearchParams(parameters).toString();
 
