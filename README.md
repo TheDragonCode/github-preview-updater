@@ -172,6 +172,54 @@ will be `?foo=asd&bar=zxc`.
 Ultimately, the image link will look like this:
 `https://banners.beyondco.de/Qwe%20rty/asd-zxc.png?foo=asd&bar=zxc`.
 
+## Recipes
+
+### Update many files
+
+```yaml
+# .github/workflows/preview.yml
+name: Preview Updater
+
+on:
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    main:
+        uses: TheDragonCode/.github/.github/workflows/preview.yml@main
+
+    foo:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v6
+                with:
+                    fetch-depth: 0
+
+            -   name: Update banner
+                uses: TheDragonCode/github-preview-updater@v2
+                with:
+                    readme: 'README_foo.md'
+                    config: '.github/preview-updater-foo.yml'
+
+    bar:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v6
+                with:
+                    fetch-depth: 0
+
+            -   name: Update banner
+                uses: TheDragonCode/github-preview-updater@v2
+                with:
+                    readme: 'README.bar.md'
+                    config: '.github/preview-updater-bar.yml'
+```
+
 ## FAQ
 
 > 💥 Preview Updater failed with error: Error when creating a pull request from preview/banner-***: GitHub Actions is not permitted to create or approve pull requests
