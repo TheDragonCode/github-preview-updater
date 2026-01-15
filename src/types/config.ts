@@ -7,9 +7,8 @@ export interface Config {
     directory?: string;
     readme?: string;
 
-    repository?: Repository;
-
-    data?: Data;
     package?: Package;
+    data?: Data;
     image?: Image;
+    repository?: Repository;
 }

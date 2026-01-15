@@ -41,11 +41,11 @@ export const defaultPullRequest: PullRequest = {
 export const defaultConfig: Config = {
     readme: "README.md",
 
+    package: defaultPackage,
+    image: defaultImage,
+
     repository: {
         commit: defaultCommit,
         pullRequest: defaultPullRequest,
     },
-
-    package: defaultPackage,
-    image: defaultImage,
 };

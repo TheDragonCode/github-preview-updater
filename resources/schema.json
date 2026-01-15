@@ -15,14 +15,14 @@
             "default": {
                 "commit": {
                     "branch": "preview/banner-{random}",
-                    "title": "docs(preview): Update preview",
+                    "title": "docs(preview): Update repository banner image",
                     "author": {
                         "name": "github-actions",
                         "email": "github-actions@github.com"
                     }
                 },
                 "pullRequest": {
-                    "title": "Update preview",
+                    "title": "Update repository banner image",
                     "labels": [
                         "preview"
                     ]
@@ -34,7 +34,7 @@
                     "additionalProperties": false,
                     "default": {
                         "branch": "preview/banner-{random}",
-                        "title": "docs(preview): Update preview",
+                        "title": "docs(preview): Update repository banner image",
                         "author": {
                             "name": "github-actions",
                             "email": "github-actions@github.com"
@@ -49,7 +49,7 @@
                         "title": {
                             "type": "string",
                             "description": "Commit title",
-                            "default": "docs(preview): Update preview"
+                            "default": "docs(preview): Update repository banner image"
                         },
                         "body": {
                             "type": "string",
@@ -80,7 +80,7 @@
                         "title": {
                             "type": "string",
                             "description": "Pull request title",
-                            "default": "Update preview"
+                            "default": "Update repository banner image"
                         },
                         "body": {
                             "type": "string",

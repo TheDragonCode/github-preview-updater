@@ -41,15 +41,15 @@ jobs:
                 with:
                     # Personal access token (PAT) used when interacting with Git and GitHub.
                     #
-                    # We recommend using a service account with the least permissions necessary. Also
-                    # when generating a new PAT, select the least scopes necessary.
+                    # We recommend using a service account with the least permissions necessary.
+                    # Also, when generating a new PAT, select the least scopes necessary.
                     #
                     # [Learn more about creating and using encrypted secrets](https://help.github.com/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
                     #
                     # Required: true
                     token: ${{ secrets.GITHUB_TOKEN }}
 
-                    # Path to settings file
+                    # Path to the settings file 
                     #
                     # By default, .github/preview-updater.yml
                     #
@@ -84,30 +84,6 @@ All fields are optional—omitted ones fall back to defaults.
 
 path: README.md        # Target file to update
 
-repository:
-    commit:
-        branch: preview/banner-{random}
-        title: "docs(preview): Update preview"
-        body: ''
-        author:
-            name: github-actions
-            email: github-actions@github.com
-
-    pullRequest:
-        title: Update preview
-        body: ''
-        assignees: [ ]
-        labels: [ 'preview' ]
-
-data:
-    # By default, the repository name will be used.
-    # For example, for https://github.com/TheDragonCode/github-preview-updater, it will take `preview-updater`
-    # and convert it to `Preview Updater`.
-    title: ''          # Fallbacks to repo name (Title Case)
-
-    # By default, the package description will be used (the ` description ` key in composer.json or package.json).
-    description: ''    # Fallbacks to owner name or package description
-
 package:
     # Declares the use of the package manager.
     # It is a regular string that will be substituted into the URL address.
@@ -132,6 +108,15 @@ package:
     # By default, the package name is taken from the composer.json or package.json file.
     name: ''
 
+data:
+    # By default, the repository name will be used.
+    # For example, for https://github.com/TheDragonCode/github-preview-updater, it will take `preview-updater`
+    # and convert it to `Preview Updater`.
+    title: ''          # Fallbacks to repo name (Title Case)
+
+    # By default, the package description will be used (the ` description ` key in composer.json or package.json).
+    description: ''    # Fallbacks to owner name or package description
+
 image:
     url: https://banners.beyondco.de/{title}.png
 
@@ -142,6 +127,20 @@ image:
         fontSize: 100px
         icon: code
 
+repository:
+    commit:
+        branch: preview/banner-{random}
+        title: "docs(preview): Update preview"
+        body: ''
+        author:
+            name: github-actions
+            email: github-actions@github.com
+
+    pullRequest:
+        title: Update preview
+        body: ''
+        assignees: [ ]
+        labels: [ 'preview' ]
 ```
 
 Currently, the project generates previews through [banners.beyondco.de](https://banners.beyondco.de) and the parameters
