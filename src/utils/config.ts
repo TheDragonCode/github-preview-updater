@@ -1,9 +1,10 @@
-import { type Config, defaultConfig } from "../types/config";
+import type { Config } from "../types/config";
 import * as yaml from "js-yaml";
 import { readFile, readRemoteFile } from "./filesystem";
 import { merge } from "./merge";
 import { info } from "@actions/core";
 import * as url from "node:url";
+import { defaultConfig } from "../libs/defaults";
 
 export const readConfig = async (
     config: Config,

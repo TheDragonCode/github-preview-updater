@@ -1,6 +1,12 @@
 ## Triggers
 
-### Update schema
+### JSON schema
+
+Aliases:
+- `update schema`
+- `upgrade schema`
+- `schema`
+- `json schema`
 
 Ignore the following properties:
 
@@ -10,7 +16,7 @@ Ignore the following properties:
 
 Steps:
 
-1. Carefully study the `Config` interface in the `src/types/config.ts` file.
+1. Carefully study the `Config` interface in the `src/types/defaults.ts` file.
 2. Study its dependencies.
 3. Memorize the overall relationship scheme of these interfaces.
 4. Update the JSON schema in the `resources/schema.json` file in accordance with the new requirements.

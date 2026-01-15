@@ -1,6 +1,7 @@
-import { type Config, defaultConfig } from "../../src/types/config";
+import type { Config } from "../../src/types/config";
 import { deepmerge } from "deepmerge-ts";
 import { readConfig } from "../../src/utils/config";
+import { defaultConfig } from "../../src/libs/defaults";
 
 export const rawTestConfig: Config = <Config>{
     directory: process.cwd(),

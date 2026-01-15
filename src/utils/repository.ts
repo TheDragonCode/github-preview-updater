@@ -3,6 +3,11 @@ import type { GitHub } from "@actions/github/lib/utils";
 import type { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods/dist-types/generated/parameters-and-response-types";
 import { exec } from "./processes";
 import { randomString } from "./strings";
+import {
+    defaultAuthor,
+    defaultCommit,
+    defaultPullRequest,
+} from "../libs/defaults";
 
 export class Repository {
     private _config: Config;
@@ -16,14 +21,18 @@ export class Repository {
     }
 
     async authenticate() {
-        try {
-            const author = this._config.repository.commit.author;
+        const authorName =
+            this._config.repository?.commit?.author?.name || defaultAuthor.name;
+        const authorEmail =
+            this._config.repository?.commit?.author?.name ||
+            defaultAuthor.email;
 
-            await exec(`git config user.name "${author.name}"`);
-            await exec(`git config user.email "${author.email}"`);
+        try {
+            await exec(`git config user.name "${authorName}"`);
+            await exec(`git config user.email "${authorEmail}"`);
         } catch (error) {
             // @ts-expect-error
-            error.message = `Error authenticating user "${author.name}" with e-mail "${author.email}": ${error.message}`;
+            error.message = `Error authenticating user "${authorName}" with e-mail "${author.email}": ${error.message}`;
 
             throw error;
         }
@@ -84,8 +93,12 @@ export class Repository {
 
     async commit() {
         try {
-            let message = this._config.repository.commit.title;
-            const body = this._config.repository.commit.body || "";
+            let message =
+                this._config.repository?.commit?.title || defaultCommit.title;
+            const body =
+                this._config.repository?.commit?.body ||
+                defaultCommit.body ||
+                "";
 
             if (body !== "") {
                 message += `\n${body}`;
@@ -126,10 +139,15 @@ export class Repository {
             return this._octokit.rest.pulls.create(<
                 RestEndpointMethodTypes["pulls"]["create"]["parameters"]
             >{
-                owner: this._config.repository.owner,
-                repo: this._config.repository.repo,
-                title: this._config.repository.pullRequest.title,
-                body: this._config.repository.pullRequest.body,
+                owner: this._config.repository?.owner,
+                repo: this._config.repository?.repo,
+                title:
+                    this._config.repository?.pullRequest?.title ||
+                    defaultPullRequest.title,
+                body:
+                    this._config.repository?.pullRequest?.body ||
+                    defaultPullRequest.body ||
+                    "",
                 head: this.branchName(),
                 base: defaultBranch,
             });
@@ -150,8 +168,8 @@ export class Repository {
             return this._octokit.rest.issues.addAssignees(<
                 RestEndpointMethodTypes["issues"]["addAssignees"]["parameters"]
             >{
-                owner: this._config.repository.owner,
-                repo: this._config.repository.repo,
+                owner: this._config.repository?.owner,
+                repo: this._config.repository?.repo,
                 issue_number: issueNumber,
                 assignees: assignees,
             });
@@ -172,8 +190,8 @@ export class Repository {
             return this._octokit.rest.issues.addLabels(<
                 RestEndpointMethodTypes["issues"]["addLabels"]["parameters"]
             >{
-                owner: this._config.repository.owner,
-                repo: this._config.repository.repo,
+                owner: this._config.repository?.owner,
+                repo: this._config.repository?.repo,
                 issue_number: issueNumber,
                 labels,
             });
@@ -187,10 +205,12 @@ export class Repository {
 
     branchName(): string {
         if (this._currentBranch === "") {
-            this._currentBranch = this._config.repository.commit.branch.replace(
-                "{random}",
-                randomString(),
-            );
+            const branch: string =
+                this._config.repository?.commit?.branch ||
+                defaultCommit.branch ||
+                "preview/{random}";
+
+            this._currentBranch = branch.replace("{random}", randomString());
         }
 
         return this._currentBranch;

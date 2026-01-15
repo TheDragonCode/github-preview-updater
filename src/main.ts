@@ -10,8 +10,12 @@ import { getPackageManager } from "./utils/packageManagers";
 import { titleCase } from "./utils/strings";
 import { readConfig } from "./utils/config";
 import type { LockFile } from "./types/lockFile";
-import type { Package } from "./types/package";
 import type { Data } from "./types/data";
+import {
+    defaultConfig,
+    defaultPackage,
+    defaultPullRequest,
+} from "./libs/defaults";
 
 const previewUpdater = async () => {
     // Inputs
@@ -33,13 +37,15 @@ const previewUpdater = async () => {
     // Read names
     const packageLock: LockFile = getPackageManager(config);
 
-    config.package ||= <Package>{};
+    config.readme ||= defaultConfig.readme || "README.md";
+
+    config.package ||= defaultPackage;
     config.data ||= <Data>{};
 
     config.package.name ||= packageLock.name;
-    config.data.title ||= titleCase(config.repository.repo);
+    config.data.title ||= titleCase(config.repository?.repo);
     config.data.description ||=
-        packageLock.description || config.repository.owner;
+        packageLock.description || config.repository?.owner;
 
     // Show working directory
     info(`Working directory: ${config.directory}`);
@@ -84,11 +90,15 @@ const previewUpdater = async () => {
     // Set labels and assignees
     await repo.assignee(
         pullRequestNumber,
-        config.repository.pullRequest.assignees,
+        config.repository?.pullRequest?.assignees ||
+            defaultPullRequest.assignees ||
+            [],
     );
     await repo.addLabels(
         pullRequestNumber,
-        config.repository.pullRequest.labels,
+        config.repository?.pullRequest?.labels ||
+            defaultPullRequest.labels ||
+            [],
     );
 
     info(
