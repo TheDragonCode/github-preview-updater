@@ -202,6 +202,7 @@ jobs:
             -   name: Update banner
                 uses: TheDragonCode/github-preview-updater@v2
                 with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
                     readme: 'README_foo.md'
                     config: '.github/preview-updater-foo.yml'
 
@@ -216,6 +217,7 @@ jobs:
             -   name: Update banner
                 uses: TheDragonCode/github-preview-updater@v2
                 with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
                     readme: 'README.bar.md'
                     config: '.github/preview-updater-bar.yml'
 ```
