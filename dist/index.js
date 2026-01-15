@@ -34832,7 +34832,7 @@ exports.TOKEN = {
     env: "INPUT_TOKEN",
 };
 exports.CONFIG_PATH = {
-    name: "configPath",
+    name: "config",
     env: "INPUT_CONFIG_PATH",
     defaultValue: ".github/preview-updater.yml",
 };
