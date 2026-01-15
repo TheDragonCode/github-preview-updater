@@ -202,13 +202,13 @@ export class Repository {
         }
     }
 
-    async getRawFile(filename: string): Promise<string> {
+    async getRawFile(repo: string, filename: string): Promise<string> {
         try {
             const response = await this._octokit.rest.repos.getContent(<
                 RestEndpointMethodTypes["repos"]["getContent"]["parameters"]
             >{
                 owner: this._config.repository?.owner,
-                repo: ".github",
+                repo: repo,
                 path: filename,
                 headers: {
                     Accept: "application/vnd.github.v3.raw",

@@ -14,7 +14,11 @@ export const readConfig = async (
 ): Promise<Config> => {
     const content: string = readFile(config, userConfigPath);
 
-    const remoteConfig: Config = await readRemoteConfig(repo, userConfigPath);
+    const remoteConfig: Config = await readRemoteConfig(
+        config,
+        repo,
+        userConfigPath,
+    );
 
     if (content === "") {
         return <Config>merge(defaultConfig, remoteConfig, config);
@@ -26,6 +30,7 @@ export const readConfig = async (
 };
 
 export const readRemoteConfig = async (
+    config: Config,
     repo: Repository | undefined,
     filename: string,
 ): Promise<Config> => {
@@ -34,10 +39,19 @@ export const readRemoteConfig = async (
             return <Config>{};
         }
 
-        const response: string = await repo.getRawFile(filename);
+        const response1: string = await repo.getRawFile(".github", filename);
 
-        if (response !== "") {
-            return <Config>yaml.load(response);
+        if (response1 !== "") {
+            return <Config>yaml.load(response1);
+        }
+
+        const response2: string = await repo.getRawFile(
+            config.repository?.owner || ".github",
+            filename,
+        );
+
+        if (response2 !== "") {
+            return <Config>yaml.load(response2);
         }
 
         return <Config>{};
