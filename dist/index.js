@@ -34368,6 +34368,29 @@ const main_1 = __importDefault(__nccwpck_require__(1730));
 
 /***/ }),
 
+/***/ 1053:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.reservedWords = void 0;
+exports.reservedWords = [
+    "GitHub",
+    "BitBucket",
+    "GitLab",
+    "JSON",
+    "via",
+    "by",
+    "with",
+    "for",
+    "a",
+    "at",
+];
+
+
+/***/ }),
+
 /***/ 1730:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -35088,21 +35111,31 @@ exports.Repository = Repository;
 /***/ }),
 
 /***/ 3063:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomString = exports.encodeUri = exports.removeImages = exports.titleCase = void 0;
+const words_1 = __nccwpck_require__(1053);
+const normalizeWords = (value) => {
+    for (const word of words_1.reservedWords) {
+        value = value.replace(new RegExp(`\\b${word}\\b`, "i"), word);
+    }
+    return value;
+};
 const titleCase = (title) => {
     if (title === "" || title === undefined) {
         return "";
     }
-    return title
+    title = title
         .replace(/([A-Z])/g, "$1")
         .toLowerCase()
         .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
-        .replace(/[-_]/g, " ");
+        .replace(/[-_]/g, " ")
+        .trim();
+    const normalized = normalizeWords(title);
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 };
 exports.titleCase = titleCase;
 const removeImages = (content) => content
