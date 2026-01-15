@@ -167,6 +167,14 @@ will be `?foo=asd&bar=zxc`.
 Ultimately, the image link will look like this:
 `https://banners.beyondco.de/Qwe%20rty/asd-zxc.png?foo=asd&bar=zxc`.
 
+## FAQ
+
+> 💥 Preview Updater failed with error: Error when creating pull request from preview/banner-***: GitHub Actions is not permitted to create or approve pull requests
+
+Enable the "Allow GitHub Actions to create and approve pull requests" option in project settings.
+
+<img width="814" height="403" alt="Image" src="https://github.com/user-attachments/assets/3687000d-68ee-4574-b601-dc2a64ac4d90" />
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
