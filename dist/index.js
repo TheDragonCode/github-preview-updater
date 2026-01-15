@@ -34575,7 +34575,7 @@ const url = __importStar(__nccwpck_require__(3136));
 const defaults_1 = __nccwpck_require__(5620);
 const readConfig = async (config, userConfigPath, repo) => {
     const content = (0, filesystem_1.readFile)(config, userConfigPath);
-    const remoteConfig = await (0, exports.readRemoteConfig)(repo, userConfigPath);
+    const remoteConfig = await (0, exports.readRemoteConfig)(config, repo, userConfigPath);
     if (content === "") {
         return (0, merge_1.merge)(defaults_1.defaultConfig, remoteConfig, config);
     }
@@ -34583,14 +34583,18 @@ const readConfig = async (config, userConfigPath, repo) => {
     return (0, merge_1.merge)(defaults_1.defaultConfig, remoteConfig, userConfig, config);
 };
 exports.readConfig = readConfig;
-const readRemoteConfig = async (repo, filename) => {
+const readRemoteConfig = async (config, repo, filename) => {
     try {
         if (repo === undefined) {
             return {};
         }
-        const response = await repo.getRawFile(filename);
-        if (response !== "") {
-            return yaml.load(response);
+        const response1 = await repo.getRawFile(".github", filename);
+        if (response1 !== "") {
+            return yaml.load(response1);
+        }
+        const response2 = await repo.getRawFile(config.repository?.owner || ".github", filename);
+        if (response2 !== "") {
+            return yaml.load(response2);
         }
         return {};
     }
@@ -35103,11 +35107,11 @@ class Repository {
             throw error;
         }
     }
-    async getRawFile(filename) {
+    async getRawFile(repo, filename) {
         try {
             const response = await this._octokit.rest.repos.getContent({
                 owner: this._config.repository?.owner,
-                repo: ".github",
+                repo: repo,
                 path: filename,
                 headers: {
                     Accept: "application/vnd.github.v3.raw",
