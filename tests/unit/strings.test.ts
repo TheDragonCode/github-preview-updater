@@ -24,3 +24,26 @@ test("words", () => {
         expect(items.map((item: string) => titleCase(item))).toMatchSnapshot();
     }
 });
+
+test("case", () => {
+    expect(titleCase("fooBar")).toBe("Foo Bar");
+    expect(titleCase("foo Bar")).toBe("Foo Bar");
+    expect(titleCase("foo bar")).toBe("Foo Bar");
+    expect(titleCase("FOO BAR")).toBe("Foo Bar");
+    expect(titleCase("fOo bAr")).toBe("F Oo B Ar");
+
+    expect(titleCase("foo-Bar")).toBe("Foo Bar");
+    expect(titleCase("foo-bar")).toBe("Foo Bar");
+    expect(titleCase("FOO-BAR")).toBe("Foo Bar");
+    expect(titleCase("fOo-bAr")).toBe("F Oo B Ar");
+
+    expect(titleCase("foo_Bar")).toBe("Foo Bar");
+    expect(titleCase("foo_bar")).toBe("Foo Bar");
+    expect(titleCase("FOO_BAR")).toBe("Foo Bar");
+    expect(titleCase("fOo_bAr")).toBe("F Oo B Ar");
+
+    expect(titleCase("foo/Bar")).toBe("Foo Bar");
+    expect(titleCase("foo/bar")).toBe("Foo Bar");
+    expect(titleCase("FOO/BAR")).toBe("Foo Bar");
+    expect(titleCase("fOo/bAr")).toBe("F Oo B Ar");
+});

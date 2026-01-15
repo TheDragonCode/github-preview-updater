@@ -1,5 +1,18 @@
 import { reservedWords } from "../libs/words";
 
+const prepareWords = (value: string): string => {
+    value = value.replace(/([^\w\d]|[-/_])+/g, " ");
+
+    for (const word of reservedWords) {
+        value = value.replace(
+            new RegExp(`\\b${word}\\b`, "i"),
+            word.toLowerCase(),
+        );
+    }
+
+    return value;
+};
+
 const normalizeWords = (value: string): string => {
     for (const word of reservedWords) {
         value = value.replace(new RegExp(`\\b${word}\\b`, "i"), word);
@@ -13,11 +26,17 @@ export const titleCase = (title?: string) => {
         return "";
     }
 
-    title = title
-        .replace(/([A-Z])/g, "$1")
+    const upper: string = title.toUpperCase();
+
+    if (upper === title) {
+        title = title.toLowerCase();
+    }
+
+    title = prepareWords(title)
+        .replace(/([A-Z])/g, " $1")
         .toLowerCase()
         .replace(/(^|\s|-|_)\S/g, (match: string) => match.toUpperCase())
-        .replace(/[-_]/g, " ")
+        .replace(/(\s|\u3164|\u1160)+/gu, " ")
         .trim();
 
     const normalized = normalizeWords(title);
