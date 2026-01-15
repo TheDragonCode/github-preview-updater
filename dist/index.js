@@ -34369,12 +34369,13 @@ const main_1 = __importDefault(__nccwpck_require__(1730));
 /***/ }),
 
 /***/ 5620:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultConfig = exports.defaultPullRequest = exports.defaultCommit = exports.defaultAuthor = exports.defaultImage = exports.defaultPackage = void 0;
+const inputs_1 = __nccwpck_require__(9612);
 exports.defaultPackage = {
     manager: "auto",
     global: false,
@@ -34404,7 +34405,7 @@ exports.defaultPullRequest = {
     labels: ["preview"],
 };
 exports.defaultConfig = {
-    readme: "README.md",
+    readme: inputs_1.README_PATH.defaultValue,
     package: exports.defaultPackage,
     image: exports.defaultImage,
     repository: {
@@ -34458,7 +34459,7 @@ const config_1 = __nccwpck_require__(7799);
 const defaults_1 = __nccwpck_require__(5620);
 const previewUpdater = async () => {
     // Inputs
-    const { token, configPath } = (0, inputs_1.parse)();
+    const { token, configPath, readmePath } = (0, inputs_1.parse)();
     // Credentials
     const credentials = {
         owner: github_1.context.repo.owner,
@@ -34476,7 +34477,7 @@ const previewUpdater = async () => {
     }, configPath, _repo);
     // Read names
     const packageLock = (0, packageManagers_1.getPackageManager)(config);
-    config.readme ||= defaults_1.defaultConfig.readme || "README.md";
+    config.readme = readmePath;
     config.package ||= defaults_1.defaultPackage;
     config.data ||= {};
     config.package.name ||= packageLock.name;
@@ -34810,23 +34811,27 @@ exports.getImages = getImages;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parse = exports.CONFIG_PATH = exports.TOKEN = void 0;
+exports.parse = exports.README_PATH = exports.CONFIG_PATH = exports.TOKEN = void 0;
 const core_1 = __nccwpck_require__(7484);
 exports.TOKEN = {
     name: "token",
-    env: "INPUT_TOKEN",
 };
 exports.CONFIG_PATH = {
     name: "config",
-    env: "INPUT_CONFIG_PATH",
     defaultValue: ".github/preview-updater.yml",
+};
+exports.README_PATH = {
+    name: "readme",
+    defaultValue: "README.md",
 };
 const parse = () => {
     const token = (0, core_1.getInput)(exports.TOKEN.name, { required: true });
     const configPath = (0, core_1.getInput)(exports.CONFIG_PATH.name) || exports.CONFIG_PATH.defaultValue;
+    const readmePath = (0, core_1.getInput)(exports.README_PATH.name) || exports.README_PATH.defaultValue;
     return {
         token,
         configPath,
+        readmePath,
     };
 };
 exports.parse = parse;
@@ -35058,7 +35063,7 @@ class Repository {
         }
         catch (error) {
             // @ts-expect-error
-            error.message = `Error when creating pull request from ${this.branchName()}: ${error.message}`;
+            error.message = `Error when creating a pull request from ${this.branchName()}: ${error.message}`;
             throw error;
         }
     }
