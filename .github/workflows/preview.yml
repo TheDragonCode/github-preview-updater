@@ -3,6 +3,8 @@ name: Preview Updater
 on:
     schedule:
         -   cron: '20 2 * * *'
+    release:
+        types: [published]
     workflow_dispatch:
 
 permissions:
