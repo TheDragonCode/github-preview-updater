@@ -1,20 +1,20 @@
 import type { Config } from "../types/config";
 import * as yaml from "js-yaml";
-import { readFile, readRemoteFile } from "./filesystem";
+import { readFile } from "./filesystem";
 import { merge } from "./merge";
 import { info } from "@actions/core";
 import * as url from "node:url";
 import { defaultConfig } from "../libs/defaults";
+import type { Repository } from "./repository";
 
 export const readConfig = async (
     config: Config,
     userConfigPath: string,
+    repo?: Repository,
 ): Promise<Config> => {
     const content: string = readFile(config, userConfigPath);
-    const remoteConfig: Config = await readRemoteConfig(
-        config.repository?.owner,
-        userConfigPath,
-    );
+
+    const remoteConfig: Config = await readRemoteConfig(repo, userConfigPath);
 
     if (content === "") {
         return <Config>merge(defaultConfig, remoteConfig, config);
@@ -26,23 +26,21 @@ export const readConfig = async (
 };
 
 export const readRemoteConfig = async (
-    owner: string | undefined,
+    repo: Repository | undefined,
     filename: string,
 ): Promise<Config> => {
     try {
-        if (owner === undefined) {
+        if (repo === undefined) {
             return <Config>{};
         }
 
-        const data: string = await readRemoteFile(
-            `https://raw.githubusercontent.com/${owner}/.github/refs/heads/main/${filename}`,
-        );
+        const response: string = await repo.getRawFile(filename);
 
-        if (data === "") {
-            return <Config>{};
+        if (response !== "") {
+            return <Config>yaml.load(response);
         }
 
-        return <Config>yaml.load(data);
+        return <Config>{};
     } catch (error) {
         // @ts-expect-error
         info(`Failed to fetch remote config from ${url}: ${error.message}`);

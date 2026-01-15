@@ -8,6 +8,7 @@ import {
     defaultCommit,
     defaultPullRequest,
 } from "../libs/defaults";
+import { info } from "@actions/core";
 
 export class Repository {
     private _config: Config;
@@ -132,9 +133,7 @@ export class Repository {
 
     async createPullRequest() {
         try {
-            const defaultBranch = await exec(
-                `git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`,
-            );
+            const defaultBranch: string = await this.defaultBranchName();
 
             return await this._octokit.rest.pulls.create(<
                 RestEndpointMethodTypes["pulls"]["create"]["parameters"]
@@ -203,6 +202,33 @@ export class Repository {
         }
     }
 
+    async getRawFile(filename: string): Promise<string> {
+        try {
+            const response = await this._octokit.rest.repos.getContent(<
+                RestEndpointMethodTypes["repos"]["getContent"]["parameters"]
+            >{
+                owner: this._config.repository?.owner,
+                repo: ".github",
+                path: filename,
+                headers: {
+                    Accept: "application/vnd.github.v3.raw",
+                },
+            });
+
+            if (response.status !== 200) {
+                return "";
+            }
+
+            // @ts-expect-error
+            return response.data;
+        } catch (error) {
+            // @ts-expect-error
+            info(error.message);
+
+            return "";
+        }
+    }
+
     branchName(): string {
         if (this._currentBranch === "") {
             const branch: string =
@@ -214,5 +240,11 @@ export class Repository {
         }
 
         return this._currentBranch;
+    }
+
+    async defaultBranchName(): Promise<string> {
+        return await exec(
+            `git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`,
+        );
     }
 }

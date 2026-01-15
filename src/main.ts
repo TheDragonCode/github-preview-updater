@@ -11,27 +11,43 @@ import { titleCase } from "./utils/strings";
 import { readConfig } from "./utils/config";
 import type { LockFile } from "./types/lockFile";
 import type { Data } from "./types/data";
+import type { Repository as Credentials } from "./types/repository";
 import {
     defaultConfig,
     defaultPackage,
     defaultPullRequest,
 } from "./libs/defaults";
+import type { GitHub } from "@actions/github/lib/utils";
 
 const previewUpdater = async () => {
     // Inputs
     const { token, configPath } = parse();
 
+    // Credentials
+    const credentials: Credentials = {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+    };
+
+    // API
+    const github: InstanceType<typeof GitHub> = getOctokit(token);
+
     // Load Config
+    const _repo = new Repository(
+        <Config>{
+            repository: credentials,
+        },
+        github,
+    );
+
     const config: Config = await readConfig(
         <Config>{
             directory: cwd(),
 
-            repository: {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-            },
+            repository: credentials,
         },
         configPath,
+        _repo,
     );
 
     // Read names
@@ -51,7 +67,7 @@ const previewUpdater = async () => {
     info(`Working directory: ${config.directory}`);
 
     // Authenticate
-    const repo = new Repository(config, getOctokit(token));
+    const repo = new Repository(config, github);
     await repo.authenticate();
 
     // Read file

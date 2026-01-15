@@ -34368,77 +34368,6 @@ const main_1 = __importDefault(__nccwpck_require__(1730));
 
 /***/ }),
 
-/***/ 5620:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.defaultConfig = exports.defaultPullRequest = exports.defaultCommit = exports.defaultAuthor = exports.defaultImage = exports.defaultPackage = void 0;
-exports.defaultPackage = {
-    manager: "auto",
-    global: false,
-    dev: false,
-};
-exports.defaultImage = {
-    url: "https://banners.beyondco.de/{title}.png",
-    parameters: {
-        pattern: "topography",
-        style: "style_2",
-        fontSize: "100px",
-        md: "1",
-        showWatermark: "1",
-    },
-};
-exports.defaultAuthor = {
-    name: "github-actions",
-    email: "github-actions@github.com",
-};
-exports.defaultCommit = {
-    branch: "preview/banner-{random}",
-    title: "docs(preview): Update repository banner image",
-    author: exports.defaultAuthor,
-};
-exports.defaultPullRequest = {
-    title: "Update repository banner image",
-    labels: ["preview"],
-};
-exports.defaultConfig = {
-    readme: "README.md",
-    package: exports.defaultPackage,
-    image: exports.defaultImage,
-    repository: {
-        commit: exports.defaultCommit,
-        pullRequest: exports.defaultPullRequest,
-    },
-};
-
-
-/***/ }),
-
-/***/ 1053:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.reservedWords = void 0;
-exports.reservedWords = [
-    "GitHub",
-    "BitBucket",
-    "GitLab",
-    "JSON",
-    "via",
-    "by",
-    "with",
-    "for",
-    "a",
-    "at",
-];
-
-
-/***/ }),
-
 /***/ 1730:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -34455,7 +34384,6 @@ const outputs_1 = __nccwpck_require__(8595);
 const packageManagers_1 = __nccwpck_require__(2453);
 const strings_1 = __nccwpck_require__(3063);
 const config_1 = __nccwpck_require__(7799);
-const defaults_1 = __nccwpck_require__(5620);
 const previewUpdater = async () => {
     // Inputs
     const { token, configPath } = (0, inputs_1.parse)();
@@ -34468,24 +34396,21 @@ const previewUpdater = async () => {
         },
     }, configPath);
     // Read names
-    const packageLock = (0, packageManagers_1.getPackageManager)(config);
-    config.readme ||= defaults_1.defaultConfig.readme || "README.md";
-    config.package ||= defaults_1.defaultPackage;
-    config.data ||= {};
-    config.package.name ||= packageLock.name;
-    config.data.title ||= (0, strings_1.titleCase)(config.repository?.repo);
-    config.data.description ||=
-        packageLock.description || config.repository?.owner;
+    const packageData = (0, packageManagers_1.getPackageManager)(config);
+    config.image.parameters.packageName ||= packageData.name;
+    config.image.parameters.title ||= (0, strings_1.titleCase)(config.repository.repo);
+    config.image.parameters.description ||=
+        packageData.description || config.repository.owner;
     // Show working directory
     (0, core_1.info)(`Working directory: ${config.directory}`);
     // Authenticate
     const repo = new repository_1.Repository(config, (0, github_1.getOctokit)(token));
     await repo.authenticate();
     // Read file
-    const content = (0, filesystem_1.readFile)(config, config.readme);
-    const preview = (0, preview_1.setPreview)(content, config, packageLock);
+    const content = (0, filesystem_1.readFile)(config, config.path.readme);
+    const preview = (0, preview_1.setPreview)(content, config, packageData);
     if (content === preview) {
-        (0, core_1.info)(`File "${config.readme}" is up to date`);
+        (0, core_1.info)(`File "${config.path.readme}" is up to date`);
         return;
     }
     // Checkout branch
@@ -34493,8 +34418,8 @@ const previewUpdater = async () => {
     (0, core_1.info)(`Checkout ${branchExists ? "existing" : "new"} branch named "${repo.branchName()}"`);
     await repo.checkoutBranch(!branchExists);
     // Write a file
-    (0, core_1.info)(`Update readme in "${config.readme}" file`);
-    (0, filesystem_1.writeFile)(config, config.readme, preview);
+    (0, core_1.info)(`Update readme in "${config.path.readme}" file`);
+    (0, filesystem_1.writeFile)(config, config.path.readme, preview);
     // Stage and commit changes
     await repo.stage();
     await repo.commit();
@@ -34504,17 +34429,67 @@ const previewUpdater = async () => {
     // Variables
     const pullRequestNumber = pullRequest.data.number;
     const pullRequestUrl = pullRequest.data.html_url;
-    // Set labels and assignees
-    await repo.assignee(pullRequestNumber, config.repository?.pullRequest?.assignees ||
-        defaults_1.defaultPullRequest.assignees ||
-        []);
-    await repo.addLabels(pullRequestNumber, config.repository?.pullRequest?.labels ||
-        defaults_1.defaultPullRequest.labels ||
-        []);
+    if (config.repository.pullRequest.assignees.length > 0) {
+        await repo.assignee(pullRequestNumber, config.repository.pullRequest.assignees);
+    }
+    if (config.repository.pullRequest.labels.length > 0) {
+        await repo.addLabels(pullRequestNumber, config.repository.pullRequest.labels);
+    }
     (0, core_1.info)(`Preview created in Pull Request #${pullRequestNumber}: ${pullRequestUrl}`);
     (0, outputs_1.setOutputs)(repo.branchName(), pullRequestNumber, pullRequestUrl);
 };
 exports["default"] = previewUpdater;
+
+
+/***/ }),
+
+/***/ 7899:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.defaultConfig = void 0;
+exports.defaultConfig = {
+    directory: undefined,
+    path: {
+        readme: "README.md",
+    },
+    image: {
+        url: "https://banners.beyondco.de/{title}.png",
+        parameters: {
+            pattern: "topography",
+            style: "style_2",
+            fontSize: "100px",
+            icon: undefined,
+            packageManager: "auto",
+            packageGlobal: false,
+            packageDev: false,
+            packageName: undefined,
+            title: undefined,
+            description: undefined,
+        },
+    },
+    repository: {
+        owner: undefined,
+        repo: undefined,
+        commit: {
+            branch: "preview/banner-{random}",
+            title: "docs(preview): Update preview",
+            body: undefined,
+            author: {
+                name: "github-actions",
+                email: "github-actions@github.com",
+            },
+        },
+        pullRequest: {
+            title: "Update preview",
+            body: undefined,
+            assignees: [],
+            labels: ["preview"],
+        },
+    },
+};
 
 
 /***/ }),
@@ -34559,20 +34534,20 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.readRemoteConfig = exports.readConfig = void 0;
+const config_1 = __nccwpck_require__(7899);
 const yaml = __importStar(__nccwpck_require__(4281));
 const filesystem_1 = __nccwpck_require__(9742);
 const merge_1 = __nccwpck_require__(2221);
 const core_1 = __nccwpck_require__(7484);
 const url = __importStar(__nccwpck_require__(3136));
-const defaults_1 = __nccwpck_require__(5620);
 const readConfig = async (config, userConfigPath) => {
     const content = (0, filesystem_1.readFile)(config, userConfigPath);
     const remoteConfig = await (0, exports.readRemoteConfig)(config.repository?.owner, userConfigPath);
     if (content === "") {
-        return (0, merge_1.merge)(defaults_1.defaultConfig, remoteConfig, config);
+        return (0, merge_1.merge)(config_1.defaultConfig, remoteConfig, config);
     }
     const userConfig = yaml.load(content);
-    return (0, merge_1.merge)(defaults_1.defaultConfig, remoteConfig, userConfig, config);
+    return (0, merge_1.merge)(config_1.defaultConfig, remoteConfig, userConfig, config);
 };
 exports.readConfig = readConfig;
 const readRemoteConfig = async (owner, filename) => {
@@ -34580,7 +34555,8 @@ const readRemoteConfig = async (owner, filename) => {
         if (owner === undefined) {
             return {};
         }
-        const data = await (0, filesystem_1.readRemoteFile)(`https://raw.githubusercontent.com/${owner}/.github/refs/heads/main/${filename}`);
+        const url = `https://raw.githubusercontent.com/${owner}/.github/refs/heads/main/${filename}`;
+        const data = await (0, filesystem_1.readRemoteFile)(url);
         if (data === "") {
             return {};
         }
@@ -34717,10 +34693,7 @@ const find = (dependencies, icons) => {
     }
     return undefined;
 };
-const detectIcon = (image, packageData) => {
-    if (image?.parameters?.icon) {
-        return image.parameters.icon;
-    }
+const detectIcon = (packageData) => {
     if (packageData?.require !== undefined) {
         const phpIcon = find(packageData.require, exports.phpIcons);
         return phpIcon || exports.defaultPhpIcon;
@@ -34744,8 +34717,8 @@ exports.detectIcon = detectIcon;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getImages = void 0;
 const packageManagers_1 = __nccwpck_require__(2453);
-const icons_1 = __nccwpck_require__(5983);
 const strings_1 = __nccwpck_require__(3063);
+const icons_1 = __nccwpck_require__(5983);
 const command = (manager, dev, global) => {
     switch (manager) {
         case "composer":
@@ -34771,9 +34744,9 @@ const detectPackageManager = (config) => {
     return "none";
 };
 const packageManager = (config) => {
-    const global = config.package?.global || false;
-    const dev = config.package?.dev || false;
-    let name = config.package?.manager || "auto";
+    const global = config.image.parameters.packageGlobal;
+    const dev = config.image.parameters.packageDev;
+    let name = config.image.parameters.packageManager;
     if (name === "none") {
         return "";
     }
@@ -34783,32 +34756,34 @@ const packageManager = (config) => {
     if (["composer", "npm", "yarn"].includes(name)) {
         return command(name, dev, global);
     }
-    return name.trim();
+    return config.image.parameters.packageManager.trim();
 };
-const packageName = (data) => {
-    if (data?.manager === "none") {
+const packageName = (image) => {
+    if (image.packageManager === "none") {
         return "";
     }
-    return data?.name || "";
+    return image?.packageName || "";
 };
 const render = (config, packageData, theme) => {
-    let url = config.image?.url || "";
-    const parameters = config.image?.parameters || {};
-    parameters.theme = theme;
-    parameters.packageManager = packageManager(config);
-    parameters.packageName = packageName(config.package);
-    parameters.title ||= config.data?.title || "";
-    parameters.description ||= config.data?.description || "";
-    parameters.images = (0, icons_1.detectIcon)(config.image, packageData);
-    for (const [key, value] of Object.entries(parameters)) {
-        url = url.replace(`{${key}}`, (0, strings_1.encodeUri)(value));
-    }
-    delete parameters.title;
-    const query = new URLSearchParams(parameters).toString();
-    return `${url}?${query}`;
+    const image = config.image.parameters;
+    const params = new URLSearchParams({
+        theme: theme,
+        pattern: image.pattern,
+        style: image.style,
+        fontSize: image.fontSize,
+        images: image.icon || (0, icons_1.detectIcon)(packageData),
+        packageManager: packageManager(config),
+        packageName: packageName(image),
+        description: image.description || "",
+        md: "1",
+        showWatermark: "1",
+    });
+    return (config.image.url.replace("{title}", (0, strings_1.encodeUri)(image.title)) +
+        "?" +
+        params.toString());
 };
 const getImages = (config, packageData) => {
-    const title = config.data?.title;
+    const title = config.image.parameters.title;
     const light = render(config, packageData, "light");
     const dark = render(config, packageData, "dark");
     return `<picture>
@@ -34834,7 +34809,7 @@ exports.TOKEN = {
     env: "INPUT_TOKEN",
 };
 exports.CONFIG_PATH = {
-    name: "config",
+    name: "configPath",
     env: "INPUT_CONFIG_PATH",
     defaultValue: ".github/preview-updater.yml",
 };
@@ -34925,7 +34900,7 @@ const strings_1 = __nccwpck_require__(3063);
 const hasHeader = (content) => content.match(/^#\s+/);
 const setPreview = (content, config, packageData) => {
     if (!hasHeader(content)) {
-        const title = (0, strings_1.titleCase)(config.data?.title);
+        const title = (0, strings_1.titleCase)(config.image.parameters.title);
         content = `# ${title}\n\n${content}`;
     }
     const images = (0, image_1.getImages)(config, packageData);
@@ -34965,7 +34940,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Repository = void 0;
 const processes_1 = __nccwpck_require__(1896);
 const strings_1 = __nccwpck_require__(3063);
-const defaults_1 = __nccwpck_require__(5620);
 class Repository {
     constructor(config, octokit) {
         this._currentBranch = "";
@@ -34974,16 +34948,14 @@ class Repository {
         this._octokit = octokit;
     }
     async authenticate() {
-        const authorName = this._config.repository?.commit?.author?.name || defaults_1.defaultAuthor.name;
-        const authorEmail = this._config.repository?.commit?.author?.email ||
-            defaults_1.defaultAuthor.email;
         try {
-            await (0, processes_1.exec)(`git config user.name "${authorName}"`);
-            await (0, processes_1.exec)(`git config user.email "${authorEmail}"`);
+            const author = this._config.repository.commit.author;
+            await (0, processes_1.exec)(`git config user.name "${author.name}"`);
+            await (0, processes_1.exec)(`git config user.email "${author.email}"`);
         }
         catch (error) {
             // @ts-expect-error
-            error.message = `Error authenticating user "${authorName}" with e-mail "${authorEmail}": ${error.message}`;
+            error.message = `Error authenticating user "${author.name}" with e-mail "${author.email}": ${error.message}`;
             throw error;
         }
     }
@@ -35018,20 +34990,18 @@ class Repository {
     }
     async stage() {
         try {
-            await (0, processes_1.exec)(`git add ${this._config.readme}`);
+            await (0, processes_1.exec)(`git add ${this._config.path.readme}`);
         }
         catch (error) {
             // @ts-expect-error
-            error.message = `Error staging file "${this._config.readme}": ${error.message}`;
+            error.message = `Error staging file "${this._config.path.readme}": ${error.message}`;
             throw error;
         }
     }
     async commit() {
         try {
-            let message = this._config.repository?.commit?.title || defaults_1.defaultCommit.title;
-            const body = this._config.repository?.commit?.body ||
-                defaults_1.defaultCommit.body ||
-                "";
+            let message = this._config.repository.commit.title;
+            const body = this._config.repository.commit.body || "";
             if (body !== "") {
                 message += `\n${body}`;
             }
@@ -35039,7 +35009,7 @@ class Repository {
         }
         catch (error) {
             // @ts-expect-error
-            error.message = `Error committing file "${this._config.readme}": ${error.message}`;
+            error.message = `Error committing file "${this._config.path.readme}": ${error.message}`;
             throw error;
         }
     }
@@ -35060,14 +35030,11 @@ class Repository {
     async createPullRequest() {
         try {
             const defaultBranch = await (0, processes_1.exec)(`git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5`);
-            return await this._octokit.rest.pulls.create({
-                owner: this._config.repository?.owner,
-                repo: this._config.repository?.repo,
-                title: this._config.repository?.pullRequest?.title ||
-                    defaults_1.defaultPullRequest.title,
-                body: this._config.repository?.pullRequest?.body ||
-                    defaults_1.defaultPullRequest.body ||
-                    "",
+            return this._octokit.rest.pulls.create({
+                owner: this._config.repository.owner,
+                repo: this._config.repository.repo,
+                title: this._config.repository.pullRequest.title,
+                body: this._config.repository.pullRequest.body,
                 head: this.branchName(),
                 base: defaultBranch,
             });
@@ -35080,12 +35047,9 @@ class Repository {
     }
     async assignee(issueNumber, assignees) {
         try {
-            if (assignees.length === 0) {
-                return;
-            }
-            return await this._octokit.rest.issues.addAssignees({
-                owner: this._config.repository?.owner,
-                repo: this._config.repository?.repo,
+            return this._octokit.rest.issues.addAssignees({
+                owner: this._config.repository.owner,
+                repo: this._config.repository.repo,
                 issue_number: issueNumber,
                 assignees: assignees,
             });
@@ -35098,12 +35062,9 @@ class Repository {
     }
     async addLabels(issueNumber, labels) {
         try {
-            if (labels.length === 0) {
-                return;
-            }
-            return await this._octokit.rest.issues.addLabels({
-                owner: this._config.repository?.owner,
-                repo: this._config.repository?.repo,
+            return this._octokit.rest.issues.addLabels({
+                owner: this._config.repository.owner,
+                repo: this._config.repository.repo,
                 issue_number: issueNumber,
                 labels,
             });
@@ -35116,10 +35077,7 @@ class Repository {
     }
     branchName() {
         if (this._currentBranch === "") {
-            const branch = this._config.repository?.commit?.branch ||
-                defaults_1.defaultCommit.branch ||
-                "preview/{random}";
-            this._currentBranch = branch.replace("{random}", (0, strings_1.randomString)());
+            this._currentBranch = this._config.repository.commit.branch.replace("{random}", (0, strings_1.randomString)());
         }
         return this._currentBranch;
     }
@@ -35130,31 +35088,21 @@ exports.Repository = Repository;
 /***/ }),
 
 /***/ 3063:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.randomString = exports.encodeUri = exports.removeImages = exports.titleCase = void 0;
-const words_1 = __nccwpck_require__(1053);
-const normalizeWords = (value) => {
-    for (const word of words_1.reservedWords) {
-        value = value.replace(new RegExp(`\\b${word}\\b`, "i"), word);
-    }
-    return value;
-};
 const titleCase = (title) => {
     if (title === "" || title === undefined) {
         return "";
     }
-    title = title
+    return title
         .replace(/([A-Z])/g, "$1")
         .toLowerCase()
         .replace(/(^|\s|-|_)\S/g, (match) => match.toUpperCase())
-        .replace(/[-_]/g, " ")
-        .trim();
-    const normalized = normalizeWords(title);
-    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+        .replace(/[-_]/g, " ");
 };
 exports.titleCase = titleCase;
 const removeImages = (content) => content
