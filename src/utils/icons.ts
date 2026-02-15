@@ -24,8 +24,7 @@ const find = (
 ): string | undefined => {
     const names: string[] = Object.keys(dependencies);
 
-    outer:
-    for (const name of names) {
+    outer: for (const name of names) {
         for (const icon of icons) {
             if (!name.includes(icon.query)) {
                 continue;
