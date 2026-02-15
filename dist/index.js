@@ -34689,6 +34689,7 @@ exports.phpIcons = [
     {
         query: "symfony/",
         icon: "https://symfony.com/logos/symfony_black_03.svg",
+        exclude: ["polyfill", "var-dumper"]
     },
 ];
 exports.jsIcons = [];
@@ -34698,8 +34699,16 @@ const find = (dependencies, icons) => {
     const names = Object.keys(dependencies);
     for (const name of names) {
         for (const icon of icons) {
-            if (name.includes(icon.query)) {
+            if (!name.includes(icon.query)) {
+                continue;
+            }
+            if (!icon.exclude) {
                 return icon.icon;
+            }
+            for (const exclude of icon.exclude) {
+                if (name.includes(exclude)) {
+                    return icon.icon;
+                }
             }
         }
     }
