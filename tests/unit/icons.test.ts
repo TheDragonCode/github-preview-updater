@@ -19,13 +19,17 @@ test("composer illuminate", () => {
 });
 
 test("composer symfony framework", () => {
-    const data = getPackage("tests/fixtures/packages/composer-symfony-framework.json");
+    const data = getPackage(
+        "tests/fixtures/packages/composer-symfony-framework.json",
+    );
 
     expect(detectIcon(undefined, data)).toBe(phpIcons[2].icon);
 });
 
 test("composer symfony polyfill", () => {
-    const data = getPackage("tests/fixtures/packages/composer-symfony-polyfill.json");
+    const data = getPackage(
+        "tests/fixtures/packages/composer-symfony-polyfill.json",
+    );
 
     expect(detectIcon(undefined, data)).toBe(defaultPhpIcon);
 });
