@@ -8,7 +8,7 @@ export const phpIcons: Icon[] = [
     {
         query: "symfony/",
         icon: "https://symfony.com/logos/symfony_black_03.svg",
-        exclude: ["polyfill", "var-dumper"]
+        exclude: ["polyfill", "var-dumper"],
     },
 ];
 
@@ -26,11 +26,11 @@ const find = (
 
     for (const name of names) {
         for (const icon of icons) {
-            if (! name.includes(icon.query)) {
+            if (!name.includes(icon.query)) {
                 continue;
             }
 
-            if (! icon.exclude) {
+            if (!icon.exclude) {
                 return icon.icon;
             }
 
