@@ -219,7 +219,7 @@ export class Repository {
                 return "";
             }
 
-            // @ts-expect-error
+            // @ts-ignore
             return response.data;
         } catch (error) {
             // @ts-expect-error
