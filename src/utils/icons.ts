@@ -24,6 +24,7 @@ const find = (
 ): string | undefined => {
     const names: string[] = Object.keys(dependencies);
 
+    outer:
     for (const name of names) {
         for (const icon of icons) {
             if (! name.includes(icon.query)) {
@@ -36,9 +37,11 @@ const find = (
 
             for (const exclude of icon.exclude) {
                 if (name.includes(exclude)) {
-                    return icon.icon;
+                    break outer;
                 }
             }
+
+            return icon.icon;
         }
     }
 

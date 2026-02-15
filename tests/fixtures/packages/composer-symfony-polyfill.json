@@ -1,0 +1,8 @@
+{
+    "name": "dragon-code/any",
+    "description": "Performing any actions during the deployment process",
+    "require": {
+        "php": "^8.5",
+        "symfony/polyfill-php85": "^1.33"
+    }
+}
