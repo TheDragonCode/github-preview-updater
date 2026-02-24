@@ -20,12 +20,12 @@ those details change.
 
 ### What gets inserted into your README
 
-After the first heading (`# My Project`) the action inserts (or replaces) the following block:
+After the first heading (for example, `# My Project`) the action inserts (or replaces) the following block:
 
 ```html
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/My%20Project.png?...&theme=dark">
-    <img src="https://banners.beyondco.de/My%20Project.png?...&theme=light" alt="My Project">
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/...&theme=dark">
+    <img src="https://banners.beyondco.de/...&theme=light" alt="{project_name}">
 </picture>
 ```
 
