@@ -7,9 +7,36 @@
 
 ## Overview
 
-GitHub Action that generates an always-fresh preview banner for your project and keeps it at the top of your
-`README.md`. The action detects your package manager, builds a light/dark banner, replaces any previous preview block,
-commits the change in a dedicated branch, and opens a pull request with optional assignees and labels.
+[banners.beyondco.de](https://banners.beyondco.de) is a service that generates beautiful social preview banners for
+GitHub projects. The image at the top of this README is an example of such a banner.
+
+The problem is that each banner URL must be manually crafted — you have to fill in the project title, description,
+package manager install command, icon, and other parameters by hand, then keep the URL up to date whenever any of
+those details change.
+
+**GitHub Preview Updater** is a GitHub Action that automates all of that. It reads your repository metadata
+(name, description, package manager), builds the correct banner URL automatically, and keeps the
+`<picture>` block in your `README.md` up to date — creating a pull request whenever the banner changes.
+
+### What gets inserted into your README
+
+After the first heading (for example, `# My Project`) the action inserts (or replaces) the following block:
+
+```html
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/...&theme=dark">
+    <img src="https://banners.beyondco.de/...&theme=light" alt="{project_name}">
+</picture>
+```
+
+Both a light-theme and a dark-theme variant of the banner are generated automatically.
+
+### How it works
+
+1. The action reads your `composer.json` / `package.json` to detect the package manager, package name, and description.
+2. It builds the banner URL for [banners.beyondco.de](https://banners.beyondco.de) using the collected data.
+3. It replaces the `<picture>` block in your `README.md` with the freshly generated URLs.
+4. If the file changed, it commits the update to a new branch and opens a pull request.
 
 ## Quick start
 
