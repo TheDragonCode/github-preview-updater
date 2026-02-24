@@ -36343,7 +36343,6 @@ class Repository {
             if (response.status !== 200) {
                 return "";
             }
-            // @ts-ignore
             return response.data;
         }
         catch (error) {
