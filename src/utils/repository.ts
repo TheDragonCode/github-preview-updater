@@ -219,8 +219,7 @@ export class Repository {
                 return "";
             }
 
-            // @ts-expect-error
-            return response.data;
+            return response.data as unknown as string;
         } catch (error) {
             // @ts-expect-error
             info(error.message);
