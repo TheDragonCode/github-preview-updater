@@ -5,28 +5,6 @@
     <img src="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=light&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&description=Lightweight+preview+update+in+your+repository&images=photograph" alt="GitHub Preview Updater">
 </picture>
 
-## Overview
-
-[banners.beyondco.de](https://banners.beyondco.de) is a service that generates beautiful social preview banners for
-GitHub projects. The image at the top of this README is an example of such a banner.
-
-The problem is that each banner URL must be manually crafted — you have to fill in the project title, description,
-package manager install command, icon, and other parameters by hand, then keep the URL up to date whenever any of
-those details change.
-
-**GitHub Preview Updater** is a GitHub Action that automates all of that. It reads your repository metadata
-(name, description, package manager), builds the correct banner URL automatically, and keeps the
-`<picture>` block in your `README.md` up to date — creating a pull request whenever the banner changes.
-
-### What gets inserted into your README
-
-After the first heading (for example, `# My Project`) the action inserts (or replaces) the following block:
-
-```html
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/...&theme=dark">
-    <img src="https://banners.beyondco.de/...&theme=light" alt="{project_name}">
-</picture>
 ```
 
 Both a light-theme and a dark-theme variant of the banner are generated automatically.
