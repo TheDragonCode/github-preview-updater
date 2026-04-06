@@ -5,8 +5,6 @@
     <img src="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=light&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&description=Lightweight+preview+update+in+your+repository&images=photograph" alt="GitHub Preview Updater">
 </picture>
 
-```
-
 Both a light-theme and a dark-theme variant of the banner are generated automatically.
 
 ### How it works
