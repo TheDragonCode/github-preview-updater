@@ -5,18 +5,18 @@
     <img src="https://banners.beyondco.de/GitHub%20Preview%20Updater.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=photograph&theme=light&packageManager=uses%3A&packageName=TheDragonCode%2Fgithub-preview-updater%40v2&description=Lightweight+preview+update+in+your+repository&images=photograph" alt="GitHub Preview Updater">
 </picture>
 
-Both a light-theme and a dark-theme variant of the banner are generated automatically.
+Both light and dark banner variants are generated automatically.
 
-### How it works
+## How it works
 
-1. The action reads your `composer.json` / `package.json` to detect the package manager, package name, and description.
-2. It builds the banner URL for [banners.beyondco.de](https://banners.beyondco.de) using the collected data.
-3. It replaces the `<picture>` block in your `README.md` with the freshly generated URLs.
+1. The action reads `composer.json` / `package.json` to detect the package manager, package name, and description.
+2. It builds the banner URL for [banners.beyondco.de](https://banners.beyondco.de) from the collected data.
+3. It replaces the `<picture>` block in `README.md` with refreshed URLs.
 4. If the file changed, it commits the update to a new branch and opens a pull request.
 
-## Quick start
+## Quick start (reusable workflow)
 
-Create the file `.github/workflows/preview.yml` with the following content:
+Create `.github/workflows/preview.yml`:
 
 ```yaml
 name: Preview Updater
@@ -35,18 +35,18 @@ jobs:
         uses: TheDragonCode/.github/.github/workflows/preview.yml@main
 ```
 
-You can see a workflow here: https://github.com/TheDragonCode/.github/blob/main/.github/workflows/preview.yml
+Example reusable workflow: https://github.com/TheDragonCode/.github/blob/main/.github/workflows/preview.yml
 
-## Usage
+## Standalone usage (direct action call)
 
-Create the file `.github/workflows/preview.yml` with the following content:
+If you prefer not to use the reusable workflow, create `.github/workflows/preview.yml` like this:
 
 ```yaml
 name: Preview Updater
 
 on:
     schedule:
-        -   cron: '20 2 * * *' # 02:20 AM on everyday
+        -   cron: '20 2 * * *' # 02:20 AM every day
     workflow_dispatch:
 
 permissions:
@@ -97,27 +97,27 @@ jobs:
                 run: gh pr merge --merge --delete-branch ${{ steps.preview.outputs.pullRequestNumber }}
 ```
 
-The action is setting the following outputs:
+The action exposes these outputs:
 
-| Name                | Description                                                                           |
-|---------------------|---------------------------------------------------------------------------------------|
-| `branchName`        | The name of the git branch created for the purpose of updating the readme file.       |
-| `pullRequestNumber` | The number of the GitHub pull request created for the purpose of updating the readme. |
-| `pullRequestUrl`    | The URL of the GitHub pull request created for the purpose of updating the readme.    |
+| Name                | Description                                          |
+|---------------------|------------------------------------------------------|
+| `branchName`        | Name of the branch created for README update.        |
+| `pullRequestNumber` | Number of the created pull request.                  |
+| `pullRequestUrl`    | URL of the created pull request.                     |
 
 ## Configuration
 
 > [!TIP]
 >
-> Support for working with a global settings file at the organization level (the `.github` repository).
+> You can keep a shared config in the organization-level `.github` repository.
 >
-> For example,
+> Example:
 >
-> - template is `https://github.com/<repo>/.github/blob/main/<config>`.
-> - result is `https://github.com/TheDragonCode/.github/blob/main/.github/preview-updater.yml`.
+> - Template: `https://github.com/<repo>/.github/blob/main/<config>`
+> - Result: `https://github.com/TheDragonCode/.github/blob/main/.github/preview-updater.yml`
 
-Create `.github/preview-updater.yml` (or provide your own path via `config`).
-All fields are optional—omitted ones fall back to defaults.
+Create `.github/preview-updater.yml` (or set your own path via `config`).
+All fields are optional; omitted values fallback to defaults.
 
 ```yaml
 # $schema: https://raw.githubusercontent.com/TheDragonCode/github-preview-updater/refs/heads/main/resources/schema.json
@@ -181,28 +181,25 @@ repository:
         labels: [ 'preview' ]
 ```
 
-Currently, the project generates previews through [banners.beyondco.de](https://banners.beyondco.de) and the parameters
-are specified for it.
-But you can use any other service by replacing the URL.
+By default, previews are generated with [banners.beyondco.de](https://banners.beyondco.de).
+You can use any service by replacing `image.url`.
 
-### Information on how link formation works
+### How URL generation works
 
-An object is created, containing combined data from the [`data`](src/types/data.ts) and [
-`image.parameters`](src/types/image.ts) objects.
+A merged object is built from [`data`](src/types/data.ts) and [`image.parameters`](src/types/image.ts).
 
-A link is taken from the `image.url` parameter and using the `replace` method, everything is replaced in it according to
-the `{key}` pattern, where `key` is the object key from the merged object.
+Then values are substituted into `image.url` by `{key}` placeholders.
 
-For example, if the `image.url` parameter is `https://banners.beyondco.de/{title}/{foo}-{bar}.png`, and the `data`
-object is `{ title: 'Qwe rty', foo: 'asd', bar: 'zxc' }`, then the resulting link will be
+For example, if `image.url` is `https://banners.beyondco.de/{title}/{foo}-{bar}.png`, and `data` is
+`{ title: 'Qwe rty', foo: 'asd', bar: 'zxc' }`, the resulting link is:
 `https://banners.beyondco.de/Qwe%20rty/asd-zxc.png`.
 
-After this, the original `image.parameters` object is taken and query parameters are formed from it.
+After that, query params are built from `image.parameters`.
 
-For example, if the `image.parameters` object is `{ foo: 'asd', bar: 'zxc' }`, then the resulting query parameters
-will be `?foo=asd&bar=zxc`.
+For example, for `{ foo: 'asd', bar: 'zxc' }`, the query string is:
+`?foo=asd&bar=zxc`.
 
-Ultimately, the image link will look like this:
+Final image URL example:
 `https://banners.beyondco.de/Qwe%20rty/asd-zxc.png?foo=asd&bar=zxc`.
 
 ## Recipes
@@ -243,7 +240,7 @@ jobs:
                 if: steps.preview1.outputs.pullRequestNumber != ''
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                run: gh pr merge --merge --delete-branch ${{ steps.preview.outputs.pullRequestNumber }}
+                run: gh pr merge --merge --delete-branch ${{ steps.preview1.outputs.pullRequestNumber }}
 
     bar:
         runs-on: ubuntu-latest
@@ -265,7 +262,7 @@ jobs:
                 if: steps.preview2.outputs.pullRequestNumber != ''
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                run: gh pr merge --merge --delete-branch ${{ steps.preview.outputs.pullRequestNumber }}
+                run: gh pr merge --merge --delete-branch ${{ steps.preview2.outputs.pullRequestNumber }}
 ```
 
 ## FAQ
