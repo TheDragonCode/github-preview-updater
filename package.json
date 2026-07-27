@@ -36,7 +36,7 @@
         "@actions/core": "^2.0.3",
         "@actions/github": "^8.0.1",
         "deepmerge-ts": "^7.1.5",
-        "js-yaml": "^4.1.1"
+        "js-yaml": "^4.3.0"
     },
     "devDependencies": {
         "@babel/core": "^7.28.5",
